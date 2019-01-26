@@ -4,8 +4,11 @@
 * Auteur : David Dratwa
 */
 
-#include "Restaurant.h"
+#ifndef MAIN_H
+#define MAIN_H
+#endif
 
+#include "Restaurant.h"
 using namespace std; 
 
 int main() {
