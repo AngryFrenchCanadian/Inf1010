@@ -7,11 +7,7 @@ Menu::Menu()
 	nbPlats_ = 0;
 	type_ = Matin;
 	listePlats_ = new Plat*[MAXPLAT];
-	for (int i = 0; i < MAXPLAT; i++) {
-		listePlats_[i] = nullptr;
 	}
-
-}
 
 Menu::Menu(string fichier, TypeMenu type)
 {
@@ -22,6 +18,15 @@ Menu::Menu(string fichier, TypeMenu type)
 	lireMenu(fichier, type);
 }
 
+Menu::~Menu() {
+	for (int i = 0; i < MAXPLAT; i++) {
+		delete listePlats_[i];
+		listePlats_[i] = nullptr;
+	}
+
+	delete[] listePlats_;
+	listePlats_ = nullptr;
+}
 int Menu::getNbPlats() const
 {
 	return nbPlats_;
