@@ -15,6 +15,10 @@ Menu::Menu()
 
 Menu::Menu(string fichier, TypeMenu type)
 {
+	nbPlats_ = 0;
+	capacite_ = MAXPLAT;
+	type_ = Matin;
+	listePlats_ = new Plat*[MAXPLAT];
 	lireMenu(fichier, type);
 }
 
@@ -26,12 +30,19 @@ int Menu::getNbPlats() const
 
 void Menu::afficher() const
 {
-
+	for (int i = 0; i < nbPlats_; i++) {
+		listePlats_[i]->afficher();
+	}
 }
 
 Plat* Menu::trouverPlat(string& nom) const
 {
+	for (int i = 0; i < nbPlats_; i++) {
+		if (listePlats_[i]->getNom == nom)
+			return listePlats_[i];
+	}
 
+	return nullptr;
 }
 
 void Menu::ajouterPlat(Plat & plat)
@@ -55,15 +66,16 @@ void Menu::ajouterPlat(string& nom, double montant, double cout)
 bool Menu::lireMenu(const string& fichier,TypeMenu type) 
 {
 	string typeMenu;
+	int nPlats;
 	switch (type) {
 		case Matin: typeMenu = "-MATIN";
-			nbPlats_ = 5;
+			nPlats = 5;
 			break;
 		case Midi: typeMenu = "-MIDI";
-			nbPlats_ = 4;
+			nPlats = 4;
 			break;
 		case Soir: typeMenu = "-SOIR";
-			nbPlats_ = 5;
+			nPlats = 5;
 			break;
 	}
 	ifstream fichierLu(fichier, ios::beg);
@@ -72,7 +84,7 @@ bool Menu::lireMenu(const string& fichier,TypeMenu type)
 		getline(fichierLu, ligneLue);
 		
 	}
-	for (int i = 0; i < nbPlats_; i++_) {
+	for (int i = 0; i < nPlats; i++) {
 		string nomTampon; double prixTampon; double coutTampon;
 		fichierLu >> nomTampon >> prixTampon >> coutTampon;
 		ajouterPlat(nomTampon, prixTampon, coutTampon);
