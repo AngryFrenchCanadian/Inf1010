@@ -5,7 +5,6 @@
 */
 
 #include "Restaurant.h"
-
 using namespace std; 
 
 int main() {
@@ -29,7 +28,6 @@ int main() {
 	//Poulet - Table 4
 	//Muffin - Table 4 
 	//Oeud - Table 4 
-	
 
 	//afficher le restaurant
 	//poly.afficher(); 
