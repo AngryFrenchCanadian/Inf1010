@@ -18,7 +18,8 @@ public:
 	Menu(); 
 	Menu(string fichier, TypeMenu type); 
 
-
+	//destructeur
+	~Menu();
 	//getters
 	int getNbPlats() const; 
 	
