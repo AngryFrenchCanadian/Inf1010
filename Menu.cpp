@@ -111,7 +111,16 @@ void Menu::ajouterPlat(const string& nom, double montant, double cout)
 	else std::cout<< "Erreur, le menu est plein. \n"; // std::cout plutot que double cout
 }
 
-
+/**
+* Cette méthode permet de lire le menu contenu dans un fichier.
+*
+* @param Le nom du fichier contenant le menu.
+* @param Le type de menu sélectionné (matin, midi ou soir).
+*
+* @return Si le fichier du menu a pu être lu.
+*
+* @see méthode ajouterPlat (utilisée).
+*/
 bool Menu::lireMenu(const string& fichier,TypeMenu type) 
 {
 	string typeMenu;
