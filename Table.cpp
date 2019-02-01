@@ -16,12 +16,20 @@ using namespace std;
 		nbPlats_ = 0;
 		id_ = id;
 		nbPlaces_ = nbPlaces;
-		occupee_ = true;
+		occupee_ = false;
 		commande_ = new Plat*[MAXCAP];
 		
 			
 	}
 
+	Table::~Table() {
+		for (unsigned i = 0; i < nbPlats_; i++) {
+			delete commande_[i];
+			commande_[i] = nullptr;
+		}
+		delete[] commande_;
+			
+	}
 	int Table::getId()const {
 		return id_;
 	}
@@ -44,7 +52,7 @@ using namespace std;
 	}
 
 	void Table::placerClient() {
-
+		occupee_ = true;
 	}
 
 	void Table::setId(int id) {
@@ -52,20 +60,35 @@ using namespace std;
 	}
 
 	void Table::commander(Plat* plat) {
-		commande_[nbPlats_++] = new Plat(plat->getNom, plat->getPrix, plat->getCout);
+		commande_[nbPlats_++] = new Plat(plat->getNom(), plat->getPrix(), plat->getCout());
 
 	}
 
 	double Table::getChiffreAffaire() {
 		double chiffreAffaire = 0;
-		for (int i = 0; i < nbPlats_; i++) 
-			chiffreAffaire += (commande_[i]->getPrix - commande_[i]->getCout);
+		for (unsigned i = 0; i < nbPlats_; i++) 
+			chiffreAffaire += (commande_[i]->getPrix() - commande_[i]->getCout());
 		return chiffreAffaire;
 		
 	}
 
 	void Table::afficher()const {
-		for (int i = 0; i < nbPlats_; i++) {
-			commande_[i]->afficher();
+		cout << "	La table numero " << id_ << " est ";
+
+		if (occupee_ == true) {
+			cout << "occupee.";
+			if (nbPlats_ != 0) {
+				cout << " Voici la commande passee par les clients. \n";
+				for (unsigned i = 0; i < nbPlats_; i++) {
+					commande_[i]->afficher();
+				}
+			}
+			else
+				cout << " Mais ils n'ont rien commande pour l'instant. \n";
 		}
+
+		else
+			cout << "libre.\n";
+		//pour le formating
+		cout << "\n";
 	}

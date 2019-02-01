@@ -15,6 +15,8 @@ public:
 	Restaurant(); 
 	Restaurant(string& fichier, string& nom,  TypeMenu moment); 
 
+	//destructeur
+	~Restaurant();
 	//setters 
 	void setMoment(TypeMenu moment); 
 
@@ -23,10 +25,10 @@ public:
 	TypeMenu getMoment()const; 
 
 	//Autres methodes 
-	void lireTable(string& fichier); 
+	void lireTable(const string& fichier); 
 	void ajouterTable(int id, int nbPlaces);
 	void libererTable(int id); 
-	void commanderPlat(string& nom, int idTable);
+	void commanderPlat(const string& nom, int idTable);
 	void placerClients(int nbClients); 
 
 	//affichage 

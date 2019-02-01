@@ -27,9 +27,9 @@ public:
 	void afficher() const; 
 
 	//methodes en plus
-	Plat* trouverPlat(string& nom) const; 
+	Plat* trouverPlat(const string& nom) const; 
 	void ajouterPlat(Plat & plat); 
-	void ajouterPlat(string& nom, double montant, double cout); 
+	void ajouterPlat(const string& nom, double montant, double cout); 
 	bool lireMenu(const string& fichier, TypeMenu type); 
 	
 private : 

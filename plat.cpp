@@ -34,6 +34,6 @@ using namespace std;
 	}
 
 	void Plat::afficher()const {
-		cout << setprecision(5) << nom_ << " - " << prix_ << " $  ("
+		cout << "	" << nom_ << " - " << prix_ << " $  ("
 			<< cout_ << " $ pour le restaurant) \n";
 	}

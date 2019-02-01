@@ -15,6 +15,8 @@ public:
 	Table(); 
 	Table(int id, int nbPlaces);
 
+	//destructeur
+	~Table();
 	//getters 
 	int getId()const; 
 	int getNbPlaces()const; 

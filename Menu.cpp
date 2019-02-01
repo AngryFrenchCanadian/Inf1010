@@ -36,15 +36,15 @@ int Menu::getNbPlats() const
 
 void Menu::afficher() const
 {
-	for (int i = 0; i < nbPlats_; i++) {
+	for (unsigned i = 0; i < nbPlats_; i++) {
 		listePlats_[i]->afficher();
 	}
 }
 
-Plat* Menu::trouverPlat(string& nom) const
+Plat* Menu::trouverPlat(const string& nom) const
 {
-	for (int i = 0; i < nbPlats_; i++) {
-		if (listePlats_[i]->getNom == nom)
+	for (unsigned i = 0; i < nbPlats_; i++) {
+		if (listePlats_[i]->getNom() == nom)
 			return listePlats_[i];
 	}
 
@@ -55,12 +55,12 @@ void Menu::ajouterPlat(Plat & plat)
 {
 	if (nbPlats_ != capacite_) {
 
-		listePlats_[nbPlats_++] = new Plat(plat.getNom, plat.getPrix, plat.getCout);
+		listePlats_[nbPlats_++] = new Plat(plat.getNom(), plat.getPrix(), plat.getCout());
 	}
 	else cout << "Erreur, le menu est plein. \n";
 }
 
-void Menu::ajouterPlat(string& nom, double montant, double cout)
+void Menu::ajouterPlat(const string& nom, double montant, double cout)
 {
 	if (nbPlats_ != capacite_) {
 		listePlats_[nbPlats_++] = new Plat(nom, montant, cout);
@@ -73,6 +73,7 @@ bool Menu::lireMenu(const string& fichier,TypeMenu type)
 {
 	string typeMenu;
 	int nPlats;
+	//permet de determiner le debut et la fin de la lecture
 	switch (type) {
 		case Matin: typeMenu = "-MATIN";
 			nPlats = 5;
@@ -85,15 +86,22 @@ bool Menu::lireMenu(const string& fichier,TypeMenu type)
 			break;
 	}
 	ifstream fichierLu(fichier, ios::beg);
+	if (fichierLu.fail())
+		return false;
 	string ligneLue;
+
+	//positionnement de la tete de lecture
 	while (ligneLue != typeMenu){
 		getline(fichierLu, ligneLue);
 		
 	}
+	//lecture des plats
 	for (int i = 0; i < nPlats; i++) {
 		string nomTampon; double prixTampon; double coutTampon;
 		fichierLu >> nomTampon >> prixTampon >> coutTampon;
 		ajouterPlat(nomTampon, prixTampon, coutTampon);
 	}
-
+	fichierLu.close();
+	
+	return true;
 }
