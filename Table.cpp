@@ -22,14 +22,7 @@ using namespace std;
 			
 	}
 
-	Table::~Table() {
-		for (unsigned i = 0; i < nbPlats_; i++) {
-			delete commande_[i];
-			commande_[i] = nullptr;
-		}
-		delete[] commande_;
-			
-	}
+	
 	int Table::getId()const {
 		return id_;
 	}
@@ -43,12 +36,13 @@ using namespace std;
 	}
 
 	void Table::libererTable() {
-		for (int i = 0; i < MAXCAP; i++) {
+		for (unsigned i = 0; i < nbPlats_; i++) {
 			delete commande_[i];
 			commande_[i] = nullptr;
 		}
 		delete[] commande_;
 		commande_ = nullptr;
+		occupee_ = false;
 	}
 
 	void Table::placerClient() {

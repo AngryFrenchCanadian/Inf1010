@@ -20,7 +20,7 @@ Menu::Menu(string fichier, TypeMenu type)
 
 //desalloue la memoire de la liste de plats
 Menu::~Menu() {
-	for (int i = 0; i < MAXPLAT; i++) {
+	for (int i = 0; i < nbPlats_; i++) {
 		delete listePlats_[i];
 		listePlats_[i] = nullptr;
 	}
