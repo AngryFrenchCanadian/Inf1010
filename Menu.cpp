@@ -1,3 +1,10 @@
+/*
+* Titre : Menu.cpp - Travail Pratique #1
+* Date : 02 Février 2019
+* Auteur : Étienne Bourgoin #1955553
+* Auteur : Manuel Pellerin #1960929
+*/
+
 #include "Menu.h"
 #include "Plat.h"
 

@@ -1,3 +1,10 @@
+/*
+* Titre : restaurant.cpp - Travail Pratique #1
+* Date : 02 Février 2019
+* Auteur : Étienne Bourgoin #1955553
+* Auteur : Manuel Pellerin #1960929
+*/
+
 #include "Restaurant.h"
 
 /**
@@ -104,7 +111,7 @@ void Restaurant::lireTable(const string& fichier) {
 * Cette méthode permet d'ajouter une table au restaurant.
 *
 * @param Le numéro de la table (id).
-* @param Le nombre de places de la table
+* @param Le nombre de places de la table.
 *
 * @see Table.cpp (utilisé).
 */
