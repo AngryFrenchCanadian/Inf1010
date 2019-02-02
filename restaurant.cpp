@@ -1,6 +1,8 @@
 #include "Restaurant.h"
 
-//constructeurs 
+/**
+* Ce constructeur par défaut initialise les attributs de la table aux valeurs par défaut.
+*/
 Restaurant::Restaurant() {
 	nom_ =new string("inconnu");
 	momentJournee_ = Matin;
@@ -11,6 +13,14 @@ Restaurant::Restaurant() {
 	
 	
 }
+
+/**
+* Ce constructeur par paramètres initialise les attributs de la table aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu du restaurant.
+* @param Le nom du restaurant.
+* @param Le moment de la journée.
+*/
 Restaurant::Restaurant(string& fichier, string& nom, TypeMenu moment) {
 	nom_ =new string(nom);
 	momentJournee_ = moment;
@@ -24,7 +34,9 @@ Restaurant::Restaurant(string& fichier, string& nom, TypeMenu moment) {
 	lireTable(fichier);
 }
 
-//destructeur
+/**
+* Ce destructeur détruit le restaurant.
+*/
 Restaurant::~Restaurant() {
 	delete nom_; nom_ = nullptr;
 
@@ -42,20 +54,35 @@ Restaurant::~Restaurant() {
 	menuSoir_->~Menu(); menuSoir_ = nullptr;
 
 }
-//setters 
+
+/**
+* Cette méthode permet de définir le moment de la journée.
+*/
 void Restaurant::setMoment(TypeMenu moment) {
 	momentJournee_ = moment;
 }
 
-//getters 
+/**
+* Cette méthode accède au nom du restaurant.
+*
+* @return Le nom du restaurant.
+*/
 string Restaurant::getNom()const {
 	return *nom_;
 }
+
+/**
+* Cette méthode accède au moment de la journée.
+*
+* @return Le moment de la journée.
+*/
 TypeMenu Restaurant::getMoment()const {
 	return momentJournee_;
 }
 
-//Autres methodes 
+/**
+* Cette méthode permet de lire les informations d'une table dans un fichier.
+*/
 void Restaurant::lireTable(const string& fichier) {
 	string ligneLue;
 	int idTampon; int nbPlacesTampon;
@@ -73,11 +100,22 @@ void Restaurant::lireTable(const string& fichier) {
 	fichierLu.close();
 }
 
+/**
+* Cette méthode permet d'ajouter une table au restaurant.
+*
+* @param Le numéro de la table (id).
+* @param Le nombre de places de la table
+*
+* @see Table.cpp (utilisé).
+*/
 void Restaurant::ajouterTable(int id, int nbPlaces) {
 	tables_[nbTables_++] = new Table(id, nbPlaces);
 }
 
-
+/**
+* Cette méthode permet de libérer la table et d'ajouter le chiffre
+* d'affaire de celle-ci au total du chiffre d'affaire du restaurant. 
+*/
 void Restaurant::libererTable(int id) {
 	 
 	for (unsigned i = 0; i < nbTables_; i++) {
@@ -88,10 +126,21 @@ void Restaurant::libererTable(int id) {
 		}
 	}
 }
+
+/**
+* Cette méthode permet d'ajouter un plat commandé à une table
+* en fonction du moment de la journée.
+*
+* @param Le nom du plat.
+* @param Le numéro de la table (id).
+*
+* @see Méthode trouverPlat dans Menu.cpp (utilisée).
+* @see Méthode commander dans Table.cpp (utilisée).
+*/
 void Restaurant::commanderPlat(const string& nom, int idTable) {
 	Plat* ptrPlatTampon;
 
-	//cherche le plat dans le menu approprie. ptrPlatTampon = nullptr si le plat est invalide
+	//cherche le plat dans le menu approprié. ptrPlatTampon = nullptr si le plat est invalide.
 	switch (momentJournee_) {
 	case Matin: ptrPlatTampon = menuMatin_->trouverPlat(nom);
 		break;
@@ -101,9 +150,8 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 		break;
 	}
 
-
 	for (unsigned i = 0; i < nbTables_; i++) {
-		//verifie que la table est occuppee et que le plat est valide
+		//verifie que le numéro de la table (idTable) est le bon et que le plat est valide
 		if (tables_[i]->getId() == idTable && ptrPlatTampon != nullptr) {
 			tables_[i]->commander(ptrPlatTampon);
 			return;
@@ -113,6 +161,10 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 	cout << "Erreur : table non occupee ou plat introuvable \n";
 }
 
+/**
+* Cette méthode permet de placer les clients à la table disponible ayant
+* le moins de places tout en ayant assez de places pour le nombre de clients.
+*/
 void Restaurant::placerClients(int nbClients) {
 	int indexTailleOptimale = 0;
 	int minSiegesExtra = 100; // grand nombre arbitrairement choisi
@@ -126,6 +178,7 @@ void Restaurant::placerClients(int nbClients) {
 				minSiegesExtra = (tables_[i]->getNbPlaces() - nbClients);
 				indexTailleOptimale = i;
 				isMatched = true;
+
 			}
 		}
 	}
@@ -135,7 +188,11 @@ void Restaurant::placerClients(int nbClients) {
 	else
 		cout << "Erreur : Il n'y a plus/pas de place disponible pour le client\n";
 }
-//affichage 
+
+/**
+* Cette méthode permet d'afficher le chiffre d'affaire du restaurant,
+* les tables du restaurant et son menu.
+*/
 void Restaurant::afficher()const {
 
 	//affichage chiffre d'affaire
@@ -149,7 +206,7 @@ void Restaurant::afficher()const {
 	}
 
 	//affichage des tables
-	cout << "Voice les tables : \n";
+	cout << "Voici les tables : \n";
 	for (unsigned i = 0; i < nbTables_; i++) 
 		tables_[i]->afficher();
 			
