@@ -6,8 +6,8 @@
 
 
 /*
-	Question1: Il s'agit d'une agregation puisque l'on peut detruire menu sans detruire plat.
-	Question2: Une moethode constante ne peut modifier les attributs.
+	Question1: Il s'agit d'une composition puisque plat est detruit lorsque menu est detruit.
+	Question2: Une methode constante ne peut modifier les attributs.
 */
 #include "Restaurant.h"
 using namespace std; 

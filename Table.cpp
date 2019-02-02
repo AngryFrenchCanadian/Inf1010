@@ -38,17 +38,6 @@ Table::Table(int id, int nbPlaces) {
 			
 }
 
-/**
-* Ce destructeur détruit les commandes passées à la table.
-*/
-Table::~Table() {
-	for (unsigned i = 0; i < nbPlats_; i++) {
-		delete commande_[i];
-		commande_[i] = nullptr;
-	}
-	delete[] commande_;
-			
-}
 
 /**
 * Cette méthode accède au numero de la table (id).
@@ -69,6 +58,19 @@ int Table::getNbPlaces()const {
 }
 
 /**
+* Cette méthode efface les commandes passées à la table.
+*/
+	void Table::libererTable() {
+		for (unsigned i = 0; i < nbPlats_; i++) {
+			delete commande_[i];
+			commande_[i] = nullptr;
+		}
+		delete[] commande_;
+		commande_ = nullptr;
+		occupee_ = false;
+	}
+
+/**
 * Cette méthode accède au booléen qui permet de savoir si la table est occupée par des clients.
 *
 * @return Si la table est occupée par des clients.
@@ -77,17 +79,6 @@ bool Table::estOccupee()const {
 	return occupee_;
 }
 
-/**
-* Cette méthode efface les commandes passées à la table.
-*/
-void Table::libererTable() {
-	for (int i = 0; i < MAXCAP; i++) {
-		delete commande_[i];
-		commande_[i] = nullptr;
-	}
-	delete[] commande_;
-	commande_ = nullptr;
-}
 
 /**
 * Cette méthode permet de placer un client à une table et la rendre occupée.

@@ -38,7 +38,7 @@ Menu::Menu(string fichier, TypeMenu type)
 * Ce destructeur réinitialise le menu à la valeur nulle.
 */
 Menu::~Menu() {
-	for (int i = 0; i < MAXPLAT; i++) {
+	for (unsigned i = 0; i < nbPlats_; i++) {
 		delete listePlats_[i];
 		listePlats_[i] = nullptr;
 	}

@@ -49,7 +49,7 @@ Restaurant::~Restaurant() {
 
 	//delete tables
 	for (unsigned i = 0; i < nbTables_; i++) {
-		tables_[i]->~Table();
+		delete tables_[i];
 	}
 	delete[] tables_;
 	tables_ = nullptr;
@@ -124,13 +124,12 @@ void Restaurant::ajouterTable(int id, int nbPlaces) {
 * d'affaire de celle-ci au total du chiffre d'affaire du restaurant. 
 */
 void Restaurant::libererTable(int id) {
-	Table* pointeurTampon;
+	 
 	for (unsigned i = 0; i < nbTables_; i++) {
 		if (tables_[i]->getId() == id) {
 			chiffreAffaire_ += tables_[i]->getChiffreAffaire();
-			pointeurTampon = tables_[i];
-			tables_[i] = new Table(pointeurTampon->getId(),pointeurTampon->getNbPlaces());
-			delete pointeurTampon; pointeurTampon = nullptr;
+			tables_[i]->libererTable();
+			return;
 		}
 	}
 }
@@ -162,6 +161,7 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 		//verifie que le numéro de la table (idTable) est le bon et que le plat est valide
 		if (tables_[i]->getId() == idTable && ptrPlatTampon != nullptr) {
 			tables_[i]->commander(ptrPlatTampon);
+			return;
 		}
 		
 	}
@@ -173,14 +173,27 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 * le moins de places tout en ayant assez de places pour le nombre de clients.
 */
 void Restaurant::placerClients(int nbClients) {
+	int indexTailleOptimale = 0;
+	int minSiegesExtra = 100; // grand nombre arbitrairement choisi
+	bool isMatched = false;
+
 	for (unsigned i = 0; i < nbTables_; i++) {
 		//verifie que la table est libre et que le nb de places soit suffisant
 		if (tables_[i]->estOccupee() == false && tables_[i]->getNbPlaces() >= nbClients) {
-			tables_[i]->placerClient();
-			return;
+			//determine l'index de la table la plus appropriee pour le nb de clients
+			if ((tables_[i]->getNbPlaces() - nbClients) < minSiegesExtra) {
+				minSiegesExtra = (tables_[i]->getNbPlaces() - nbClients);
+				indexTailleOptimale = i;
+				isMatched = true;
+
+			}
 		}
 	}
-	cout << "Erreur : Il n'y a plus/pas de place disponible pour le client\n";
+
+	if (isMatched)
+		tables_[indexTailleOptimale]->placerClient();
+	else
+		cout << "Erreur : Il n'y a plus/pas de place disponible pour le client\n";
 }
 
 /**
