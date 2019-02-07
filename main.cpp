@@ -1,7 +1,9 @@
 /*
-* Titre : main.cpp - Travail Pratique #1
-* Date : 09 Janvier 2019 
-* Auteur : David Dratwa
+* Titre : Table.cpp - Travail Pratique #1
+* Date : 02 Février 2019
+* Auteur : Étienne Bourgoin #1955553
+* Auteur : Manuel Pellerin #1960929
+* ce fichier effectue les instructions demandées dans le tp1 du cours INF1010 (H2019)
 */
 
 
