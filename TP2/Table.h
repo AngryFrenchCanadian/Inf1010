@@ -8,6 +8,7 @@
 #define TABLE_H
 
 #include "Plat.h"
+#include <vector>;
 const  int MAXCAP = 5;
 class Table {
 public:
@@ -15,8 +16,7 @@ public:
 	Table();
 	Table(int id, int nbPlaces);
 
-	///destructeur
-	~Table();
+
 
 	///getters
 	int getId() const;
@@ -26,24 +26,24 @@ public:
 	bool estOccupee() const;
 
 	///setters
-	void libererTable(); // A MODIFIER
+	void libererTable(); 
 	void placerClient(int nbClients);
 	void setId(int id);
 
 	///autres methodes
-	void commander(Plat* plat); // A MODIFIER
+	void commander(Plat* plat); 
 	double getChiffreAffaire() const;
 
 	///affichage
-	void afficher() const; //A MODIFIER
+	friend ostream& operator<<(ostream& o, const Table& table);
 
 private :
 	//A MODIFIER
-	int capacite_;
-	Plat** commande_;
-	int nbPlats_;
+	vector <Plat*> commande_;
 	int id_;
 	int nbPlaces_;
 	int nbClientsATable_;
 };
+
+ostream& operator<<(ostream& o, const Table& table);
 #endif // !TABLE_H

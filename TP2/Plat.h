@@ -28,7 +28,8 @@ public:
 	void setPrix(double prix);
 
 	///methodes en plus
-	void afficher() const; // A MODIFIER
+	friend ostream& operator<<(ostream& o, const Plat& plat);
+	bool operator<(const Plat& plat);
 
 private:
 	string nom_;
@@ -36,5 +37,8 @@ private:
 	double cout_;
 
 };
+
+
+ostream& operator<<(ostream& o, const Plat& plat);
 
 #endif // !PLAT_H

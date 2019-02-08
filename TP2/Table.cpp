@@ -8,28 +8,18 @@
 
 //constructeurs
 Table::Table() {
-	capacite_ = MAXCAP;
-	commande_ = new Plat*[MAXCAP];
-	nbPlats_ = 0;
 	id_ = -1;
 	nbPlaces_ = 1;
 	nbClientsATable_ = 0;
 }
 
 Table::Table(int id, int nbPlaces) {
-	capacite_ = MAXCAP;
-	commande_ = new Plat*[capacite_];
-	nbPlats_ = 0;
 	id_ = id;
 	nbPlaces_ = nbPlaces;
 	nbClientsATable_ = 0;
 }
 
-//destructeur
-Table::~Table() {
-	//A MODIFIER
-	delete[] commande_;
-}
+
 
 //getters
 int Table::getId() const {
@@ -63,10 +53,11 @@ void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
 	//A MODIFIER
-	for (int i = 0; i < nbPlats_; i++) {
-		commande_[i] = nullptr;
+	for (int i = 0; i < commande_.size(); i++) {
+		delete commande_[i];
 	}
-	nbPlats_ = 0;
+	commande_.clear();
+
 }
 
 void Table::placerClient(int nbClients) {
@@ -76,46 +67,33 @@ void Table::placerClient(int nbClients) {
 
 //autres methodes
 void Table::commander(Plat* plat) {
-	// A MODIFIER
-	if (nbPlats_ == capacite_) {
-		capacite_ *= 2;
-		Plat** temp = new Plat*[capacite_];
-		for (int i = 0; i < nbPlats_; i++) {
-			temp[i] = commande_[i];
-		}
-
-		delete[] commande_;
-		commande_ = temp;
-	}
-
-	commande_[nbPlats_] = plat;
-	nbPlats_++;
+	commande_.push_back(plat);
 }
 
 double Table::getChiffreAffaire() const {
 	double chiffre = 0;
-	for (int i = 0; i < nbPlats_; i++) {
+	for (int i = 0; i < commande_.size(); i++) {
 		chiffre += (commande_[i]->getPrix() - commande_[i]->getCout());
 	}
 	return chiffre;
 }
-
 //affichage
-void Table::afficher() const {
-	cout << "La table numero " << id_;
-	if (estOccupee()) {
-		cout << " est occupee. ";
-		if (nbPlats_ != 0) {
-			cout << "Voici la commande passee par les clients : " << endl;
-			for (int i = 0; i < nbPlats_; i++) {
-				cout << "\t";
-				commande_[i]->afficher();
+ostream& operator<<(ostream& o, const Table& table) {
+	o << "La table numero " << table.id_;
+	if (table.estOccupee()) {
+		o << " est occupee. :";
+		if (table.commande_.size() != 0) {
+			o << "Voice la commande passee par les clients : \n";
+			for (int i = 0; i < table.commande_.size(); i++) {
+				o << "\t" << *table.commande_[i];
 			}
+
 		}
 		else
-			cout << "Mais ils n'ont rien conmmande pour l'instant. " << endl;
+			o << "Mais ils n'ont riend commande pour l'instant. \n";
 	}
-	else {
-		cout << " est libre. " << endl;
-	}
+	else
+		o << "est libre. \n";
 }
+
+

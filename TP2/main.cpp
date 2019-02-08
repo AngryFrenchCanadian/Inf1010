@@ -67,5 +67,4 @@ int main() {
 	// Le restaurant Poly2 doit maintenant avoir toutes ses tables libérées
 	cout << poly2;
 
-	system("pause"); 
 }
