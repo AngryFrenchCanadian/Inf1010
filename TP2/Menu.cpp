@@ -9,16 +9,11 @@
 //constructeurs
 
 Menu::Menu() {
-	capacite_ = MAXPLAT;
-	listePlats_ = new Plat*[capacite_];
-	nbPlats_ = 0;
 	type_ = Matin;
 }
 
 Menu::Menu(string fichier, TypeMenu type) {
-	capacite_ = MAXPLAT;
-	listePlats_ = new Plat*[capacite_];
-	nbPlats_ = 0;
+	
 	type_ = type;
 
 	//lecture du fichier -- creation du menu
@@ -28,52 +23,28 @@ Menu::Menu(string fichier, TypeMenu type) {
 //destructeur
 Menu::~Menu() {
 	// A MODIFIER
-	for (int i = 0; i < nbPlats_; i++)
+	for (int i = 0; i < listePlats_.size(); i++)
 		delete listePlats_[i];
-	delete[] listePlats_;
+	listePlats_.clear();
 }
 
 //getters
 
 int Menu::getNbPlats() const {
-	return nbPlats_;
+	return listePlats_.size();
 }
 
 //autres methodes
 
-void Menu::afficher() const {
-
-	for (int i = 0; i < nbPlats_; i++) {
-		cout << "\t";
-		listePlats_[i]->afficher();
-
+ostream& operator<<(ostream& o, const Menu& menu) {
+	for (int i = 0; i < menu.listePlats_.size(); i++) {
+		o << "\t" << menu.listePlats_[i];
 	}
 }
 
+
 void Menu::ajouterPlat(const Plat &  plat) {
-	// A MODIFIER
-	if (nbPlats_ == capacite_) {
-		if (capacite_ == 0) {
-			capacite_ = 1;
-			delete[] listePlats_;
-			listePlats_ = new Plat*[1];
-
-		}
-		else {
-			capacite_ *= 2;
-			Plat** listeTemp = new Plat*[capacite_];
-			for (int i = 0; i < nbPlats_; i++) {
-				listeTemp[i] = listePlats_[i];
-			}
-
-			delete[] listePlats_;
-			listePlats_ = listeTemp;
-
-		}
-	}
-
-	listePlats_[nbPlats_] = new Plat(plat);
-	nbPlats_++;
+	listePlats_.push_back(new Plat(plat));
 }
 
 
@@ -180,7 +151,7 @@ Plat * Menu::trouverPlatMoinsCher() const
 }
 
 Plat* Menu::trouverPlat(const string& nom) const {
-	for (int i = 0; i < nbPlats_; i++) {
+	for (int i = 0; i < listePlats_.size(); i++) {
 		if (listePlats_[i]->getNom() == nom)
 			return listePlats_[i];
 	}
