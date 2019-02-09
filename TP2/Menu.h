@@ -25,7 +25,7 @@ public:
 	int getNbPlats() const;
 
 	//affichage
-	void afficher() const; //A MODIFIER
+	
 
 	//methodes en plus
 	Plat* trouverPlat(const string& nom) const; // A MODIFIER
@@ -33,6 +33,7 @@ public:
 	void ajouterPlat(const Plat & plat); // A MODIFIER
 	bool lireMenu(const string& fichier);
 	friend ostream& operator<<(ostream& o, const Menu& menu);
+
 
 private :
 	// A MODIFIER

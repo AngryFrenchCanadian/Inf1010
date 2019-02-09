@@ -52,7 +52,7 @@ void Table::setId(int id) {
 void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
-	//A MODIFIER
+	
 	for (int i = 0; i < commande_.size(); i++) {
 		delete commande_[i];
 	}

@@ -42,6 +42,10 @@ ostream& operator<<(ostream& o, const Menu& menu) {
 	}
 }
 
+Menu& Menu::operator+=(const Plat& plat) {
+	listePlats_.push_back(new Plat(plat));
+	return *this;
+}
 
 void Menu::ajouterPlat(const Plat &  plat) {
 	listePlats_.push_back(new Plat(plat));
@@ -157,3 +161,4 @@ Plat* Menu::trouverPlat(const string& nom) const {
 	}
 	return nullptr;
 }
+
