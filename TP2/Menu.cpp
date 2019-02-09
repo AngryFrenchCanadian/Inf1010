@@ -2,16 +2,26 @@
 * Titre : Menu.cpp - Travail Pratique #2
 * Date : 18 Janvier 2019
 * Auteur : Allan BEDDOUK
+* Modifié par : Étienne Bourgoin #1955553 et Manuel Pellerin #1960929
+* Date : 08 février 2019
 */
 
 #include "Menu.h"
 
-//constructeurs
-
+/**
+* Ce constructeur par défaut initialise les attributs du menu aux valeurs par défaut.
+*/
 Menu::Menu() {
+
 	type_ = Matin;
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu.
+* @param Le type du menu contenu dans le fichier sélectionné (matin, midi ou soir).
+*/
 Menu::Menu(string fichier, TypeMenu type) {
 	
 	type_ = type;
@@ -20,31 +30,34 @@ Menu::Menu(string fichier, TypeMenu type) {
 	lireMenu(fichier);
 }
 
+
 Menu::Menu(const Menu& menu):type_(menu.type_),listePlats_(menu.listePlats_)
 {}
 
 
 //destructeur
+
+/**
+* Ce destructeur réinitialise le menu à la valeur nulle.
+*/
+
 Menu::~Menu() {
 	// A MODIFIER
-	for (int i = 0; i < listePlats_.size(); i++)
+	for (int i = 0; i < listePlats_.size(); i++) {
 		delete listePlats_[i];
-	listePlats_.clear();
+		listePlats_[i] = nullptr;
+	}
+	
 }
 
-//getters
-
-int Menu::getNbPlats() const {
-	return listePlats_.size();
-}
-
-//autres methodes
 
 ostream& operator<<(ostream& o, const Menu& menu) {
-	for (int i = 0; i < menu.listePlats_.size(); i++) {
-		o << "\t" << menu.listePlats_[i];
+	for (unsigned i = 0; i < menu.listePlats_.size(); i++) {
+		cout << "\t" << menu.listePlats_[i];
 	}
 }
+
+
 
 Menu& Menu::operator+=(const Plat& plat) {
 	listePlats_.push_back(new Plat(plat));
@@ -63,9 +76,6 @@ Menu& Menu::operator=(const Menu& menu) {
 		listePlats_ = menu.listePlats_;
 	}
 	return *this;
-}
-void Menu::ajouterPlat(const Plat &  plat) {
-	listePlats_.push_back(new Plat(plat));
 }
 
 
@@ -101,7 +111,7 @@ bool Menu::lireMenu(const string& fichier) {
 
 
 		// lecture
-		while (!file.eof()) {
+		while(!file.eof()) {
 			getline(file, ligne);
 			//trouver le bon type de menu (section)
 			if (ligne == type){
@@ -138,7 +148,7 @@ bool Menu::lireMenu(const string& fichier) {
 
 					cout =int( stof(coutString.c_str()));
 
-					ajouterPlat( Plat(nom, prix, cout));
+					*this+= Plat(nom, prix, cout);   // POSSIBLEMENT PROBLEMATIQUE - MANU
 					nom = "";
 					prixString = "";
 					coutString = "";

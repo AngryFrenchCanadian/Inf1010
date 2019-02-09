@@ -17,14 +17,13 @@ public:
 	// constructeurs
 	Menu();
 	Menu(string fichier, TypeMenu type);
-
+	Menu(const Menu& menu);
 	//destructeur
 	~Menu();
 
 	//getters
 	int getNbPlats() const;
 
-	//affichage
 	
 
 	//methodes en plus
@@ -33,7 +32,8 @@ public:
 	void ajouterPlat(const Plat & plat); // A MODIFIER
 	bool lireMenu(const string& fichier);
 	friend ostream& operator<<(ostream& o, const Menu& menu);
-
+	Menu& operator+=(const Plat& plat);
+	Menu& operator=(const Menu& menu);
 
 private :
 	// A MODIFIER
