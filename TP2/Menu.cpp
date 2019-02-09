@@ -20,6 +20,10 @@ Menu::Menu(string fichier, TypeMenu type) {
 	lireMenu(fichier);
 }
 
+Menu::Menu(const Menu& menu):type_(menu.type_),listePlats_(menu.listePlats_)
+{}
+
+
 //destructeur
 Menu::~Menu() {
 	// A MODIFIER
@@ -47,6 +51,19 @@ Menu& Menu::operator+=(const Plat& plat) {
 	return *this;
 }
 
+Menu& Menu::operator=(const Menu& menu) {
+	if (this != &menu) {
+		for (unsigned i = 0; i < listePlats_.size(); i++) {
+			delete listePlats_[i];
+			listePlats_[i] = nullptr;
+		}
+		listePlats_.clear();
+
+		type_ = menu.type_;
+		listePlats_ = menu.listePlats_;
+	}
+	return *this;
+}
 void Menu::ajouterPlat(const Plat &  plat) {
 	listePlats_.push_back(new Plat(plat));
 }

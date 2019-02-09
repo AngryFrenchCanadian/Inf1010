@@ -8,8 +8,7 @@
 #define TABLE_H
 
 #include "Plat.h"
-#include <vector>;
-const  int MAXCAP = 5;
+
 class Table {
 public:
 	///constructeurs

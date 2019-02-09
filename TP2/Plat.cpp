@@ -47,8 +47,8 @@ ostream& operator<<(ostream& o, const Plat& plat) {
 		<< " $ (" << plat.getCout() << "$ pour le restaurant )";
 	return o;
 }
-bool Plat::operator<(const Plat& plat) {
-	if (prix_ < plat.getPrix())
+bool operator<(const Plat& plat1, const Plat& plat2) {
+	if (plat1.getPrix() < plat2.getPrix())
 		return true;
 	else
 		return false;

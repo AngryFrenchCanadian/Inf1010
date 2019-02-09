@@ -9,9 +9,9 @@
 
 #include <string>
 #include <iostream>
-
+#include <vector>
 using namespace std;
-
+const int MAXPLAT = 5;
 class Plat {
 public:
 	/// constructeurs
@@ -29,7 +29,7 @@ public:
 
 	///methodes en plus
 	friend ostream& operator<<(ostream& o, const Plat& plat);
-	bool operator<(const Plat& plat);
+	friend bool operator<(const Plat& plat1,const Plat& plat2);
 
 private:
 	string nom_;
@@ -38,7 +38,8 @@ private:
 
 };
 
-
 ostream& operator<<(ostream& o, const Plat& plat);
+bool operator<(const Plat& plat1, const Plat& plat2);
+
 
 #endif // !PLAT_H
