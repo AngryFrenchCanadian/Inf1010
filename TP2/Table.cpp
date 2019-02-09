@@ -80,16 +80,19 @@ bool Table::estOccupee() const
 
 /**
 * Cette méthode permet de créer le numéro d'une table (id).
+*
+* @param Le numéro de la table.
 */
 void Table::setId(int id) {
 	id_ = id;
 }
 
-
+/**
+* Cette méthode libère la table et efface les commandes passées à celle-ci.
+*/
 void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
-	//A MODIFIER
 	for (int i = 0; i < commande_.size(); i++) {
 		delete commande_[i];
 	}
@@ -99,17 +102,28 @@ void Table::libererTable() {
 
 /**
 * Cette méthode permet de placer un client à une table et la rendre occupée.
+*
+* @param Le nombre de clients placés à la table.
 */
 void Table::placerClient(int nbClients) {
 	nbClientsATable_ = nbClients;
 	nbPlaces_ -= nbClients;
 }
 
-//autres methodes
+/**
+* Cette méthode permet d'ajouter un plat à la commande d'une table.
+*
+* @param Le plat à ajouter.
+*/
 void Table::commander(Plat* plat) {
 	commande_.push_back(plat);
 }
 
+/**
+* Cette méthode permet de calculer le chiffre d'affaire des commandes d'une table.
+*
+* @return Le chiffre d'affaire des commandes d'une table.
+*/
 double Table::getChiffreAffaire() const {
 	double chiffre = 0;
 	for (int i = 0; i < commande_.size(); i++) {
@@ -117,7 +131,16 @@ double Table::getChiffreAffaire() const {
 	}
 	return chiffre;
 }
-//affichage
+
+/**
+* Cette méthode permet d'afficher l'état d'une table et d'afficher les plats qui ont été
+* commandés pour celle-ci.
+*
+* @param Le paramètre en sortie.
+* @param La table à afficher.
+*
+* @return La sortie
+*/
 ostream& operator<<(ostream& o, const Table& table) {
 	o << "La table numero " << table.id_;
 	if (table.estOccupee()) {
@@ -130,10 +153,12 @@ ostream& operator<<(ostream& o, const Table& table) {
 
 		}
 		else
-			o << "Mais ils n'ont riend commande pour l'instant. \n";
+			o << "Mais ils n'ont rien commande pour l'instant. \n";
 	}
 	else
 		o << "est libre. \n";
+	
+	return o;
 }
 
 

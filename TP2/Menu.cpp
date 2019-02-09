@@ -2,49 +2,89 @@
 * Titre : Menu.cpp - Travail Pratique #2
 * Date : 18 Janvier 2019
 * Auteur : Allan BEDDOUK
+* Modifié par : Étienne Bourgoin #1955553 et Manuel Pellerin #1960929
+* Date : 08 février 2019
 */
 
 #include "Menu.h"
 
-//constructeurs
-
+/**
+* Ce constructeur par défaut initialise les attributs du menu aux valeurs par défaut.
+*/
 Menu::Menu() {
+	capacite_ = MAXPLAT;
+	listePlats_ = new Plat*[capacite_];
+	nbPlats_ = 0;
 	type_ = Matin;
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu.
+* @param Le type du menu contenu dans le fichier sélectionné (matin, midi ou soir).
+*/
 Menu::Menu(string fichier, TypeMenu type) {
-	
+	capacite_ = MAXPLAT;
+	listePlats_ = new Plat*[capacite_];
+	nbPlats_ = 0;
 	type_ = type;
 
 	//lecture du fichier -- creation du menu
 	lireMenu(fichier);
 }
 
-//destructeur
+/**
+* Ce destructeur réinitialise le menu à la valeur nulle.
+*/
 Menu::~Menu() {
 	// A MODIFIER
-	for (int i = 0; i < listePlats_.size(); i++)
+	for (int i = 0; i < nbPlats_; i++)
 		delete listePlats_[i];
-	listePlats_.clear();
+	delete[] listePlats_;
 }
 
 //getters
 
 int Menu::getNbPlats() const {
-	return listePlats_.size();
+	return nbPlats_;
 }
 
 //autres methodes
 
-ostream& operator<<(ostream& o, const Menu& menu) {
-	for (int i = 0; i < menu.listePlats_.size(); i++) {
-		o << "\t" << menu.listePlats_[i];
+void Menu::afficher() const {
+
+	for (int i = 0; i < nbPlats_; i++) {
+		cout << "\t";
+		listePlats_[i]->afficher();
+
 	}
 }
 
-
 void Menu::ajouterPlat(const Plat &  plat) {
-	listePlats_.push_back(new Plat(plat));
+	// A MODIFIER
+	if (nbPlats_ == capacite_) {
+		if (capacite_ == 0) {
+			capacite_ = 1;
+			delete[] listePlats_;
+			listePlats_ = new Plat*[1];
+
+		}
+		else {
+			capacite_ *= 2;
+			Plat** listeTemp = new Plat*[capacite_];
+			for (int i = 0; i < nbPlats_; i++) {
+				listeTemp[i] = listePlats_[i];
+			}
+
+			delete[] listePlats_;
+			listePlats_ = listeTemp;
+
+		}
+	}
+
+	listePlats_[nbPlats_] = new Plat(plat);
+	nbPlats_++;
 }
 
 
@@ -151,7 +191,7 @@ Plat * Menu::trouverPlatMoinsCher() const
 }
 
 Plat* Menu::trouverPlat(const string& nom) const {
-	for (int i = 0; i < listePlats_.size(); i++) {
+	for (int i = 0; i < nbPlats_; i++) {
 		if (listePlats_[i]->getNom() == nom)
 			return listePlats_[i];
 	}
