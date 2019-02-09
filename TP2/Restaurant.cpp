@@ -62,6 +62,10 @@ Restaurant::~Restaurant() {
 void Restaurant::setMoment(TypeMenu moment) {
 	momentJournee_ = moment;
 }
+
+void Restaurant::setNom(const string& nom) {
+	*nom_ = nom;
+}
 //getters
 string Restaurant::getNom() const {
 	return *nom_;

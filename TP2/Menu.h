@@ -32,14 +32,14 @@ public:
 	Plat * trouverPlatMoinsCher() const; // Utilise les vecteurs (NE PAS MODIFIER)
 	void ajouterPlat(const Plat & plat); // A MODIFIER
 	bool lireMenu(const string& fichier);
+	friend ostream& operator<<(ostream& o, const Menu& menu);
 
 private :
 	// A MODIFIER
-	int capacite_;
-	Plat** listePlats_;
-	int nbPlats_;
+	vector <Plat*> listePlats_;
 	TypeMenu type_;
 
 };
 
+ostream& operator<<(ostream& o, const Menu& menu);
 #endif // !MENU_H
