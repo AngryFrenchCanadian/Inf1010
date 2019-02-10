@@ -35,6 +35,7 @@ public:
 
 	void placerClients(int nbClients);
 
+	friend ostream& operator<<(ostream& o, const Restaurant& resto);
 private:
 	string* nom_;
 
@@ -53,4 +54,6 @@ private:
 	vector <Table*> tables_;
 	
 };
+
+ostream& operator<<(ostream& o, const Plat& plat);
 #endif // !RESTAURANT_H
