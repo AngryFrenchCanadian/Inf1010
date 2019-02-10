@@ -6,7 +6,9 @@
 
 #include "Restaurant.h"
 
-//constructeurs
+/**
+* Ce constructeur par défaut initialise les attributs du restaurant aux valeurs par défaut.
+*/
 Restaurant::Restaurant() {
 	nom_ = new string("Inconnu");
 
@@ -24,6 +26,13 @@ Restaurant::Restaurant() {
 
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du restaurant aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu du restaurant par référence.
+* @param Le nom du restaurant par référence.
+* @param Le moment de la journée.
+*/
 Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu moment) {
 	nom_ = new string(nom);
 
@@ -39,7 +48,10 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	
 	lireTable(fichier);
 }
-//destructeur
+
+/**
+* Ce destructeur détruit le restaurant.
+*/
 Restaurant::~Restaurant() {
 	delete nom_;
 	delete menuMatin_;
@@ -51,28 +63,48 @@ Restaurant::~Restaurant() {
 	tables_.clear();
 }
 
-
-//setter
-
+/**
+* Cette méthode permet de définir le moment de la journée.
+*
+* @param Le moment de la journée.
+*/
 void Restaurant::setMoment(TypeMenu moment) {
 	momentJournee_ = moment;
 }
 
+/**
+* Cette méthode permet de définir le nom du restaurant.
+*
+* @param Le nom du restaurant par référence.
+*/
 void Restaurant::setNom(const string& nom) {
 	*nom_ = nom;
 }
-//getters
+
+/**
+* Cette méthode accède au nom du restaurant.
+*
+* @return Le pointeur vers le nom du restaurant.
+*/
 string Restaurant::getNom() const {
 	return *nom_;
 }
 
+/**
+* Cette méthode accède au moment de la journée.
+*
+* @return Le moment de la journée.
+*/
 TypeMenu Restaurant::getMoment() const {
 	return momentJournee_;
 }
 
-//autres methodes
-
-
+/**
+* Cette méthode permet de libérer la table et d'ajouter le chiffre
+* d'affaire de celle-ci au total du chiffre d'affaire du restaurant.
+*
+* @param Le numéro de la table(id).
+*/
 void Restaurant::libererTable(int id) {
 	for (int i = 0; i < tables_.size(); i++) {
 		if (id == tables_[i]->getId()) {
@@ -82,7 +114,14 @@ void Restaurant::libererTable(int id) {
 	}
 }
 
-
+/**
+* Cette méthode permet d'afficher le chiffre d'affaire du restaurant, ses tables et son menu.
+*
+* @param Le paramètre en sortie.
+* @param Le restaurant à afficher par référence.
+*
+* @return La sortie.
+*/
 ostream& operator<<(ostream& o, const Restaurant& resto){
 	cout << "Le restaurant " << *resto.nom_;
 	if (resto.chiffreAffaire_ != 0)
@@ -103,6 +142,16 @@ ostream& operator<<(ostream& o, const Restaurant& resto){
 	cout << "Soir : " << endl << resto.menuSoir_;
 }
 
+/**
+* Cette méthode permet d'ajouter un plat commandé à une table
+* en fonction du moment de la journée.
+*
+* @param Le nom du plat en référence.
+* @param Le numéro de la table (id).
+*
+* @see Méthode trouverPlat dans Menu.cpp (utilisée).
+* @see Méthode commander dans Table.cpp (utilisée).
+*/
 void Restaurant::commanderPlat(const string& nom, int idTable) {
 	Plat* plat = nullptr;
 	int index;
@@ -128,6 +177,11 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 	else cout << "Erreur : table non occupee ou plat introuvable" << endl;
 }
 
+/**
+* Cette méthode permet de lire les informations d'une table dans un fichier.
+*
+* @param Le fichier contenant une table du restaurant par référence.
+*/
 void Restaurant::lireTable(const string& fichier) {
 	ifstream file(fichier, ios::in);
 
@@ -169,11 +223,26 @@ void Restaurant::lireTable(const string& fichier) {
 	}
 }
 
+/**
+* Cette méthode permet d'ajouter une table au restaurant.
+*
+* @param Le fichier contenant une table du restaurant par référence.
+*
+* @return Le restaurant avec la table ajoutée.
+*/
 Restaurant& Restaurant::operator+=(const Table& table) {
 	tables_.push_back(new Table(table));
 	return *this;
 }
 
+/**
+* Cette méthode permet de comparer les chiffres d'affaire de deux restaurants.
+*
+* @param Le restaurant 1 par référence.
+* @param Le restaurant 2 par référence.
+*
+* @return Si le chiffre d'affaire du restaurant 1 est plus grand que celui du 2.
+*/
 bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
 	if (resto1.chiffreAffaire_ < resto2.chiffreAffaire_)
 		return true;
@@ -181,9 +250,23 @@ bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
 		return false;
 }
 
+/**
+* Cette méthode permet de mettre à jour le restaurant.
+*
+* @param Les informations du restaurant par référence.
+*
+* @return Le restaurant mis à jour.
+*/
 Restaurant& Restaurant::operator=(const Restaurant& resto) {
 
 }
+
+/**
+* Cette méthode permet de placer les clients à la table disponible ayant
+* le moins de places tout en ayant assez de places pour le nombre de clients.
+*
+* @param Le nombre de clients à placer.
+*/
 void Restaurant::placerClients(int nbClients) {
 	int indexTable = -1;
 	int minimum = 100;
