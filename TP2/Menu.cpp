@@ -47,6 +47,7 @@ Menu::~Menu() {
 		delete listePlats_[i];
 		listePlats_[i] = nullptr;
 	}
+	listePlats_.clear();
 	
 }
 
@@ -83,7 +84,7 @@ bool Menu::lireMenu(const string& fichier) {
 	ifstream file(fichier, ios::in);
 
 	if (!file) {
-		//cout << "ERREUR : le fichier n'a pas pu etre ouvert" << endl;
+		cout << "ERREUR : le fichier n'a pas pu etre ouvert" << endl;
 		return false;
 	}
 	else {

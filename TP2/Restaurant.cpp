@@ -18,9 +18,8 @@ Restaurant::Restaurant() {
 	menuMidi_ = new Menu("menu.txt", Midi);
 	menuSoir_ = new Menu("menu.txt",  Soir);
 
-	capaciteTables_ = INTTABLES;
-	nbTables_ = 0;
-	tables_ = new Table*[capaciteTables_];
+
+
 
 
 }
@@ -37,10 +36,7 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	menuSoir_ = new Menu(fichier,  Soir);
 
 
-	capaciteTables_ = INTTABLES;
-	nbTables_ = 0;
-	tables_ = new Table*[capaciteTables_];
-
+	
 	lireTable(fichier);
 }
 //destructeur
@@ -51,9 +47,9 @@ Restaurant::~Restaurant() {
 	delete menuSoir_;
 
 	//A MODIFIER
-	for (int i = 0; i < nbTables_; i++)
+	for (int i = 0; i <tables_.size() ; i++)
 		delete tables_[i];
-	delete[] tables_;
+	tables_.clear();
 }
 
 
@@ -79,41 +75,39 @@ TypeMenu Restaurant::getMoment() const {
 
 
 void Restaurant::libererTable(int id) {
-	for (int i = 0; i < nbTables_; i++) {
+	for (int i = 0; i < tables_.size(); i++) {
 		if (id == tables_[i]->getId()) {
 			chiffreAffaire_ += tables_[i]->getChiffreAffaire();
 			tables_[i]->libererTable();
 		}
 	}
 }
-void Restaurant::afficher() const {
-	cout << "Le restaurant " << *nom_;
-	if (chiffreAffaire_ != 0)
-		cout << " a fait un chiffre d'affaire de : " << chiffreAffaire_ << "$" << endl;
+
+
+ostream& operator<<(ostream& o, const Restaurant& resto){
+	cout << "Le restaurant " << *resto.nom_;
+	if (resto.chiffreAffaire_ != 0)
+		cout << " a fait un chiffre d'affaire de : " << resto.chiffreAffaire_ << "$" << endl;
 	else
 		cout << " n'a pas fait de benefice ou le chiffre n'est pas encore calcule." << endl;
 	cout << "-Voici les tables : " << endl;
-	for (int i = 0; i < nbTables_; i++) {
-		cout << "\t";
-		tables_[i]->afficher();
-		cout << endl;
+	for (int i = 0; i < resto.tables_.size(); i++) {
+		cout << "\t" << resto.tables_[i] << endl;
+		
 	}
 	cout << endl;
 
 
 	cout << "-Voici son menu : " << endl;
-	cout << "Matin : " << endl;
-	menuMatin_->afficher();
-	cout << "Midi : " << endl;
-	menuMidi_->afficher();
-	cout << "Soir : " << endl;
-	menuSoir_->afficher();
+	cout << "Matin : " << endl <<resto.menuMatin_;
+	cout << "Midi : " << endl << resto.menuMidi_;
+	cout << "Soir : " << endl << resto.menuSoir_;
 }
 
 void Restaurant::commanderPlat(const string& nom, int idTable) {
 	Plat* plat = nullptr;
 	int index;
-	for (int i = 0; i < nbTables_; i++) {
+	for (int i = 0; i < tables_.size(); i++) {
 		if (idTable == tables_[i]->getId()) {
 			index = i;
 			switch (momentJournee_) {

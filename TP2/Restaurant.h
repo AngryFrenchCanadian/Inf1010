@@ -46,11 +46,11 @@ private:
 	Menu* menuMidi_;
 	Menu* menuSoir_;
 
-	// A MODIFIER
+	
 
 	//liste des tables
-	int capaciteTables_;
-	Table** tables_;
-	int nbTables_;
+	
+	vector <Table*> tables_;
+	
 };
 #endif // !RESTAURANT_H
