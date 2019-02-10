@@ -31,7 +31,7 @@ Menu::Menu(string fichier, TypeMenu type) {
 }
 
 /**
-* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+* Ce constructeur crée une copie du menu existant.
 *
 * @param Les informations du menu par référence. 
 */
