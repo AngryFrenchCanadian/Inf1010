@@ -15,7 +15,7 @@ public:
 	//constructeurs
 	Restaurant();
 	Restaurant(const string& fichier, const string& nom,  TypeMenu moment);
-
+	Restaurant(const Restaurant& resto);
 	//destructeur
 	~Restaurant();
 

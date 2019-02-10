@@ -35,15 +35,21 @@ Menu::Menu(string fichier, TypeMenu type) {
 *
 * @param Les informations du menu par référence. 
 */
-Menu::Menu(const Menu& menu):type_(menu.type_),listePlats_(menu.listePlats_)
-{}
+Menu::Menu(const Menu& menu) :type_(menu.type_)
+{
+	for (unsigned i = 0; i < menu.listePlats_.size(); i++) {
+		Plat* platTemp = new Plat(menu.listePlats_[i]->getNom(),
+			menu.listePlats_[i]->getPrix(), menu.listePlats_[i]->getCout());
+		listePlats_.push_back(platTemp);
+	}
+}
 
 /**
 * Ce destructeur réinitialise le menu à la valeur nulle.
 */
 Menu::~Menu() {
 	// A MODIFIER
-	for (int i = 0; i < listePlats_.size(); i++) {
+	for (unsigned i = 0; i < listePlats_.size(); i++) {
 		delete listePlats_[i];
 		listePlats_[i] = nullptr;
 	}
@@ -62,7 +68,7 @@ Menu::~Menu() {
 */
 ostream& operator<<(ostream& o, const Menu& menu) {
 	for (unsigned i = 0; i < menu.listePlats_.size(); i++) {
-		cout << "\t" << menu.listePlats_[i];
+		cout << "\t" << *menu.listePlats_[i] << '\n';
 	}
 	return o;
 }
@@ -227,7 +233,7 @@ Plat * Menu::trouverPlatMoinsCher() const
 * @return Le pointeur vers le plat trouvé ou le pointeur nul (plat non trouvé).
 */
 Plat* Menu::trouverPlat(const string& nom) const {
-	for (int i = 0; i < listePlats_.size(); i++) {
+	for (unsigned i = 0; i < listePlats_.size(); i++) {
 		if (listePlats_[i]->getNom() == nom)
 			return listePlats_[i];
 	}

@@ -93,10 +93,12 @@ void Table::setId(int id) {
 void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
-	for (int i = 0; i < commande_.size(); i++) {
+	for (unsigned i = 0; i < commande_.size(); i++) {
 		delete commande_[i];
+		commande_[i] = nullptr;
 	}
 	commande_.clear();
+
 
 }
 
@@ -126,7 +128,7 @@ void Table::commander(Plat* plat) {
 */
 double Table::getChiffreAffaire() const {
 	double chiffre = 0;
-	for (int i = 0; i < commande_.size(); i++) {
+	for (unsigned i = 0; i < commande_.size(); i++) {
 		chiffre += (commande_[i]->getPrix() - commande_[i]->getCout());
 	}
 	return chiffre;
@@ -146,8 +148,8 @@ ostream& operator<<(ostream& o, const Table& table) {
 	if (table.estOccupee()) {
 		o << " est occupee. :";
 		if (table.commande_.size() != 0) {
-			o << "Voice la commande passee par les clients : \n";
-			for (int i = 0; i < table.commande_.size(); i++) {
+			o << "Voici la commande passee par les clients : \n";
+			for (unsigned i = 0; i < table.commande_.size(); i++) {
 				o << "\t" << *table.commande_[i];
 			}
 
@@ -156,7 +158,7 @@ ostream& operator<<(ostream& o, const Table& table) {
 			o << "Mais ils n'ont rien commande pour l'instant. \n";
 	}
 	else
-		o << "est libre. \n";
+		o << " est libre. \n";
 	
 	return o;
 }

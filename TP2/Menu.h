@@ -11,7 +11,7 @@
 #include <fstream>
 
 enum TypeMenu{Matin, Midi, Soir};
-const int MAXPLAT = 5;
+
 class Menu {
 public:
 	// constructeurs

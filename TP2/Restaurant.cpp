@@ -14,9 +14,9 @@ Restaurant::Restaurant() {
 
 	momentJournee_ = Matin;
 
-	menuMatin_ = new Menu("menu.txt", Matin);
-	menuMidi_ = new Menu("menu.txt", Midi);
-	menuSoir_ = new Menu("menu.txt",  Soir);
+	menuMatin_ = new Menu("polyFood.txt", Matin);
+	menuMidi_ = new Menu("polyFood.txt", Midi);
+	menuSoir_ = new Menu("polyFood.txt",  Soir);
 
 
 
@@ -39,15 +39,34 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	
 	lireTable(fichier);
 }
+
+Restaurant::Restaurant(const Restaurant& resto) :chiffreAffaire_(resto.chiffreAffaire_),
+	momentJournee_(resto.momentJournee_),menuMatin_(nullptr),
+	menuMidi_(nullptr),menuSoir_(nullptr),nom_(nullptr)
+{
+	nom_ = new string(*resto.nom_);
+	menuMatin_ = new Menu(*resto.menuMatin_);
+	menuMidi_ = new Menu(*resto.menuMidi_);
+	menuSoir_ = new Menu(*resto.menuSoir_);
+
+	for (unsigned i = 0; i < resto.tables_.size(); i++) {
+		Table* tableTemp = new Table(resto.tables_[i]->getId(),
+			resto.tables_[i]->getNbPlaces());
+		tables_.push_back(tableTemp);
+	}
+}
 //destructeur
 Restaurant::~Restaurant() {
-	delete nom_;
-	delete menuMatin_;
-	delete menuMidi_;
-	delete menuSoir_;
+	delete nom_; nom_ = nullptr;
+	delete menuMatin_; menuMatin_ = nullptr;
+	delete menuMidi_; menuMidi_ = nullptr;
+	delete menuSoir_; menuSoir_ = nullptr;
 
-	for (int i = 0; i <tables_.size() ; i++)
-		delete tables_[i];
+	for (unsigned i = 0; i < tables_.size(); i++) {
+		libererTable(tables_[i]->getId());
+	}
+
+	
 	tables_.clear();
 }
 
@@ -74,10 +93,11 @@ TypeMenu Restaurant::getMoment() const {
 
 
 void Restaurant::libererTable(int id) {
-	for (int i = 0; i < tables_.size(); i++) {
+	for (unsigned i = 0; i < tables_.size(); i++) {
 		if (id == tables_[i]->getId()) {
 			chiffreAffaire_ += tables_[i]->getChiffreAffaire();
-			tables_[i]->libererTable();
+			tables_[i]->Table::libererTable();
+			
 		}
 	}
 }
@@ -86,27 +106,28 @@ void Restaurant::libererTable(int id) {
 ostream& operator<<(ostream& o, const Restaurant& resto){
 	cout << "Le restaurant " << *resto.nom_;
 	if (resto.chiffreAffaire_ != 0)
-		cout << " a fait un chiffre d'affaire de : " << resto.chiffreAffaire_ << "$" << endl;
+		cout << " a fait un chiffre d'affaire de : " << resto.chiffreAffaire_ << "$\n";
 	else
-		cout << " n'a pas fait de benefice ou le chiffre n'est pas encore calcule." << endl;
-	cout << "-Voici les tables : " << endl;
-	for (int i = 0; i < resto.tables_.size(); i++) {
-		cout << "\t" << resto.tables_[i] << endl;
+		cout << " n'a pas fait de benefice ou le chiffre n'est pas encore calcule.\n" ;
+	cout << "-Voici les tables : \n" ;
+	for (unsigned i = 0; i < resto.tables_.size(); i++) {
+		cout << "\t" << *resto.tables_[i] << '\n';
 		
 	}
 	cout << endl;
 
 
-	cout << "-Voici son menu : " << endl;
-	cout << "Matin : " << endl <<resto.menuMatin_;
-	cout << "Midi : " << endl << resto.menuMidi_;
-	cout << "Soir : " << endl << resto.menuSoir_;
+	cout << "-Voici son menu : \n" ;
+	cout << "Matin : \n"  <<*resto.menuMatin_;
+	cout << "Midi : \n"  << *resto.menuMidi_;
+	cout << "Soir : \n"  << *resto.menuSoir_;
+	return o;
 }
 
 void Restaurant::commanderPlat(const string& nom, int idTable) {
 	Plat* plat = nullptr;
 	int index;
-	for (int i = 0; i < tables_.size(); i++) {
+	for (unsigned i = 0; i < tables_.size(); i++) {
 		if (idTable == tables_[i]->getId()) {
 			index = i;
 			switch (momentJournee_) {
@@ -123,9 +144,10 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 		}
 	}
 	if (plat != nullptr && tables_[index]->estOccupee()) {
-		tables_[index]->commander(plat);
+		tables_[index]->commander(new Plat(plat->getNom(), plat->getPrix(),
+			plat->getCout()));
 	}
-	else cout << "Erreur : table non occupee ou plat introuvable" << endl;
+	else cout << "Erreur : table non occupee ou plat introuvable\n" ;
 }
 
 void Restaurant::lireTable(const string& fichier) {
@@ -146,7 +168,7 @@ void Restaurant::lireTable(const string& fichier) {
 			if (ligne == "-TABLES") {
 				while (!file.eof()) {
 					getline(file, ligne);
-					for (int i = 0; i < ligne.size(); i++) {
+					for (unsigned i = 0; i < ligne.size(); i++) {
 						if (ligne[i] == ' ') {
 							curseur = i;
 							break;
@@ -159,7 +181,7 @@ void Restaurant::lireTable(const string& fichier) {
 					nbPersonnesString = ligne.substr(curseur + 1);
 					nbPersonnes = stoi(nbPersonnesString);
 
-					ajouterTable(id, nbPersonnes);
+					*this+= Table(id, nbPersonnes);
 					nbPersonnesString = "";
 					idString = "";
 				}
@@ -183,12 +205,10 @@ bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
 
 Restaurant& Restaurant::operator=(const Restaurant& resto) {
 	if (this != &resto) {
-		delete nom_; nom_ = new string(*resto.nom_);
-		chiffreAffaire_ = resto.chiffreAffaire_;
-		momentJournee_ = resto.momentJournee_;
-		delete menuMatin_; menuMatin_ = new Menu(*resto.menuMatin_);
-		delete menuMidi_; menuMidi_ = new Menu(*resto.menuMidi_);
-		delete menuSoir_; menuSoir_ = new Menu(*resto.menuSoir_);
+		
+		delete menuMatin_;
+		delete menuMidi_;
+		delete menuSoir_;
 
 		for (unsigned i = 0; i < tables_.size(); i++) {
 			delete tables_[i];
@@ -196,15 +216,24 @@ Restaurant& Restaurant::operator=(const Restaurant& resto) {
 		}
 		tables_.clear();
 
+		
+		chiffreAffaire_ = resto.chiffreAffaire_;
+		momentJournee_ = resto.momentJournee_;
+		menuMatin_ = new Menu(*resto.menuMatin_);
+		menuMidi_ = new Menu(*resto.menuMidi_);
+		menuSoir_ = new Menu(*resto.menuSoir_);
+
 		tables_ = resto.tables_;
+
 	}
+	return *this;
 }
 void Restaurant::placerClients(int nbClients) {
 	int indexTable = -1;
 	int minimum = 100;
 
 
-	for (int i = 0; i < tables_.size(); i++) {
+	for (unsigned i = 0; i < tables_.size(); i++) {
 		if (tables_[i]->getNbPlaces() >= nbClients && !tables_[i]->estOccupee() && tables_[i]->getNbPlaces() < minimum) {
 			indexTable = i;
 			minimum = tables_[i]->getNbPlaces();

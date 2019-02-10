@@ -80,6 +80,7 @@ void Plat::setPrix(double prix) {
 ostream& operator<<(ostream& o, const Plat& plat) {
 	o << plat.getNom() << " - " << plat.getPrix()
 		<< " $ (" << plat.getCout() << "$ pour le restaurant )";
+		
 	return o;
 }
 /**
