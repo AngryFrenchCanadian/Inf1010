@@ -2,6 +2,8 @@
 * Titre : main.cpp - Travail Pratique #1
 * Date : 18 Janvier 2019 
 * Auteur : Allan BEDDOUK
+* Modifié par : Étienne Bourgoin #1955553 et Manuel Pellerin #1960929
+* Date : 08 février 2019
 */
 
 #include "Restaurant.h"
