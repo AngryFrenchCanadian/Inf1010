@@ -46,7 +46,6 @@ Restaurant::~Restaurant() {
 	delete menuMidi_;
 	delete menuSoir_;
 
-	//A MODIFIER
 	for (int i = 0; i <tables_.size() ; i++)
 		delete tables_[i];
 	tables_.clear();
@@ -170,23 +169,14 @@ void Restaurant::lireTable(const string& fichier) {
 	}
 }
 
-void Restaurant::ajouterTable(int id, int nbPlaces) {
-	// A MODIFIER
-	if (nbTables_ == capaciteTables_) {
-		capaciteTables_ *= 2;
-		Table** temp = new Table*[capaciteTables_];
-
-		for (int i = 0; i < nbTables_; i++) {
-			temp[i] = tables_[i];
-		}
-
-		delete[] tables_;
-		tables_ = temp;
-
-	}
-
-	tables_[nbTables_] = new Table(id, nbPlaces);
-	nbTables_++;
+Restaurant& Restaurant::operator+=(const Table& table) {
+	tables_.push_back(new Table(table));
+}
+bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
+	if (resto1.chiffreAffaire_ < resto2.chiffreAffaire_)
+		return true;
+	else
+		return false;
 }
 
 void Restaurant::placerClients(int nbClients) {
@@ -194,7 +184,7 @@ void Restaurant::placerClients(int nbClients) {
 	int minimum = 100;
 
 
-	for (int i = 0; i < nbTables_; i++) {
+	for (int i = 0; i < tables_.size(); i++) {
 		if (tables_[i]->getNbPlaces() >= nbClients && !tables_[i]->estOccupee() && tables_[i]->getNbPlaces() < minimum) {
 			indexTable = i;
 			minimum = tables_[i]->getNbPlaces();

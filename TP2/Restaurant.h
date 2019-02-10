@@ -34,8 +34,9 @@ public:
 	void commanderPlat(const string& nom, int idTable); 
 
 	void placerClients(int nbClients);
-
+	Restaurant& operator+=(const Table& table);
 	friend ostream& operator<<(ostream& o, const Restaurant& resto);
+	friend bool operator<(const Restaurant& resto1, const Restaurant& resto2);
 private:
 	string* nom_;
 
@@ -56,4 +57,5 @@ private:
 };
 
 ostream& operator<<(ostream& o, const Plat& plat);
+bool operator<(const Restaurant& resto1, const Restaurant& resto2);
 #endif // !RESTAURANT_H
