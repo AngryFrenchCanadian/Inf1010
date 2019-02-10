@@ -171,7 +171,9 @@ void Restaurant::lireTable(const string& fichier) {
 
 Restaurant& Restaurant::operator+=(const Table& table) {
 	tables_.push_back(new Table(table));
+	return *this;
 }
+
 bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
 	if (resto1.chiffreAffaire_ < resto2.chiffreAffaire_)
 		return true;
@@ -179,6 +181,9 @@ bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
 		return false;
 }
 
+Restaurant& Restaurant::operator=(const Restaurant& resto) {
+
+}
 void Restaurant::placerClients(int nbClients) {
 	int indexTable = -1;
 	int minimum = 100;

@@ -35,6 +35,7 @@ public:
 
 	void placerClients(int nbClients);
 	Restaurant& operator+=(const Table& table);
+	Restaurant& operator=(const Restaurant& resto);
 	friend ostream& operator<<(ostream& o, const Restaurant& resto);
 	friend bool operator<(const Restaurant& resto1, const Restaurant& resto2);
 private:
