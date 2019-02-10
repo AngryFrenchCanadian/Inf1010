@@ -6,7 +6,9 @@
 
 #include "Restaurant.h"
 
-//constructeurs
+/**
+* Ce constructeur par défaut initialise les attributs du restaurant aux valeurs par défaut.
+*/
 Restaurant::Restaurant() {
 	nom_ = new string("Inconnu");
 
@@ -17,13 +19,15 @@ Restaurant::Restaurant() {
 	menuMatin_ = new Menu("menu.txt", Matin);
 	menuMidi_ = new Menu("menu.txt", Midi);
 	menuSoir_ = new Menu("menu.txt",  Soir);
-
-
-
-
-
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du restaurant aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu du restaurant par référence.
+* @param Le nom du restaurant par référence.
+* @param Le moment de la journée.
+*/
 Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu moment) {
 	nom_ = new string(nom);
 
@@ -39,41 +43,63 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	
 	lireTable(fichier);
 }
-//destructeur
+
+/**
+* Ce destructeur détruit le restaurant.
+*/
 Restaurant::~Restaurant() {
 	delete nom_;
 	delete menuMatin_;
 	delete menuMidi_;
 	delete menuSoir_;
 
-	//A MODIFIER
 	for (int i = 0; i <tables_.size() ; i++)
 		delete tables_[i];
 	tables_.clear();
 }
 
-
-//setter
-
+/**
+* Cette méthode permet de définir le moment de la journée.
+*
+* @param Le moment de la journée.
+*/
 void Restaurant::setMoment(TypeMenu moment) {
 	momentJournee_ = moment;
 }
 
+/**
+* Cette méthode permet de définir le nom du restaurant.
+*
+* @param Le nom du restaurant par référence.
+*/
 void Restaurant::setNom(const string& nom) {
 	*nom_ = nom;
 }
-//getters
+
+/**
+* Cette méthode accède au nom du restaurant.
+*
+* @return Le pointeur vers le nom du restaurant.
+*/
 string Restaurant::getNom() const {
 	return *nom_;
 }
 
+/**
+* Cette méthode accède au moment de la journée.
+*
+* @return Le moment de la journée.
+*/
 TypeMenu Restaurant::getMoment() const {
 	return momentJournee_;
 }
 
-//autres methodes
-
-
+/**
+* Cette méthode permet de libérer la table et d'ajouter le chiffre
+* d'affaire de celle-ci au total du chiffre d'affaire du restaurant.
+*
+* @param Le numéro de la table(id).
+*/
 void Restaurant::libererTable(int id) {
 	for (int i = 0; i < tables_.size(); i++) {
 		if (id == tables_[i]->getId()) {
@@ -83,7 +109,14 @@ void Restaurant::libererTable(int id) {
 	}
 }
 
-
+/**
+* Cette méthode permet d'afficher le chiffre d'affaire du restaurant, ses tables et son menu.
+*
+* @param Le paramètre en sortie.
+* @param Le restaurant à afficher par référence.
+*
+* @return La sortie.
+*/
 ostream& operator<<(ostream& o, const Restaurant& resto){
 	cout << "Le restaurant " << *resto.nom_;
 	if (resto.chiffreAffaire_ != 0)
@@ -102,8 +135,20 @@ ostream& operator<<(ostream& o, const Restaurant& resto){
 	cout << "Matin : " << endl <<resto.menuMatin_;
 	cout << "Midi : " << endl << resto.menuMidi_;
 	cout << "Soir : " << endl << resto.menuSoir_;
+
+	return o;
 }
 
+/**
+* Cette méthode permet d'ajouter un plat commandé à une table
+* en fonction du moment de la journée.
+*
+* @param Le nom du plat en référence.
+* @param Le numéro de la table (id).
+*
+* @see Méthode trouverPlat dans Menu.cpp (utilisée).
+* @see Méthode commander dans Table.cpp (utilisée).
+*/
 void Restaurant::commanderPlat(const string& nom, int idTable) {
 	Plat* plat = nullptr;
 	int index;
@@ -129,6 +174,11 @@ void Restaurant::commanderPlat(const string& nom, int idTable) {
 	else cout << "Erreur : table non occupee ou plat introuvable" << endl;
 }
 
+/**
+* Cette méthode permet de lire les informations d'une table dans un fichier.
+*
+* @param Le fichier contenant une table du restaurant par référence.
+*/
 void Restaurant::lireTable(const string& fichier) {
 	ifstream file(fichier, ios::in);
 
@@ -169,6 +219,7 @@ void Restaurant::lireTable(const string& fichier) {
 		file.close();
 	}
 }
+
 
 void Restaurant::ajouterTable(int id, int nbPlaces) {
 	// A MODIFIER
