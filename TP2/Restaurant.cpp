@@ -182,7 +182,22 @@ bool operator<(const Restaurant& resto1, const Restaurant& resto2) {
 }
 
 Restaurant& Restaurant::operator=(const Restaurant& resto) {
+	if (this != &resto) {
+		delete nom_; nom_ = new string(*resto.nom_);
+		chiffreAffaire_ = resto.chiffreAffaire_;
+		momentJournee_ = resto.momentJournee_;
+		delete menuMatin_; menuMatin_ = new Menu(*resto.menuMatin_);
+		delete menuMidi_; menuMidi_ = new Menu(*resto.menuMidi_);
+		delete menuSoir_; menuSoir_ = new Menu(*resto.menuSoir_);
 
+		for (unsigned i = 0; i < tables_.size(); i++) {
+			delete tables_[i];
+
+		}
+		tables_.clear();
+
+		tables_ = resto.tables_;
+	}
 }
 void Restaurant::placerClients(int nbClients) {
 	int indexTable = -1;
