@@ -113,7 +113,7 @@ void Table::placerClient(int nbClients) {
 /**
 * Cette méthode permet d'ajouter un plat à la commande d'une table.
 *
-* @param Le plat à ajouter.
+* @param Le pointeur vers le plat à ajouter.
 */
 void Table::commander(Plat* plat) {
 	commande_.push_back(plat);
@@ -137,9 +137,9 @@ double Table::getChiffreAffaire() const {
 * commandés pour celle-ci.
 *
 * @param Le paramètre en sortie.
-* @param La table à afficher.
+* @param La table à afficher par référence.
 *
-* @return La sortie
+* @return La sortie.
 */
 ostream& operator<<(ostream& o, const Table& table) {
 	o << "La table numero " << table.id_;

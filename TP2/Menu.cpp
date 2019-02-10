@@ -30,40 +30,62 @@ Menu::Menu(string fichier, TypeMenu type) {
 	lireMenu(fichier);
 }
 
-
+/**
+* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+*
+* @param Les informations du menu par référence. 
+*/
 Menu::Menu(const Menu& menu):type_(menu.type_),listePlats_(menu.listePlats_)
 {}
-
-
-//destructeur
 
 /**
 * Ce destructeur réinitialise le menu à la valeur nulle.
 */
-
 Menu::~Menu() {
 	// A MODIFIER
 	for (int i = 0; i < listePlats_.size(); i++) {
 		delete listePlats_[i];
 		listePlats_[i] = nullptr;
 	}
-	
 }
 
-
+/**
+* Cette méthode permet d'afficher le menu.
+*
+* @param Le paramètre en sortie.
+* @param Le menu à afficher par référence.
+*
+* @return La sortie.
+*/
 ostream& operator<<(ostream& o, const Menu& menu) {
 	for (unsigned i = 0; i < menu.listePlats_.size(); i++) {
 		cout << "\t" << menu.listePlats_[i];
 	}
+	return o;
 }
 
 
-
+/**
+* Cette méthode permet d'ajouter un plat au menu en entrant le plat.
+*
+* @param Les informations du plat par référence contenues dans la classe Plat.
+*
+* @return Le menu avec le plat ajouté.
+*
+* @see plat.cpp
+*/
 Menu& Menu::operator+=(const Plat& plat) {
 	listePlats_.push_back(new Plat(plat));
 	return *this;
 }
 
+/**
+* Cette méthode permet de mettre à jour le menu.
+*
+* @param Les informations du menu par référence.
+*
+* @return Le menu mis à jour.
+*/
 Menu& Menu::operator=(const Menu& menu) {
 	if (this != &menu) {
 		for (unsigned i = 0; i < listePlats_.size(); i++) {
@@ -78,12 +100,20 @@ Menu& Menu::operator=(const Menu& menu) {
 	return *this;
 }
 
-
+/**
+* Cette méthode permet de lire le menu contenu dans un fichier.
+*
+* @param Le nom du fichier contenant le menu par référence.
+*
+* @return Si le fichier du menu a pu être lu.
+*
+* @see méthode ajouterPlat (utilisée).
+*/
 bool Menu::lireMenu(const string& fichier) {
 	ifstream file(fichier, ios::in);
 
 	if (!file) {
-		//cout << "ERREUR : le fichier n'a pas pu etre ouvert" << endl;
+		cout << "ERREUR : le fichier n'a pas pu etre ouvert" << endl;
 		return false;
 	}
 	else {
@@ -148,7 +178,7 @@ bool Menu::lireMenu(const string& fichier) {
 
 					cout =int( stof(coutString.c_str()));
 
-					*this+= Plat(nom, prix, cout);   // POSSIBLEMENT PROBLEMATIQUE - MANU
+					*this += Plat(nom, prix, cout);   // POSSIBLEMENT PROBLEMATIQUE - MANU
 					nom = "";
 					prixString = "";
 					coutString = "";
@@ -163,6 +193,11 @@ bool Menu::lireMenu(const string& fichier) {
 	}
 }
 
+/**
+* Cette méthode permet de trouver le plat le moins cher du menu.
+*
+* @return Le pointeur vers le plat le moins cher.
+*/
 Plat * Menu::trouverPlatMoinsCher() const
 {
 	Plat minimum(*listePlats_[0]);
@@ -181,6 +216,13 @@ Plat * Menu::trouverPlatMoinsCher() const
 
 }
 
+/**
+* Cette méthode permet de trouver un plat dans le menu.
+*
+* @param Le nom du plat à trouver.
+*
+* @return Le pointeur vers le plat trouvé ou le pointeur nul (plat non trouvé).
+*/
 Plat* Menu::trouverPlat(const string& nom) const {
 	for (int i = 0; i < listePlats_.size(); i++) {
 		if (listePlats_[i]->getNom() == nom)
