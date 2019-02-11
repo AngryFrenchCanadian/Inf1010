@@ -187,7 +187,7 @@ bool Menu::lireMenu(const string& fichier) {
 
 					cout =int( stof(coutString.c_str()));
 
-					*this += Plat(nom, prix, cout);   // POSSIBLEMENT PROBLEMATIQUE - MANU
+					*this += Plat(nom, prix, cout);   
 					nom = "";
 					prixString = "";
 					coutString = "";

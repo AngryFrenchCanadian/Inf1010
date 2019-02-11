@@ -28,9 +28,9 @@ public:
 
 	//Autres methodes
 	void lireTable(const string& fichier);
-	void ajouterTable(int id, int nbPlaces); // A MODIFIER
+	
 	void libererTable(int id);
-	void afficher() const ; // A MODIFIER
+	
 	void commanderPlat(const string& nom, int idTable); 
 
 	void placerClients(int nbClients);
@@ -57,6 +57,5 @@ private:
 	
 };
 
-ostream& operator<<(ostream& o, const Plat& plat);
-bool operator<(const Restaurant& resto1, const Restaurant& resto2);
+
 #endif // !RESTAURANT_H

@@ -93,10 +93,6 @@ void Table::setId(int id) {
 void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
-	for (unsigned i = 0; i < commande_.size(); i++) {
-		delete commande_[i];
-		commande_[i] = nullptr;
-	}
 	commande_.clear();
 
 
@@ -146,13 +142,13 @@ double Table::getChiffreAffaire() const {
 ostream& operator<<(ostream& o, const Table& table) {
 	o << "La table numero " << table.id_;
 	if (table.estOccupee()) {
-		o << " est occupee. :";
+		o << " est occupee. ";
 		if (table.commande_.size() != 0) {
 			o << "Voici la commande passee par les clients : \n";
 			for (unsigned i = 0; i < table.commande_.size(); i++) {
-				o << "\t" << *table.commande_[i];
+				o << "\t" << *table.commande_[i]<< "\n";
 			}
-
+			
 		}
 		else
 			o << "Mais ils n'ont rien commande pour l'instant. \n";

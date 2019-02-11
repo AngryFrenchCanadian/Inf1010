@@ -44,5 +44,5 @@ private :
 	int nbClientsATable_;
 };
 
-ostream& operator<<(ostream& o, const Table& table);
+
 #endif // !TABLE_H

@@ -21,13 +21,12 @@ public:
 	//destructeur
 	~Menu();
 
-	//getters
-	int getNbPlats() const;
+	
 
 	
 
 	//methodes en plus
-	Plat* trouverPlat(const string& nom) const; // A MODIFIER
+	Plat* trouverPlat(const string& nom) const; 
 	Plat * trouverPlatMoinsCher() const; // Utilise les vecteurs (NE PAS MODIFIER)
 	bool lireMenu(const string& fichier);
 	friend ostream& operator<<(ostream& o, const Menu& menu);
@@ -41,5 +40,5 @@ private :
 
 };
 
-ostream& operator<<(ostream& o, const Menu& menu);
+
 #endif // !MENU_H

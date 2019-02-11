@@ -62,11 +62,12 @@ Restaurant::Restaurant(const Restaurant& resto) :chiffreAffaire_(resto.chiffreAf
 	menuSoir_ = new Menu(*resto.menuSoir_);
 
 	for (unsigned i = 0; i < resto.tables_.size(); i++) {
-		Table* tableTemp = new Table(resto.tables_[i]->getId(),
-			resto.tables_[i]->getNbPlaces());
+		Table* tableTemp = new Table(*resto.tables_[i]);
 		tables_.push_back(tableTemp);
 	}
 }
+
+
 //destructeur
 
 /**

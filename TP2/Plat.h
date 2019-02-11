@@ -38,8 +38,7 @@ private:
 
 };
 
-ostream& operator<<(ostream& o, const Plat& plat);
-bool operator<(const Plat& plat1, const Plat& plat2);
+
 
 
 #endif // !PLAT_H
