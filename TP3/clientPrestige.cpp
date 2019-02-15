@@ -34,7 +34,7 @@ ClientPrestige::ClientPrestige(string nom, string prenom, int tailleGroupe, int 
 *
 * @return L'adresse du client prestige.
 */
-AdressCode ClientPrestige::getAdresseCode()
+AdressCode ClientPrestige::getAdresseCode() const 
 {
 	return adresse_;
 }
@@ -42,7 +42,7 @@ AdressCode ClientPrestige::getAdresseCode()
 /**
 * Cette méthode permet de convertir la valeur énumérée de adresse_ en string.
 */
-string ClientPrestige::getAdressCodeString()
+string ClientPrestige::getAdressCodeString() const 
 {
 	switch (adresse_) {
 	case Zone1: return"Zone 1";

@@ -15,11 +15,11 @@ public:
 	ClientPrestige(string nom, string prenom, int tailleGroupe, int nbPoints, AdressCode adresse);
 
 	//Accesseur 
-	AdressCode getAdresseCode();
+	AdressCode getAdresseCode() const ;
 
 	//Autres Fonctions??
 	friend ostream & operator<<(ostream & os, ClientPrestige client);
-	string getAdressCodeString();
+	string getAdressCodeString() const;
 
 
 

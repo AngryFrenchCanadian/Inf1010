@@ -35,7 +35,7 @@ ClientRegulier::ClientRegulier(string nom, string prenom, int tailleGroupe, int 
 *
 * @return Le nombre de points du client régulier.
 */
-int ClientRegulier::getNbPoints()
+int ClientRegulier::getNbPoints() const 
 {
 	return nbPoints_;
 }

@@ -4,7 +4,7 @@
 PlatCustom::PlatCustom(string nom, double prix, double cout, int nbIngredients)
 	: Plat(nom,prix,cout),nbIngredients_(nbIngredients)
 {
-	supplement_ = nbIngredients_ * FRAIS_CUSTOMISATION;
+	supplement_ = calculerSupplement();
 	type_ = Custom;
 }
 
@@ -34,4 +34,9 @@ ostream& operator<<(ostream& os, const PlatCustom& plat)
 	os << plat << endl << "\t\t contient " << plat.nbIngredients_
 		<< " elements modifies pour un supplement total de: "
 		<< plat.supplement_ << '$' << endl;
+}
+
+double PlatCustom::calculerSupplement()const
+{
+	return(nbIngredients_ * FRAIS_CUSTOMISATION);
 }
