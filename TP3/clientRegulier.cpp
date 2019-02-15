@@ -10,13 +10,10 @@
 /**
 * Ce constructeur par défaut initialise les attributs du client régulier aux valeurs par défaut.
 */
-ClientRegulier::ClientRegulier()
+ClientRegulier::ClientRegulier():Client(),nbPoints_(0)
 {
-	nbPoints_ = 0;
-	nom_ = "inconnu";
-	prenom_ = "inconnu";
 	statut_ = Fidele;
-	tailleGroupe_ = 0;
+	
 }
 
 /**
@@ -30,10 +27,6 @@ ClientRegulier::ClientRegulier()
 ClientRegulier::ClientRegulier(string nom, string prenom, int tailleGroupe, int nbPoints) 
 : Client(nom, prenom, tailleGroupe), nbPoints_(nbPoints)
 {
-	nom_ = nom;
-	prenom_ = prenom;
-	tailleGroupe_ = tailleGroupe;
-	nbPoints_ = nbPoints;
 	statut_ = Fidele;
 }
 

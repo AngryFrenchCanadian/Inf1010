@@ -10,14 +10,9 @@
 /**
 * Ce constructeur par défaut initialise les attributs du client prestige aux valeurs par défaut.
 */
-ClientPrestige::ClientPrestige()
+ClientPrestige::ClientPrestige():ClientRegulier(), adresse_(Zone3)
 {
-	adresse_ = Zone3;
-	nom_ = "inconnu";
-	prenom_ = "inconnu";
 	statut_ = Prestige;
-	tailleGroupe_ = 0;
-	nbPoints_ = 0;
 }
 
 /**
@@ -31,11 +26,6 @@ ClientPrestige::ClientPrestige()
 ClientPrestige::ClientPrestige(string nom, string prenom, int tailleGroupe, int nbPoints, AdressCode adresse) 
 : ClientRegulier(nom, prenom, tailleGroupe, nbPoints), adresse_(adresse)
 {
-	nom_ = nom;
-	prenom_ = prenom;
-	tailleGroupe_ = tailleGroupe;
-	nbPoints_ = nbPoints;
-	adresse_ = adresse;
 	statut_ = Prestige;
 }
 

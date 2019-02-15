@@ -1,7 +1,10 @@
 #include "PlatBio.h"
 
 PlatBio::PlatBio(string nom, double prix, double cout, double ecoTaxe) 
-: Plat(nom, prix, cout), ecoTaxe_(ecoTaxe) {}
+: Plat(nom, prix, cout), ecoTaxe_(ecoTaxe) 
+{
+	type_ = Bio;
+}
 
 double PlatBio::getEcoTaxe() const {
 	return ecoTaxe_;

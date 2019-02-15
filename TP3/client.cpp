@@ -75,7 +75,7 @@ int Client::getTailleGroupe() {
 /**
 * Cette méthode permet de convertir la valeur énumérée de statut_ en string.
 */
-string Client::convertirStatutString() {
+string Client::convertirStatutString() const{
 	switch (statut_) {
 	case Occasionnel:
 		return "Occasionnel";
@@ -98,7 +98,8 @@ string Client::convertirStatutString() {
 * @return La sortie.
 */
 ostream & operator<<(ostream & os, const Client& client) {
-	os << "Le client principal est: " << endl << "\t\t" << client.prenom_ << " " << client.nom_ << " statut: " << client.convertirStatutString;
+	os << "Le client principal est: " << endl << "\t\t" << client.prenom_ 
+		<< " " << client.nom_ << " statut: " << client.convertirStatutString;
 	return os;
 }
 

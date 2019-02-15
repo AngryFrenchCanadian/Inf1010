@@ -5,6 +5,7 @@ PlatCustom::PlatCustom(string nom, double prix, double cout, int nbIngredients)
 	: Plat(nom,prix,cout),nbIngredients_(nbIngredients)
 {
 	supplement_ = nbIngredients_ * FRAIS_CUSTOMISATION;
+	type_ = Custom;
 }
 
 //getters 
