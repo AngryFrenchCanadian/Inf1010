@@ -7,24 +7,24 @@
 #define CLIENT_PRESTIGE
 
 #include "ClientRegulier.h"
-enum AddressCode{Zone1,Zone2,Zone3};
-class ClientPrestige 
+enum AdressCode{Zone1,Zone2,Zone3};
+class ClientPrestige : public ClientRegulier
 {
 public:
 	ClientPrestige();
-	ClientPrestige(string nom, string prenom, int tailleGroupe, int nbPoints,AddressCode addresse);
+	ClientPrestige(string nom, string prenom, int tailleGroupe, int nbPoints, AdressCode adresse);
 
 	//Accesseur 
-	AddressCode getAddresseCode();
+	AdressCode getAdresseCode();
 
 	//Autres Fonctions??
 	friend ostream & operator<<(ostream & os, ClientPrestige client);
-	string getAddressCodeString();
+	string getAdressCodeString();
 
 
 
 private: 
-	AddressCode addresse_;
+	AdressCode adresse_;
 
 };
 
