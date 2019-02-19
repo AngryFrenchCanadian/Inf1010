@@ -76,17 +76,9 @@ int Client::getTailleGroupe() {
 * Cette méthode permet de convertir la valeur énumérée de statut_ en string.
 */
 string Client::convertirStatutString() const{
-	switch (statut_) {
-	case Occasionnel:
-		return "Occasionnel";
-		break;
-	case Fidele:
-		return "Fidele";
-		break;
-	case Prestige:
-		return "Prestige";
-		break;
-	}
+	string statuts[3] = { "occasionnel","regulier","prestige" };
+	return statuts[statut_];
+
 }
 
 /**

@@ -15,6 +15,7 @@ Table::Table() {
 	id_ = -1;
 	nbPlaces_ = 1;
 	nbClientsATable_ = 0;
+	clientPrincipal_ = nullptr;
 }
 
 /**
@@ -27,6 +28,7 @@ Table::Table(int id, int nbPlaces) {
 	id_ = id;
 	nbPlaces_ = nbPlaces;
 	nbClientsATable_ = 0;
+	clientPrincipal_ = nullptr;
 }
 
 /**
@@ -97,16 +99,18 @@ Client* Table::getClientPrincipal() const
 }
 
 /**
-* Cette méthode permet de créer le client principal.
+* Cette méthode permet de créer/modifier le client principal.
 *
 * @param Le client principal.
 */void Table::setClientPrincipal(Client* clientPrincipal)
 {
+	if (clientPrincipal_ != nullptr)
+		delete clientPrincipal_;
 	clientPrincipal_ = clientPrincipal;
 }
 
 /**
-* Cette méthode permet de créer le numéro d'une table (id).
+* Cette méthode permet de créer/modifier le numéro d'une table (id).
 *
 * @param Le numéro de la table.
 */
@@ -152,8 +156,23 @@ double Table::getChiffreAffaire() const {
 	///Modifier pour que le chiffre d'Affaire prenne en compte le type de plat
 	///voir Énoncé
 	double chiffre = 0;
-	for (unsigned i = 0; i < commande_.size(); ++i) 
-			chiffre += commande_[i]->getPrix() - commande_[i]->getCout();
+	for (unsigned i = 0; i < commande_.size(); ++i) {
+		switch (commande_[i]->getType()) {
+		case Regulier:
+			chiffre += (commande_[i]->getPrix() - commande_[i]->getCout());
+			break;
+		case Bio:
+			PlatBio* unPlatBio = static_cast<PlatBio*>(commande_[i]);
+			chiffre += ((unPlatBio->getPrix() * (1 + unPlatBio->getEcoTaxe()))
+				- unPlatBio->getCout());
+			break;
+		case Custom:
+			PlatCustom* unPlatCustom = static_cast<PlatCustom*>(commande_[i]);
+			chiffre += ((unPlatCustom->getPrix() + unPlatCustom->getSupplement())
+				- unPlatCustom->getPrix());
+			break;
+		}
+	}
 	return chiffre;
 }
 
