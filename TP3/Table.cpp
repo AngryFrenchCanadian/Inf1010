@@ -102,10 +102,27 @@ Client* Table::getClientPrincipal() const
 * Cette méthode permet de créer/modifier le client principal.
 *
 * @param Le client principal.
-*/void Table::setClientPrincipal(Client* clientPrincipal)
+*/void Table::setClientPrincipal(const Client* clientPrincipal)
 {
 	if (clientPrincipal_ != nullptr)
 		delete clientPrincipal_;
+
+	switch (clientPrincipal->getStatut()) {
+	case Occasionnel:clientPrincipal_ = new Client(clientPrincipal->getNom(),
+		clientPrincipal->getPrenom(), clientPrincipal->getTailleGroupe());
+		break;
+	case Fidele:ClientRegulier* clientReg;
+		clientReg = static_cast<ClientRegulier*>(clientPrincipal);
+		clientPrincipal_ = new ClientRegulier(clientReg->getNom(), clientReg->getPrenom(),
+			clientReg->getTailleGroupe(), clientReg->getNbPoints());
+		break;
+	case Prestige: ClientPrestige* clientPrest;
+		clientPrest = static_cast<ClientPrestige*>(clientPrincipal);
+		clientPrincipal_ = new ClientPrestige(clientPrest->getNom(), clientPrest->getPrenom(),
+			clientPrest->getTailleGroupe(), clientPrest->getNbPoints(),clientPrest->getAdresseCode());
+		
+		break;
+	}
 	clientPrincipal_ = clientPrincipal;
 }
 
@@ -161,13 +178,13 @@ double Table::getChiffreAffaire() const {
 		case Regulier:
 			chiffre += (commande_[i]->getPrix() - commande_[i]->getCout());
 			break;
-		case Bio:
-			PlatBio* unPlatBio = static_cast<PlatBio*>(commande_[i]);
+		case Bio:PlatBio* unPlatBio;
+			unPlatBio= static_cast<PlatBio*>(commande_[i]);
 			chiffre += ((unPlatBio->getPrix() * (1 + unPlatBio->getEcoTaxe()))
 				- unPlatBio->getCout());
 			break;
-		case Custom:
-			PlatCustom* unPlatCustom = static_cast<PlatCustom*>(commande_[i]);
+		case Custom: PlatCustom* unPlatCustom;
+			unPlatCustom= static_cast<PlatCustom*>(commande_[i]);
 			chiffre += ((unPlatCustom->getPrix() + unPlatCustom->getSupplement())
 				- unPlatCustom->getPrix());
 			break;

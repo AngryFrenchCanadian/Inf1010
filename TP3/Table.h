@@ -37,7 +37,7 @@ public:
 	void placerClients(int nbClients);
 	void setId(int id);
 	///TODO
-	void setClientPrincipal(Client* clientPrincipal); 
+	void setClientPrincipal(const Client* clientPrincipal); 
 
 	//autres methodes
 	void commander(Plat* plat);

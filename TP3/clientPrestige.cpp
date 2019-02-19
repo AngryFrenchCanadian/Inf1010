@@ -44,14 +44,9 @@ AdressCode ClientPrestige::getAdresseCode() const
 */
 string ClientPrestige::getAdressCodeString() const 
 {
-	switch (adresse_) {
-	case Zone1: return"Zone 1";
-		break;
-	case Zone2: return"Zone 2";
-		break;
-	case Zone3: return"Zone3";
-		break;
-	}
+	string adresses[3] = { "Zone 1", "Zone 2", "Zone 3" };
+	return adresses[adresse_];
+	
 }
 
 /**

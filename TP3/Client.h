@@ -19,10 +19,10 @@ public:
 	~Client();
 
 // Accesseurs
-	StatutClient getStatut();
-	int getTailleGroupe();
-	string getNom();
-	string getPrenom();
+	StatutClient getStatut()const;
+	int getTailleGroupe()const;
+	string getNom()const;
+	string getPrenom()const;
 	
 //Autes méthodes
 

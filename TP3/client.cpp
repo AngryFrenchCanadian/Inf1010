@@ -41,7 +41,7 @@ Client::~Client() {}
 *
 * @return Le statut du client.
 */
-StatutClient Client::getStatut() {
+StatutClient Client::getStatut()const {
 	return statut_;
 }
 
@@ -50,7 +50,7 @@ StatutClient Client::getStatut() {
 *
 * @return Le nom du client.
 */
-string Client::getNom() {
+string Client::getNom()const {
 	return nom_;
 }
 
@@ -59,7 +59,7 @@ string Client::getNom() {
 *
 * @return Le prénom du client.
 */
-string Client::getPrenom() {
+string Client::getPrenom()const {
 	return prenom_;
 }
 
@@ -68,7 +68,7 @@ string Client::getPrenom() {
 *
 * @return La taille du groupe du client.
 */
-int Client::getTailleGroupe() {
+int Client::getTailleGroupe()const {
 	return tailleGroupe_;
 }
 
@@ -91,7 +91,7 @@ string Client::convertirStatutString() const{
 */
 ostream & operator<<(ostream & os, const Client& client) {
 	os << "Le client principal est: " << endl << "\t\t" << client.prenom_ 
-		<< " " << client.nom_ << " statut: " << client.convertirStatutString;
+		<< " " << client.nom_ << " statut: " << client.convertirStatutString();
 	return os;
 }
 
