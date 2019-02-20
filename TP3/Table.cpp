@@ -102,7 +102,7 @@ Client* Table::getClientPrincipal() const
 * Cette méthode permet de créer/modifier le client principal.
 *
 * @param Le client principal.
-*/void Table::setClientPrincipal(const Client* clientPrincipal)
+*/void Table::setClientPrincipal(Client* clientPrincipal)
 {
 	if (clientPrincipal_ != nullptr)
 		delete clientPrincipal_;
@@ -123,7 +123,7 @@ Client* Table::getClientPrincipal() const
 		
 		break;
 	}
-	clientPrincipal_ = clientPrincipal;
+	
 }
 
 /**
@@ -207,7 +207,8 @@ ostream& operator<<(ostream& os, const Table& table)
 	os << "La table numero " << table.id_;
 	if (table.estOccupee())
 	{
-		os << " est occupee. ";
+		os << " est occupee. Le client principal est: " << endl
+			<< *table.getClientPrincipal() << endl;
 		if (!table.commande_.empty())
 		{
 			os << "Voici la commande passee par les clients : " << endl;

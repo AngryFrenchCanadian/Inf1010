@@ -45,7 +45,7 @@ public:
 	bool operator < (const Restaurant& restau) const ;
 	Restaurant& operator = (const Restaurant& restau); 
 	///TODO 
-	void placerClients(const Client& client);///A Modifier
+	void placerClients(Client* client);///A Modifier
 	///TODO
 	void livrerClient(Client * client, vector<string>nomPlats);
 	///TODO

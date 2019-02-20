@@ -97,7 +97,9 @@ void Restaurant::libererTable(int id) {
 
 	for (unsigned i = 0; i < tables_.size(); ++i) {
 		if (id == tables_[i]->getId()) {
-			chiffreAffaire_ += tables_[i]->getChiffreAffaire(); 
+			double chiffreAffaireTable = tables_[i]->getChiffreAffaire();
+			chiffreAffaire_ += chiffreAffaireTable - calculerReduction(tables_[i]->getClientPrincipal(),
+				chiffreAffaireTable, tables_[i]->getClientPrincipal()->getStatut() == Prestige);
 			tables_[i]->libererTable(); 
 			break;
 		}
@@ -137,7 +139,7 @@ ostream& operator<<(ostream& os, const Restaurant& restau)
 }
 
 
-
+//done?
 void Restaurant::commanderPlat(const string& nom, int idTable,TypePlat type, int nbIngredients) {
 
 	///TODO
@@ -167,11 +169,15 @@ void Restaurant::commanderPlat(const string& nom, int idTable,TypePlat type, int
 
 		cout << "Erreur : table vide ou plat introuvable" << endl << endl;
 	}
-	else
+	else if(type == Custom)
 	{
-		tables_[index]->commander(plat);
+		PlatCustom* platCustom = static_cast<PlatCustom*>(plat);
+		platCustom->setNbIngredients(nbIngredients);
+		tables_[index]->commander(platCustom);
 
 	}
+	else
+		tables_[index]->commander(plat);
 
  
 }
@@ -254,23 +260,18 @@ Restaurant& Restaurant::operator+=(Table* table) {
 	return *this;
 }
 
-Restaurant& Restaurant::operator+=(Table* table) {
-	tables_.push_back(new Table(*table));
-	return *this;
-}
 
-void Restaurant::placerClients(const Client& client) {
+//done
+void Restaurant::placerClients(Client* client) {
 
-	/// TODO 
-	///Modifier Afin qu'elle utilise un objet de la classe clients 
-	///voir Énoncé
+
 	int indexTable = -1;
 	int minimum = 100;
 
 
 
 	for (unsigned i = 0; i < tables_.size(); i++) {
-		if (tables_[i]->getNbPlaces() >= client.getTailleGroupe() && !tables_[i]->estOccupee() 
+		if (tables_[i]->getNbPlaces() >= client->getTailleGroupe() && !tables_[i]->estOccupee() 
 			&& tables_[i]->getNbPlaces() < minimum && i != INDEX_TABLE_LIVRAISON) {
 			indexTable = i;
 			minimum = tables_[i]->getNbPlaces();
@@ -280,11 +281,12 @@ void Restaurant::placerClients(const Client& client) {
 		cout << "Erreur : il n'y a plus/pas de table disponible pour les clients. " << endl;
 	}
 	else {
-		tables_[indexTable]->placerClients(client.getTailleGroupe());
-		tables_[indexTable]->setClientPrincipal(&client);
+		tables_[indexTable]->placerClients(client->getTailleGroupe());
+		tables_[indexTable]->setClientPrincipal(client);
 	}
 }
 
+//todo
 void Restaurant::livrerClient(Client * client, vector<string> commande)
 {
 	///TODO
@@ -294,10 +296,19 @@ void Restaurant::livrerClient(Client * client, vector<string> commande)
 	///Effectuer la commande
 	if (client->getStatut() == Prestige) {
 		tables_[INDEX_TABLE_LIVRAISON]->placerClients(1);
+		cout << "Statut de la table de livraison: (table numero "
+			<< tables_[INDEX_TABLE_LIVRAISON]->getId() << "):"
+			<< endl << *tables_[INDEX_TABLE_LIVRAISON] << "Livraison terminee" << endl;
+		tables_[INDEX_TABLE_LIVRAISON]->libererTable();
 	}
-
+	else {
+		cout << "Le client " << client->getNom() << " n'est pas admissible a la livraison"
+			<< endl << endl;
+	}
+	
 
 }
+//done
 double Restaurant::calculerReduction(Client* client, double montant, bool livraison) {
 	if (client->getStatut() == Regulier) {
 		ClientRegulier* clientReg = static_cast<ClientRegulier*>(client);
