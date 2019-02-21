@@ -292,10 +292,14 @@ void Restaurant::livrerClient(Client * client, vector<string> commande)
 	///TODO
 	///se réferer à l'énoncé 
 	///vérifier que le client a droit aux livraisons
-	///Si oui lui assigner la table des livraisons 
+	///Si oui lui assigner la table des tlivraisons 
 	///Effectuer la commande
 	if (client->getStatut() == Prestige) {
 		tables_[INDEX_TABLE_LIVRAISON]->placerClients(1);
+		tables_[INDEX_TABLE_LIVRAISON]->setClientPrincipal(client);
+		for (unsigned i = 0; i < commande.size(); i++)
+			commanderPlat(commande[i], tables_[INDEX_TABLE_LIVRAISON]->getId());
+		
 		cout << "Statut de la table de livraison: (table numero "
 			<< tables_[INDEX_TABLE_LIVRAISON]->getId() << "):"
 			<< endl << *tables_[INDEX_TABLE_LIVRAISON] << "Livraison terminee" << endl;
