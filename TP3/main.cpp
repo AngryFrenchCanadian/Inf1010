@@ -76,6 +76,7 @@ int main() {
 	poly.libererTable(3);
 	poly.libererTable(4);
 
+
 	cout << poly;
 
 	cout << "====================================================================================================" << endl;
@@ -96,4 +97,5 @@ int main() {
 	delete cl4;
 	delete cl5;
 
+	return 0;
 }

@@ -202,19 +202,44 @@ double Table::getChiffreAffaire() const {
 *
 * @return La sortie.
 */
-ostream& operator<<(ostream& os, const Table& table)
+ostream& operator<<(ostream& os, Table& table)
 {
 	os << "La table numero " << table.id_;
 	if (table.estOccupee())
 	{
-		os << " est occupee. Le client principal est: " << endl
-			<< *table.getClientPrincipal() << endl;
+		os << " est occupee. Le client principal est: " << endl;
+		switch (table.getClientPrincipal()->getStatut()) {
+		case Occasionnel: os << *table.getClientPrincipal();
+			break;
+		case Fidele: 
+			ClientRegulier* clientReg;
+			clientReg = static_cast<ClientRegulier*>(table.getClientPrincipal());
+			os << *clientReg;
+			break;
+		case Prestige: 
+			ClientPrestige* clientPrest;
+			clientPrest = static_cast<ClientPrestige*>(table.getClientPrincipal());
+			os << *clientPrest;
+			break;
+		}
 		if (!table.commande_.empty())
 		{
 			os << "Voici la commande passee par les clients : " << endl;
 			for (unsigned i = 0; i < table.commande_.size(); ++i)
 			{
-				os << "\t" << *table.commande_[i];
+				switch (table.commande_[i]->getType()) {
+				case Regulier: os << "\t" << *table.commande_[i];
+					break;
+				case Bio: PlatBio* platBio;
+					platBio = static_cast<PlatBio*>(table.commande_[i]);
+					os << "\t" << *platBio;
+					break;
+				case Custom: PlatCustom* platCustom;
+					platCustom = static_cast<PlatCustom*>(table.commande_[i]);
+					os << "\t" << *platCustom;
+					break;
+				}
+			
 			}
 		}
 		else

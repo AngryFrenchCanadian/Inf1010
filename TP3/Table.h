@@ -44,7 +44,7 @@ public:
 
 	//affichage
 	///TODO
-	friend ostream& operator<<(ostream& os, const Table& table); /// A Modifier
+	friend ostream& operator<<(ostream& os, Table& table); /// A Modifier
 
 private :
 	vector<Plat*> commande_;

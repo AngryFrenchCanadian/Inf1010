@@ -18,7 +18,7 @@ public:
 	AdressCode getAdresseCode() const ;
 
 	//Autres Fonctions??
-	friend ostream & operator<<(ostream & os, ClientPrestige client);
+	friend ostream & operator<<(ostream & os, ClientPrestige& client);
 	string getAdressCodeString() const;
 
 
