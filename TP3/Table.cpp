@@ -104,7 +104,10 @@ Client* Table::getClientPrincipal() const
 * @param Le client principal.
 */void Table::setClientPrincipal(Client* clientPrincipal)
 {
-	
+	if (clientPrincipal_ != nullptr) {
+		delete clientPrincipal_;
+		clientPrincipal_ = nullptr;
+	}
 
 	switch (clientPrincipal->getStatut()) {
 	case Occasionnel:clientPrincipal_ = new Client(clientPrincipal->getNom(),
@@ -141,8 +144,7 @@ void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
 	commande_.clear();
-	delete clientPrincipal_;
-	clientPrincipal_ = nullptr;
+	
 }
 
 /**
