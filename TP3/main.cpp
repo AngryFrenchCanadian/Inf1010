@@ -2,14 +2,15 @@
 * Titre : main.cpp - Travail Pratique #3
 * Date : 11 Février 2019 
 * Auteur : Fatou S. Mounzeo
+* Modifié par : Étienne Bourgoin #1955553 et Manuel Pellerin #1960929
 *
 *Q1: Car c'est ce qui nous permet de déterminer si le plat lu est d'un type different. Ainsi, sans son existance,
-* on ne pourrait connaitre le moment approprié pour utiliser static_cast. 
+* on ne pourrait connaitre le moment approprié pour utiliser static_cast ( et donc on ne pourrait pas convertir les objets). 
 *
-*Q2: 
+*Q2: Static_cast est essentiel pour convertir les classes derivees des clients aux type approprie.
 *
-*
-*
+*Q3: Car ClientPrestige herite ainsi des methodes ( et donc des avantages ) de ClientRegulier. Puisque le client Prestige
+*benificie des memes avanages que le client regulier, on se trouve a eviter la repetition de code.
 */
 
 #include "Restaurant.h"

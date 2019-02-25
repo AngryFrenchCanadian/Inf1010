@@ -409,14 +409,14 @@ double Restaurant::calculerReduction(Client* client, double montant, bool livrai
 	if (client->getStatut() == Regulier) {
 		ClientRegulier* clientReg = nullptr;
 		clientReg = static_cast<ClientRegulier*>(client);
-		if (clientReg->getNbPoints() >= SEUIL_DEBUT_REDUCTION)
+		if (clientReg->getNbPoints() > SEUIL_DEBUT_REDUCTION)
 			return montant * TAUX_REDUC_REGULIER;
 	}
 		
 	if (client->getStatut() == Prestige) {
 		ClientPrestige* clientPrest = nullptr;
 		clientPrest = static_cast<ClientPrestige*>(client);
-		if (clientPrest->getNbPoints() <= SEUIL_LIVRAISON_GRATUITE && livraison == true)
+		if (clientPrest->getNbPoints() < SEUIL_LIVRAISON_GRATUITE && livraison == true)
 			return montant * TAUX_REDUC_PRESTIGE -
 			getFraisTransports(clientPrest->getAdresseCode());
 		else
