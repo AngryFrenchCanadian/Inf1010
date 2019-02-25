@@ -40,6 +40,9 @@ int main() {
 	Client * cl6 = new ClientPrestige("Marie", "C", 1,125, Zone1);
 	vector<string> commandeMarie;
 	commandeMarie.push_back("Pizza");
+	commandeMarie.push_back("ShitJokesBelow");
+	commandeMarie.push_back("PizzAAAAAYOYE");
+	commandeMarie.push_back("PizzaAaaH");
 
 
 	cout << "\t\t\t\t\tLIVRAISONS" << endl;
