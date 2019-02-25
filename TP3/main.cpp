@@ -38,8 +38,9 @@ int main() {
 	cout << "--------------------------------------------------------------------------------------------------" << endl;
 
 	//Livrer les clients Marie et Martins
-	poly.livrerClient(cl1, commandeMartin);
 	poly.livrerClient(cl6, commandeMarie);
+	poly.livrerClient(cl1, commandeMartin);
+
 	cout << "\t\t\t\t\tPLACEMENT DES CLIENT" << endl;
 	cout << "--------------------------------------------------------------------------------------------------" << endl;
 
@@ -52,9 +53,9 @@ int main() {
 
 	// commander des plats 
 
-	poly.commanderPlat("Poisson", 1,Custom,3);
-	poly.commanderPlat("Pizza", 2, Custom,4);
+	poly.commanderPlat("Poisson", 1, Custom, 3);
 	poly.commanderPlat("Poulet", 2);
+	poly.commanderPlat("Pizza", 2, Custom, 4);
 	poly.commanderPlat("Poulet", 4); 
 	poly.commanderPlat("Muffin", 4); 
 	poly.commanderPlat("Oeuf", 4); 

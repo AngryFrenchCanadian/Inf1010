@@ -224,7 +224,7 @@ ostream& operator<<(ostream& os, Table& table)
 		}
 		if (!table.commande_.empty())
 		{
-			os << "Voici la commande passee par les clients : " << endl;
+			os << endl << "Voici la commande passee par les clients : " << endl;
 			for (unsigned i = 0; i < table.commande_.size(); ++i)
 			{
 				switch (table.commande_[i]->getType()) {

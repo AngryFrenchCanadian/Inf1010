@@ -63,7 +63,7 @@ void PlatCustom::setNbIngredients(int nIngredients)
 ostream& operator<<(ostream& os, const PlatCustom& plat)
 {
 	Plat unPlat = static_cast<Plat>(plat);
-	os << unPlat  << "\t\t contient " << plat.nbIngredients_
+	os << unPlat << "\t\t contient " << plat.nbIngredients_
 		<< " elements modifies pour un supplement total de: "
 		<< plat.supplement_ << '$' << endl;
 	return os;
