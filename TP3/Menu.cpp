@@ -6,12 +6,19 @@
 
 #include "Menu.h"
 
-//constructeurs 
-
+/**
+* Ce constructeur par défaut initialise les attributs du menu aux valeurs par défaut.
+*/
 Menu::Menu() {
 	type_ = Matin; 
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu.
+* @param Le type du menu contenu dans le fichier sélectionné (matin, midi ou soir).
+*/
 Menu::Menu(string fichier, TypeMenu type) {
 	type_ = type; 
 
@@ -19,6 +26,11 @@ Menu::Menu(string fichier, TypeMenu type) {
 	lireMenu(fichier); 
 }
 
+/**
+* Ce constructeur crée une copie du menu existant.
+*
+* @param Les informations du menu par référence.
+*/
 Menu::Menu(const Menu & menu): type_(menu.type_)
 {
 	///TODO 
@@ -39,17 +51,24 @@ Menu::Menu(const Menu & menu): type_(menu.type_)
 	}
 }
 
-
-//getters
-
+/**
+* Cette méthode accède à la liste de plats pointés par des pointeurs.
+*
+* @return La liste de plats.
+*/
 vector<Plat*> Menu::getListePlats() const
 {
 	return listePlats_;
 }
 
-//autres methodes 
-
-
+/**
+* Cette méthode permet d'afficher le menu.
+*
+* @param Le paramètre en sortie.
+* @param Le menu à afficher par référence.
+*
+* @return La sortie.
+*/
 ostream& operator<<(ostream& os, const Menu& menu)
 {
 	for (unsigned i = 0; i < menu.listePlats_.size(); ++i) {
@@ -66,18 +85,42 @@ ostream& operator<<(ostream& os, const Menu& menu)
 	return os;
 }
 
-
-
+/**
+* Cette méthode permet d'ajouter un plat au menu en entrant le plat.
+*
+* @param Les informations du plat par référence contenues dans la classe Plat.
+*
+* @return Le menu avec le plat ajouté.
+*
+* @see plat.cpp
+*/
 Menu& Menu::operator+=(const Plat& plat) {
 	listePlats_.push_back(new Plat(plat));
 	return *this;
 }
 
+/**
+* Cette méthode permet d'ajouter un plat bio au menu en entrant le plat.
+*
+* @param Les informations du plat bio par référence contenues dans la classe PlatBio.
+*
+* @return Le menu avec le plat bio ajouté.
+*
+* @see platBio.cpp
+*/
 Menu& Menu::operator+=(const PlatBio& platBio){
 	listePlats_.push_back(new PlatBio(platBio.getNom(), platBio.getPrix(),
 		platBio.getCout(), platBio.getEcoTaxe()));
 	return *this;
 }
+
+/**
+* Cette méthode permet de mettre à jour le menu.
+*
+* @param Les informations du menu par référence.
+*
+* @return Le menu mis à jour.
+*/
 Menu & Menu::operator=(const Menu & menu)
 {
 	///TODO
@@ -102,7 +145,15 @@ Menu & Menu::operator=(const Menu & menu)
 	return *this;
 }
 
-
+/**
+* Cette méthode permet de lire le menu contenu dans un fichier.
+*
+* @param Le nom du fichier contenant le menu par référence.
+*
+* @return Si le fichier du menu a pu être lu.
+*
+* @see méthode ajouterPlat (utilisée).
+*/
 void Menu::lireMenu(const string& fichier) {
 	ifstream file(fichier, ios::in); 
 
@@ -226,6 +277,11 @@ void Menu::lireMenu(const string& fichier) {
 	}
 }
 
+/**
+* Cette méthode permet de trouver le plat le moins cher du menu.
+*
+* @return Le pointeur vers le plat le moins cher.
+*/
 Plat * Menu::trouverPlatMoinsCher() const
 {
 	Plat minimum(*listePlats_[0]);
@@ -244,6 +300,13 @@ Plat * Menu::trouverPlatMoinsCher() const
 
 }
 
+/**
+* Cette méthode permet de trouver un plat dans le menu.
+*
+* @param Le nom du plat à trouver.
+*
+* @return Le pointeur vers le plat trouvé ou le pointeur nul (plat non trouvé).
+*/
 Plat* Menu::trouverPlat(const string& nom) const {
 	for (unsigned i = 0; i < listePlats_.size(); ++i) {
 		if (listePlats_[i]->getNom() == nom)

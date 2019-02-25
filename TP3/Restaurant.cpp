@@ -6,7 +6,9 @@
 
 #include "Restaurant.h"
 
-//constructeurs 
+/**
+* Ce constructeur par défaut initialise les attributs du restaurant aux valeurs par défaut.
+*/
 Restaurant::Restaurant() {
 	nom_ = new string("Inconnu"); 
 
@@ -20,6 +22,13 @@ Restaurant::Restaurant() {
 
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du restaurant aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu du restaurant par référence.
+* @param Le nom du restaurant par référence.
+* @param Le moment de la journée.
+*/
 Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu moment) {
 	nom_ = new string(nom); 
 
@@ -34,6 +43,12 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	lireTable(fichier); 
 	lireAdresses(fichier);
 }
+
+/**
+* Ce constructeur crée une copie du restaurant existant.
+*
+* @param Les informations du restaurant par référence.
+*/
 Restaurant::Restaurant(const Restaurant & restau) : nom_(new string(*restau.nom_)),
 chiffreAffaire_(restau.chiffreAffaire_),
 momentJournee_(restau.momentJournee_),
@@ -49,7 +64,10 @@ menuSoir_(new Menu(*restau.menuSoir_))
 
 
 }
-//destructeur 
+
+/**
+* Ce destructeur détruit le restaurant.
+*/
 Restaurant::~Restaurant() {
 	delete nom_; 
 	delete menuMatin_; 
@@ -60,40 +78,62 @@ Restaurant::~Restaurant() {
 
 }
 
-
-//setter 
-
+/**
+* Cette méthode permet de définir le moment de la journée.
+*
+* @param Le moment de la journée.
+*/
 void Restaurant::setMoment(TypeMenu moment) {
 	momentJournee_ = moment; 
 }
+
+/**
+* Cette méthode permet de définir le nom du restaurant.
+*
+* @param Le nom du restaurant par référence.
+*/
 void Restaurant::setNom(const string & nom)
 {
 	nom_ = new string(nom);
 }
-//getters 
+
+/**
+* Cette méthode accède au nom du restaurant.
+*
+* @return Le pointeur vers le nom du restaurant.
+*/
 string Restaurant::getNom() const {
 	return *nom_; 
 }
 
+/**
+* Cette méthode accède au moment de la journée.
+*
+* @return Le moment de la journée.
+*/
 TypeMenu Restaurant::getMoment() const {
 	return momentJournee_; 
 }
 
+/**
+* Cette méthode accède au frais de transport pour une table.
+*
+* @param L'index de la table de livraison.
+*
+* @return Le frais de transport pour la table de livraison.
+*/
 double Restaurant::getFraisTransports(int index) const
 {
 	return fraisTransport_[index];
 }
 
-
-
-//autres methodes 
-
-
+/**
+* Cette méthode permet de libérer la table et d'ajouter le chiffre
+* d'affaire de celle-ci au total du chiffre d'affaire du restaurant.
+*
+* @param Le numéro de la table(id).
+*/
 void Restaurant::libererTable(int id) {
-
-	///TODO
-	///Modifier pour prendre en compte les différents types de clients et leurs privilèges
-	///Voir Énoncé
 
 	for (unsigned i = 0; i < tables_.size(); ++i) {
 		if (id == tables_[i]->getId()) {
@@ -107,9 +147,14 @@ void Restaurant::libererTable(int id) {
 	}
 }
 
-
-
-
+/**
+* Cette méthode permet d'afficher le chiffre d'affaire du restaurant, ses tables et son menu.
+*
+* @param Le paramètre en sortie.
+* @param Le restaurant à afficher par référence.
+*
+* @return La sortie.
+*/
 ostream& operator<<(ostream& os, const Restaurant& restau)
 {
 	os << "Le restaurant " << *restau.nom_;
@@ -139,12 +184,18 @@ ostream& operator<<(ostream& os, const Restaurant& restau)
 	return os;
 }
 
-
-//done?
+/**
+* Cette méthode permet d'ajouter un plat commandé à une table
+* en fonction du moment de la journée.
+*
+* @param Le nom du plat en référence.
+* @param Le numéro de la table (id).
+*
+* @see Méthode trouverPlat dans Menu.cpp (utilisée).
+* @see Méthode commander dans Table.cpp (utilisée).
+*/
 void Restaurant::commanderPlat(const string& nom, int idTable,TypePlat type, int nbIngredients) {
 
-	///TODO
-	/// Modifier la fonction pour ajouter des plats customisés aux commandes
 	Plat* plat = nullptr; 
 	int index; 
 	for (unsigned i = 0; i < tables_.size(); i++) {
@@ -182,13 +233,26 @@ void Restaurant::commanderPlat(const string& nom, int idTable,TypePlat type, int
  
 }
 
-
-
+/**
+* Cette méthode permet de comparer les chiffres d'affaire de deux restaurants.
+*
+* @param Le restaurant 1 par référence.
+* @param Le restaurant 2 par référence.
+*
+* @return Si le chiffre d'affaire du restaurant 1 est plus grand que celui du 2.
+*/
 bool Restaurant::operator<(const Restaurant & restau) const 
 {
 	return this->chiffreAffaire_ < restau.chiffreAffaire_;
 }
 
+/**
+* Cette méthode permet de mettre à jour le restaurant.
+*
+* @param Les informations du restaurant par référence.
+*
+* @return Le restaurant mis à jour.
+*/
 Restaurant & Restaurant::operator=(const Restaurant & restau)
 {
 	if (this != &restau)
@@ -212,6 +276,11 @@ Restaurant & Restaurant::operator=(const Restaurant & restau)
 	return *this;
 }
 
+/**
+* Cette méthode permet de lire les informations d'une table dans un fichier.
+*
+* @param Le fichier contenant une table du restaurant par référence.
+*/
 void Restaurant::lireTable(const string& fichier) {
 	ifstream file(fichier, ios::in); 
 
@@ -255,20 +324,28 @@ void Restaurant::lireTable(const string& fichier) {
 	}
 }
 
+/**
+* Cette méthode permet d'ajouter une table au restaurant.
+*
+* @param Le fichier contenant une table du restaurant par référence.
+*
+* @return Le restaurant avec la table ajoutée.
+*/
 Restaurant& Restaurant::operator+=(Table* table) {
 	tables_.push_back(new Table(*table)); 
 	return *this;
 }
 
-
-//done
+/**
+* Cette méthode permet de placer les clients à la table disponible ayant
+* le moins de places tout en ayant assez de places pour le nombre de clients.
+*
+* @param Le nombre de clients à placer.
+*/
 void Restaurant::placerClients(Client* client) {
-
 
 	int indexTable = -1;
 	int minimum = 100;
-
-
 
 	for (unsigned i = 0; i < tables_.size(); i++) {
 		if (tables_[i]->getNbPlaces() >= client->getTailleGroupe() && !tables_[i]->estOccupee() 
@@ -286,14 +363,17 @@ void Restaurant::placerClients(Client* client) {
 	}
 }
 
-//todo
+
+	/**
+	* Cette méthode permet de livrer le repas au client s'il a accès à ce service.
+	*
+	* @param Le nom du client.
+	* @param La commande du client.
+	*/
+
 void Restaurant::livrerClient(Client * client, vector<string> commande, int nbIngredients)
 {
-	///TODO
-	///se réferer à l'énoncé 
-	///vérifier que le client a droit aux livraisons
-	///Si oui lui assigner la table des tlivraisons 
-	///Effectuer la commande
+
 	if (client->getStatut() == Prestige) {
 		tables_[INDEX_TABLE_LIVRAISON]->placerClients(1);
 		tables_[INDEX_TABLE_LIVRAISON]->setClientPrincipal(client);
@@ -316,7 +396,14 @@ void Restaurant::livrerClient(Client * client, vector<string> commande, int nbIn
 	
 
 }
-//done
+
+/**
+* Cette méthode permet de calculer la réduction du client s'il a accès à ce service.
+*
+* @param Le nom du client.
+* @param Le montant de la commande du client.
+* @param Si le client a commandé pour une livraison.
+*/
 double Restaurant::calculerReduction(Client* client, double montant, bool livraison) {
 	if (client->getStatut() == Regulier) {
 		ClientRegulier* clientReg = nullptr;
@@ -337,6 +424,11 @@ double Restaurant::calculerReduction(Client* client, double montant, bool livrai
 	return 0;
  }
 
+/**
+* Cette méthode permet de lire les frais de transport en fonction des adresses.
+*
+* @param Le fichier contenant les frais de transport. 
+*/
 void Restaurant::lireAdresses(const string & fichier)
 {
 	ifstream file(fichier, ios::in);
