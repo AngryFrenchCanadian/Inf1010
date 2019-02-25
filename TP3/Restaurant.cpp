@@ -175,7 +175,6 @@ void Restaurant::commanderPlat(const string& nom, int idTable,TypePlat type, int
 		PlatCustom* platCustom = static_cast<PlatCustom*>(plat);
 		platCustom->setNbIngredients(nbIngredients);
 		tables_[index]->commander(platCustom);
-
 	}
 	else
 		tables_[index]->commander(plat);
@@ -307,7 +306,7 @@ void Restaurant::livrerClient(Client * client, vector<string> commande, int nbIn
 		
 		cout << "Statut de la table de livraison: (table numero "
 			<< tables_[INDEX_TABLE_LIVRAISON]->getId() << "):"
-			<< endl << *tables_[INDEX_TABLE_LIVRAISON] << "Livraison terminee" << endl;
+			<< endl << *tables_[INDEX_TABLE_LIVRAISON] << "Livraison terminee" << endl << endl;
 		tables_[INDEX_TABLE_LIVRAISON]->libererTable();
 	}
 	else {

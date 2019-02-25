@@ -90,7 +90,7 @@ string Client::convertirStatutString() const{
 * @return La sortie.
 */
 ostream & operator<<(ostream & os, const Client& client) {
-	os <<client.prenom_ << " " << client.nom_ << " statut: " << client.convertirStatutString();
+	os << "\t -" << client.prenom_ << " " << client.nom_ << " statut: " << client.convertirStatutString();
 	return os;
 }
 
