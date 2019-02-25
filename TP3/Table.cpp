@@ -104,8 +104,7 @@ Client* Table::getClientPrincipal() const
 * @param Le client principal.
 */void Table::setClientPrincipal(Client* clientPrincipal)
 {
-	if (clientPrincipal_ != nullptr)
-		delete clientPrincipal_;
+	
 
 	switch (clientPrincipal->getStatut()) {
 	case Occasionnel:clientPrincipal_ = new Client(clientPrincipal->getNom(),
@@ -142,6 +141,8 @@ void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
 	commande_.clear();
+	delete clientPrincipal_;
+	clientPrincipal_ = nullptr;
 }
 
 /**
@@ -180,7 +181,7 @@ double Table::getChiffreAffaire() const {
 			break;
 		case Bio:PlatBio* unPlatBio;
 			unPlatBio= static_cast<PlatBio*>(commande_[i]);
-			chiffre += ((unPlatBio->getPrix() * (1 + unPlatBio->getEcoTaxe()))
+			chiffre += ((unPlatBio->getPrix() + unPlatBio->getEcoTaxe())
 				- unPlatBio->getCout());
 			break;
 		case Custom: PlatCustom* unPlatCustom;

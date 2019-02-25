@@ -101,6 +101,7 @@ void Restaurant::libererTable(int id) {
 			chiffreAffaire_ += chiffreAffaireTable - calculerReduction(tables_[i]->getClientPrincipal(),
 				chiffreAffaireTable, tables_[i]->getClientPrincipal()->getStatut() == Prestige);
 			tables_[i]->libererTable(); 
+
 			break;
 		}
 	}
@@ -287,7 +288,7 @@ void Restaurant::placerClients(Client* client) {
 }
 
 //todo
-void Restaurant::livrerClient(Client * client, vector<string> commande)
+void Restaurant::livrerClient(Client * client, vector<string> commande, int nbIngredients)
 {
 	///TODO
 	///se réferer à l'énoncé 
@@ -297,8 +298,12 @@ void Restaurant::livrerClient(Client * client, vector<string> commande)
 	if (client->getStatut() == Prestige) {
 		tables_[INDEX_TABLE_LIVRAISON]->placerClients(1);
 		tables_[INDEX_TABLE_LIVRAISON]->setClientPrincipal(client);
-		for (unsigned i = 0; i < commande.size(); i++)
-			commanderPlat(commande[i], tables_[INDEX_TABLE_LIVRAISON]->getId());
+		for (unsigned i = 0; i < commande.size(); i++) {
+			if( nbIngredients != 0)
+				commanderPlat(commande[i], tables_[INDEX_TABLE_LIVRAISON]->getId(), Custom, nbIngredients);
+			else
+				commanderPlat(commande[i], tables_[INDEX_TABLE_LIVRAISON]->getId());
+		}
 		
 		cout << "Statut de la table de livraison: (table numero "
 			<< tables_[INDEX_TABLE_LIVRAISON]->getId() << "):"

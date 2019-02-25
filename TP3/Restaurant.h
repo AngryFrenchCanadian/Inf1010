@@ -47,7 +47,7 @@ public:
 	///TODO 
 	void placerClients(Client* client);///A Modifier
 	///TODO
-	void livrerClient(Client * client, vector<string>nomPlats);
+	void livrerClient(Client * client, vector<string>nomPlats, int nbIngredients = 0);
 	///TODO
 	double calculerReduction(Client* client, double montant, bool livraison);
 	//TODO
