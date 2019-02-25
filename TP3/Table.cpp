@@ -143,6 +143,11 @@ void Table::setId(int id) {
 void Table::libererTable() {
 	nbPlaces_ += nbClientsATable_;
 	nbClientsATable_ = 0;
+
+	for (unsigned i = 0; i < commande_.size(); i++) {
+		if (commande_[i]->getType() == Custom)
+			delete commande_[i];
+	}
 	commande_.clear();
 	
 }
@@ -189,7 +194,7 @@ double Table::getChiffreAffaire() const {
 		case Custom: PlatCustom* unPlatCustom;
 			unPlatCustom= static_cast<PlatCustom*>(commande_[i]);
 			chiffre += ((unPlatCustom->getPrix() + unPlatCustom->getSupplement())
-				- unPlatCustom->getPrix());
+				- unPlatCustom->getCout());
 			break;
 		}
 	}

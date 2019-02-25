@@ -2,6 +2,14 @@
 * Titre : main.cpp - Travail Pratique #3
 * Date : 11 Février 2019 
 * Auteur : Fatou S. Mounzeo
+*
+*Q1: Car c'est ce qui nous permet de déterminer si le plat lu est d'un type different. Ainsi, sans son existance,
+* on ne pourrait connaitre le moment approprié pour utiliser static_cast. 
+*
+*Q2: 
+*
+*
+*
 */
 
 #include "Restaurant.h"

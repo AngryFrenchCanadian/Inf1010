@@ -223,9 +223,9 @@ void Restaurant::commanderPlat(const string& nom, int idTable,TypePlat type, int
 	}
 	else if(type == Custom)
 	{
-		PlatCustom* platCustom = static_cast<PlatCustom*>(plat);
-		platCustom->setNbIngredients(nbIngredients);
-		tables_[index]->commander(platCustom);
+		
+		tables_[index]->commander(new PlatCustom(plat->getNom(), plat->getPrix(),
+			plat->getCout(), nbIngredients));
 	}
 	else
 		tables_[index]->commander(plat);
