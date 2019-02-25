@@ -387,7 +387,7 @@ void Restaurant::livrerClient(Client * client, vector<string> commande, int nbIn
 		cout << "Statut de la table de livraison: (table numero "
 			<< tables_[INDEX_TABLE_LIVRAISON]->getId() << "):"
 			<< endl << *tables_[INDEX_TABLE_LIVRAISON] << "Livraison terminee" << endl << endl;
-		tables_[INDEX_TABLE_LIVRAISON]->libererTable();
+		libererTable(tables_[INDEX_TABLE_LIVRAISON]->getId());
 	}
 	else {
 		cout << "Le client " << client->getNom() << " n'est pas admissible a la livraison"
@@ -416,7 +416,7 @@ double Restaurant::calculerReduction(Client* client, double montant, bool livrai
 		ClientPrestige* clientPrest = nullptr;
 		clientPrest = static_cast<ClientPrestige*>(client);
 		if (clientPrest->getNbPoints() < SEUIL_LIVRAISON_GRATUITE && livraison == true)
-			return montant * TAUX_REDUC_PRESTIGE +
+			return montant * TAUX_REDUC_PRESTIGE -
 			getFraisTransports(clientPrest->getAdresseCode());
 		else
 			return montant * TAUX_REDUC_PRESTIGE;
