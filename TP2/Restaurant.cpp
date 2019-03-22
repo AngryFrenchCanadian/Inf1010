@@ -51,7 +51,11 @@ Restaurant::Restaurant(const string& fichier,  const string& nom, TypeMenu momen
 	lireTable(fichier);
 }
 
-
+/**
+* Ce constructeur crée une copie du restaurant existant.
+*
+* @param Les informations du restaurant par référence.
+*/
 Restaurant::Restaurant(const Restaurant& resto) :chiffreAffaire_(resto.chiffreAffaire_),
 	momentJournee_(resto.momentJournee_),menuMatin_(nullptr),
 	menuMidi_(nullptr),menuSoir_(nullptr),nom_(nullptr)
