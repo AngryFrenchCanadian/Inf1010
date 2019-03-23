@@ -12,7 +12,7 @@
 #include "Plat.h"
 #include "def.h"
 class PlatVege :
-        public Vege, public Plat
+        public Vege, public Plat, public Taxable
 {
 public:
 	PlatVege(string nom = "inconnu", double prix = 0, double cout = 0, double vitamines = 0,
@@ -21,7 +21,9 @@ public:
     virtual Plat* clone()const; // TODO
     virtual void afficherPlat(ostream & os) const;//TODO
     double calculerApportNutritif() const; // TODO
+	virtual void setTaxe();
+	virtual double getTaxe() const;
 protected:
-
+	double taxe_;
 };
 #endif
