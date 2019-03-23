@@ -5,7 +5,7 @@
 #ifndef CLIENT_REG
 #define CLIENT_REG
 #include "Client.h"
-//#include "Restaurant.h"
+#include "Restaurant.h"
 #include "def.h"
 class Restaurant;
 

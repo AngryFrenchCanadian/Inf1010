@@ -20,7 +20,8 @@ ClientRegulier::ClientRegulier()
 * @param La taille de son groupe.
 * @param Son nombre de points.
 */
-ClientRegulier::ClientRegulier(string_view nom, string_view prenom, int tailleGroupe, int npoints) : Client(nom, prenom, tailleGroupe), nbPoints_(npoints)
+ClientRegulier::ClientRegulier(string_view nom, string_view prenom, int tailleGroupe, int npoints)
+: Client(nom, prenom, tailleGroupe), nbPoints_(npoints)
 { 
 }
 
@@ -63,7 +64,7 @@ void ClientRegulier::afficherClient(ostream & os) const
 }
 
 /**
-* Cette méthode accède a la reduction du client occasionnel.
+* Cette méthode accède a la reduction du client regulier.
 *
 * @param Le nom du restaurant.
 * @param Le montant de la facture.
