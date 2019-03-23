@@ -16,12 +16,12 @@ class ClientRegulier : public Client
 	ClientRegulier(string_view nom, string_view prenom, int tailleGroupe, int nbPoints);// TODO
     ~ClientRegulier();
 	//Accesseurs
-     int getNbPoints() const ;
+    virtual int getNbPoints() const ;
 
 	//Autres Methodes
 	void augmenterNbPoints(int bonus);
-    void afficherClient(ostream & os) const; // TODO
-    double getReduction(const Restaurant & res, double montant , bool estLivraison);// TODO
+    virtual void afficherClient(ostream & os) const; // TODO
+    virtual double getReduction(const Restaurant & res, double montant , bool estLivraison) const;// TODO
 //
 protected:
 	int nbPoints_;
