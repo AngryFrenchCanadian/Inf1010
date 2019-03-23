@@ -108,5 +108,6 @@ double Plat::getPrixRevient()
 * @return le plat copie.
 */
  Plat* Plat:: clone () const
-{ //TODO
+{ 
+	 return(new Plat(nom_, prix_, cout_));
 }

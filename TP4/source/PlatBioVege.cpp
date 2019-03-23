@@ -16,7 +16,7 @@
 * @param Le nombre de mineraux.
 */
 PlatBioVege::PlatBioVege(string nom, double prix, double cout, double ecotaxe, double vitamines, double proteines, double mineraux)
-: PlatBio(nom, prix, cout, ecotaxe), Vege(nom, vitamines, proteines, mineraux)
+	: PlatBio(nom, prix, cout, ecotaxe), Vege(nom, vitamines, proteines, mineraux)
 {
 }
 
@@ -45,7 +45,7 @@ void PlatBioVege::afficherPlat(ostream & os) const
 */
 Plat * PlatBioVege::clone() const
 { 
-	//TODO
+	return (new PlatBioVege(nom_, prix_, cout_, ecoTaxe_, vitamines_, proteines_, mineraux_));
 }
 
 double PlatBioVege::calculerApportNutritif() const

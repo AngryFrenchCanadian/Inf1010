@@ -17,7 +17,7 @@ class Plat {
 public:
 	// constructeur
 	Plat(string_view nom = "inconnu", double prix = 0, double cout = 0);
-         ~Plat();
+    virtual ~Plat() = default;
 	//getters 
 	string getNom() const;
 	double getPrix() const;
@@ -28,10 +28,10 @@ public:
 	void setPrix(double prix);
 
 	//methodes en plus
-        double getPrixRevient();
-        Plat*  clone () const; // TODO
+    virtual double getPrixRevient();
+    virtual Plat*  clone () const; // TODO
 	bool operator < (const Plat& plat) const;
-        void afficherPlat(ostream& os) const; // TODO
+    virtual void afficherPlat(ostream& os) const; // TODO
 
 
 protected:
