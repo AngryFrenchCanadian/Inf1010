@@ -29,7 +29,7 @@ public:
 
 	//methodes en plus
         double getPrixRevient();
-        Plat *  clone () const; // TODO
+        Plat*  clone () const; // TODO
 	bool operator < (const Plat& plat) const;
         void afficherPlat(ostream& os) const; // TODO
 
