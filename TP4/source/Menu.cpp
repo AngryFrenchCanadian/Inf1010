@@ -1,6 +1,9 @@
 /*
+* Titre : Menu.cpp - Travail Pratique #4
 * Date : 25 février 2019
 * Auteur : AbdeB
+* Modifié par : Étienne Bourgoin #1955553
+* Modifié par : Manuel Pellerin #1960929
 */
 
 #include "Menu.h"
@@ -8,18 +11,26 @@
 #include <cassert>  //? Contient "assert" qui permet de s'assurer qu'une expression est vraie, et terminer le programme avec un message d'erreur en cas contraire.
 using namespace std;
 
-// Constructeurs.
-
+/**
+* Ce constructeur par défaut initialise les attributs du menu aux valeurs par défaut.
+*/
 Menu::Menu() :
 	type_{TypeMenu::Matin}
 {
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu.
+* @param Le type du menu contenu dans le fichier sélectionné (matin, midi ou soir).
+*/
 Menu::Menu(string fichier, TypeMenu type) :
 	type_{type}
 {
 	lireMenu(fichier); 
 }
+
 
 Menu::~Menu()
 {
@@ -30,7 +41,11 @@ Plat* Menu::allouerPlat(Plat* plat) {
     return plat->clone();
 }
 
-
+/**
+* Ce constructeur crée une copie du menu existant.
+*
+* @param Les informations du menu par référence.
+*/
 Menu::Menu(const Menu & menu) : type_(menu.type_)
 {
 	//TODO

@@ -1,6 +1,9 @@
 /*
+* Titre : ClientPrestige.h - Travail Pratique #4
 * Date : 25 février 2019
 * Auteur : AbdeB
+* Modifié par : Étienne Bourgoin #1955553
+* Modifié par : Manuel Pellerin #1960929
 */
 #ifndef CLIENT_PRESTIGE
 #define CLIENT_PRESTIGE
@@ -19,9 +22,9 @@ public:
 	ZoneHabitation getAdresseCode() const;
 
 	//Autres Fonctions
-    void afficherClient(ostream & os) const;// TODO
+    virtual void afficherClient(ostream & os) const;// TODO
 	string getAdressCodeString() const;
-    double getReduction(const Restaurant & res, double montant, bool estLivraison); //TODO
+    virtual double getReduction(const Restaurant & res, double montant, bool estLivraison) const; //TODO
 
 private:
 	ZoneHabitation adresse_;

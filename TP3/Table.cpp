@@ -102,7 +102,8 @@ Client* Table::getClientPrincipal() const
 * Cette méthode permet de créer/modifier le client principal.
 *
 * @param Le client principal.
-*/void Table::setClientPrincipal(Client* clientPrincipal)
+*/
+void Table::setClientPrincipal(Client* clientPrincipal)
 {
 	if (clientPrincipal_ != nullptr) {
 		delete clientPrincipal_;
