@@ -1,3 +1,10 @@
+/*
+* Titre : Client.h - Travail Pratique #4
+* Date : 25 février 2019
+* Auteur : AbdeB
+* Modifié par : Étienne Bourgoin #1955553
+* Modifié par : Manuel Pellerin #1960929
+*/
 #ifndef CLIENT_H
 #define CLIENT_H
 
