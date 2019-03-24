@@ -60,10 +60,8 @@ void ClientRegulier::augmenterNbPoints(int bonus)
 */
 void ClientRegulier::afficherClient(ostream & os) const
 {
-	if (tableOccupee_ != nullptr) {
-		os << "La table numero " << tableOccupee_ << " est occupee. Le client principal est: " << endl <<
-			prenom_ << nom_ << endl;
-	}
+	Client::afficherClient(os);
+	os << "Points: " << nbPoints_ << endl;
 }
 
 /**

@@ -20,7 +20,7 @@ class Plat {
 public:
 	// constructeur
 	Plat(string_view nom = "inconnu", double prix = 0, double cout = 0);
-    virtual ~Plat() = default;
+    virtual ~Plat();
 	//getters 
 	string getNom() const;
 	double getPrix() const;

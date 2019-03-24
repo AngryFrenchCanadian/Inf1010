@@ -12,7 +12,7 @@
 #include <string_view>
 #include <iostream>
 #include "Table.h"
-#include "Restaurant.h"
+//#include "Restaurant.h"
 #include "def.h"
 using std::string, std::string_view, std::ostream;  //? On ne devrait normalement pas faire de "using" global dans un .h, mais c'est accepte en INF1010.
 
@@ -23,7 +23,7 @@ class Client
 public:
 	Client();
 	Client(string_view nom, string_view prenom, int tailleGroupe);
-    ~Client(){};
+    virtual ~Client();
 	//getters
 	int getTailleGroupe() const;
 	string getNom() const;

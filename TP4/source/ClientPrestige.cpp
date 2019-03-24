@@ -47,9 +47,18 @@ ZoneHabitation ClientPrestige::getAdresseCode() const
 */
 void ClientPrestige::afficherClient(ostream & os) const
 {
-	if (tableOccupee_ != nullptr) {
-		os << "La table numero " << tableOccupee_ << " est occupee. Le client principal est: " << endl <<
-			prenom_ << nom_ << endl;
+	ClientRegulier::afficherClient(os);
+	os << "Zone: ";
+	switch (adresse_) {
+	case  ZoneHabitation::Zone1:
+		os << "Zone1" << endl;
+		break;
+	case ZoneHabitation::Zone2:
+		os << "Zone2" << endl;
+		break;
+	case ZoneHabitation::Zone3:
+		os << "Zone3" << endl;
+		break;
 	}
 }
 

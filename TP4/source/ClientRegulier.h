@@ -8,7 +8,7 @@
 #ifndef CLIENT_REG
 #define CLIENT_REG
 #include "Client.h"
-#include "Restaurant.h"
+//#include "Restaurant.h"
 #include "def.h"
 class Restaurant;
 
@@ -17,7 +17,7 @@ class ClientRegulier : public Client
  public:
 	ClientRegulier();
 	ClientRegulier(string_view nom, string_view prenom, int tailleGroupe, int nbPoints);// TODO
-    ~ClientRegulier();
+    virtual ~ClientRegulier();
 	//Accesseurs
     virtual int getNbPoints() const ;
 

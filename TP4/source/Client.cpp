@@ -24,15 +24,17 @@ Client::Client()
 * @param La taille de son groupe.
 */
 Client::Client(string_view nom, string_view prenom, int tailleGroupe) :
-	nom_(nom), prenom_(prenom), tailleGroupe_(tailleGroupe)
+	nom_(nom), prenom_(prenom), tailleGroupe_(tailleGroupe),tableOccupee_(nullptr)
 {
-    tableOccupee_ = nullptr;
 }
 
 /**
 * Ce destructeur détruit un client.
 */
-Client::~Client() {}
+Client::~Client() {
+	
+	tableOccupee_ = nullptr;
+}
 
 /**
 * Cette méthode accède à la taille du groupe du client.
@@ -91,9 +93,9 @@ Table* Client:: getTable() const
 */
 void Client::afficherClient(ostream & os) const
 { 
-	if (tableOccupee_ != nullptr) {
-		os << "La table numero " << tableOccupee_ << " est occupee. Le client principal est: " << endl <<
-			prenom_ << nom_ << endl;
-	}
+	os << prenom_ << ' ' << nom_ << endl;
+	if (tableOccupee_ != nullptr)
+		os << *tableOccupee_;
+	
 }
 
