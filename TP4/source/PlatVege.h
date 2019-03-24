@@ -21,6 +21,7 @@ public:
     virtual Plat* clone()const; // TODO
     virtual void afficherPlat(ostream & os) const;//TODO
     double calculerApportNutritif() const; // TODO
+
 protected:
 
 };

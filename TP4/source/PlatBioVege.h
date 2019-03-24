@@ -22,5 +22,6 @@ public:
     virtual void afficherPlat(ostream & os) const;// TODO
     double calculerApportNutritif() const; // TODO
 
+
 };
 #endif

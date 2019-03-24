@@ -35,11 +35,10 @@ PlatBioVege:: ~PlatBioVege(){}
 */
 void PlatBioVege::afficherPlat(ostream & os) const
 {
-	PlatBio platbio;
-	os << "Plat Bio	  comprend une Taxe ecologique de :" << ecoTaxe_ << "$" << endl <<
-		"ET PLAT VEGE " << platbio.getNom() << "	" << "vitamines " << vitamines_ << "proteines " << proteines_
-		<< "mineraux " << mineraux_ << endl;
+	PlatBio::afficherPlat(os);
+	Vege::afficherVege(os);
 }
+
 
 /*
 * Cette methode retourne un objet alloue dynamiquement qui est une copie d'un objet courant.
@@ -48,7 +47,7 @@ void PlatBioVege::afficherPlat(ostream & os) const
 */
 Plat * PlatBioVege::clone() const
 { 
-	return (new PlatBioVege(nom_, prix_, cout_, ecoTaxe_, vitamines_, proteines_, mineraux_));
+	return (new PlatBioVege(Vege::nom_, prix_, cout_, ecoTaxe_, vitamines_, proteines_, mineraux_));
 }
 
 double PlatBioVege::calculerApportNutritif() const

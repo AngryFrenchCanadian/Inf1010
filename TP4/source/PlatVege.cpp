@@ -35,7 +35,7 @@ PlatVege::~ PlatVege(){}
 */
 Plat* PlatVege::clone() const
 { 
-	//TODO
+	return (new PlatVege(Vege::nom_, prix_, cout_, vitamines_, proteines_, mineraux_));
 }
 
 /**
@@ -45,10 +45,10 @@ Plat* PlatVege::clone() const
 */
 void PlatVege::afficherPlat(ostream & os) const
 {   
-	Plat plat;
-	os << "PLAT VEGE " << plat.getNom() << "	" << "vitamines " << vitamines_ << "proteines " << proteines_ 
-	<< "mineraux " << mineraux_ << endl << "(apport nutritif " << calculerApportNutritif() << "mg)" << endl;
+	Plat::afficherPlat(os);
+	Vege::afficherVege(os);
 }
+
 
 /**
 * Cette méthode permet de calculer l'apport nutritif du plat.

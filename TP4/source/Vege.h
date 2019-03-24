@@ -13,14 +13,14 @@ class Vege
 {
 public:
 	Vege(string nom, double vitamines, double proteines, double mineraux);
-	virtual double getVitamines() const;
-	virtual double getProteines() const;
-	virtual double getMineraux() const;
-	virtual void setVitamines(double vitamines);
-	virtual void setProteines(double proteines);
-	virtual void setMineraux(double mineraux);
-    virtual void afficherVege(ostream & os) const = 0; // TODO
-
+	double getVitamines() const;
+	double getProteines() const;
+	double getMineraux() const;
+	void setVitamines(double vitamines);
+	void setProteines(double proteines);
+	void setMineraux(double mineraux);
+    virtual void afficherVege(ostream & os) const ; // TODO
+	virtual double calculerApportNutritif() const = 0;//TODO
 protected: 
 	double vitamines_;
 	double proteines_;
