@@ -48,6 +48,7 @@ void PlatVege::afficherPlat(ostream & os) const
 {   
 	Plat::afficherPlat(os);
 	Vege::afficherVege(os);
+	os << endl << "(Apport nutritif " << calculerApportNutritif() << "mg )";
 }
 
 

@@ -69,6 +69,9 @@ Menu::Menu(const Menu & menu) : type_(menu.type_)
 
 		if (dynamic_cast<PlatVege*>(plat))
 			listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+
+		else if (dynamic_cast<PlatBioVege*>(plat))
+			listePlatsVege_.push_back(static_cast<PlatBioVege*>(plat));
 	}
 
 	
@@ -79,20 +82,25 @@ Menu::Menu(const Menu & menu) : type_(menu.type_)
 Menu & Menu::operator=(const Menu & menu)
 {
 	if (this != &menu) {
-		for (int i = 0 ; i < listePlats_.size(); i++)
+		for (int i = 0; i < listePlats_.size(); i++)
 			delete listePlats_[i];
 		listePlats_.clear();
 		listePlatsVege_.clear();
-	}
 
-	Plat* plat;
-	for (int i = 0; i < menu.listePlats_.size(); i++) {
-		plat = allouerPlat(menu.listePlats_[i]);
-		listePlats_.push_back(plat);
 
-		if (dynamic_cast<PlatVege*>(plat))
-			listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+		Plat* plat;
+		for (int i = 0; i < menu.listePlats_.size(); i++) {
+			plat = allouerPlat(menu.listePlats_[i]);
+			listePlats_.push_back(plat);
 
+			if (dynamic_cast<PlatVege*>(plat))
+				listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+
+			else if (dynamic_cast<PlatBioVege*>(plat))
+				listePlatsVege_.push_back(static_cast<PlatBioVege*>(plat));
+
+		}
+		plat = nullptr;
 	}
 	return *this;
 }
@@ -121,6 +129,9 @@ Menu& Menu::operator+=(owner<Plat*> plat)
 	listePlats_.push_back(plat);
 	if (dynamic_cast<PlatVege*>(plat))
 		listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+
+	else if (dynamic_cast<PlatBioVege*>(plat))
+		listePlatsVege_.push_back(static_cast<PlatBioVege*>(plat));
 	return *this;
 }
 
