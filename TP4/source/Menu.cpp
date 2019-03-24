@@ -31,12 +31,23 @@ Menu::Menu(string fichier, TypeMenu type) :
 	lireMenu(fichier); 
 }
 
-
+/*
+* Ce destructeur detruit le menu.
+*/
 Menu::~Menu()
 {
-	//TODO
+	Menu* menu;
+	for (int i = 0; i < listePlats_.size(); ++i) {
+		delete listePlats_[i];
+	}
+	delete menu;
 }
 
+/*
+* Cette methode retourne un plat alloue dynamiquement qui est une copie d'un plat courant.
+*
+* @return le plat copie.
+*/
 Plat* Menu::allouerPlat(Plat* plat) {
     return plat->clone();
 }
@@ -48,28 +59,51 @@ Plat* Menu::allouerPlat(Plat* plat) {
 */
 Menu::Menu(const Menu & menu) : type_(menu.type_)
 {
-	//TODO
+	Plat* plat;
+	for (unsigned i = 0; i < menu.listePlats_.size(); ++i)
+	{
+		listePlats_.push_back(new owner<Plat> (allouerPlat(plat)));
+	}
+}
   
 }
+
 
 Menu & Menu::operator=(const Menu & menu)
 {
         //TODO
 }
 
-// Getters.
-
+/**
+* Cette méthode accède à la liste de plats pointés par des pointeurs.
+*
+* @return La liste de plats.
+*/
 vector<Plat*> Menu::getListePlats() const
 {
 	return listePlats_;
 }
 
-// Autres methodes.
-
-Menu& Menu::operator+=(owner<Plat*> plat) {
-        //TODO
+/**
+* Cette méthode permet d'ajouter un plat au menu en entrant le plat.
+*
+* @param Les informations du plat par référence contenues dans la classe Plat.
+*
+* @return Le menu avec le plat ajouté.
+*
+* @see plat.cpp
+*/
+Menu& Menu::operator+=(owner<Plat*> plat) 
+{
+	listePlats_.push_back(new owner<Plat>(plat));
+	return *this;
 }
 
+/**
+* Cette méthode permet de lire le menu contenu dans un fichier.
+*
+* @param Le nom du fichier contenant le menu par référence.
+*/
 void Menu::lireMenu(const string& nomFichier) {
 	LectureFichierEnSections fichier{nomFichier};
 	fichier.allerASection(entetesDesTypesDeMenu[static_cast<int>(type_)]);
@@ -77,6 +111,11 @@ void Menu::lireMenu(const string& nomFichier) {
 		*this += lirePlatDe(fichier);
 }
 
+/**
+* Cette méthode permet de trouver le plat le moins cher du menu.
+*
+* @return Le pointeur vers le plat le moins cher.
+*/
 Plat* Menu::trouverPlatMoinsCher() const
 {
 	assert(!listePlats_.empty() && "La liste de plats de doit pas etre vide pour trouver le plat le moins cher.");
@@ -88,6 +127,13 @@ Plat* Menu::trouverPlatMoinsCher() const
 	return minimum;
 }
 
+/**
+* Cette méthode permet de trouver un plat dans le menu.
+*
+* @param Le nom du plat à trouver.
+*
+* @return Le pointeur vers le plat trouvé ou le pointeur nul (plat non trouvé).
+*/
 Plat* Menu::trouverPlat(string_view nom) const
 {
 	for (Plat* plat : listePlats_)
@@ -96,6 +142,12 @@ Plat* Menu::trouverPlat(string_view nom) const
 
 	return nullptr; 
 }
+
+/**
+* Cette méthode permet de lire un plat contenu dans un fichier.
+*
+* @param Le nom du fichier contenant le menu par référence.
+*/
 Plat* Menu::lirePlatDe(LectureFichierEnSections& fichier)
 {
     auto lectureLigne = fichier.lecteurDeLigne();
@@ -122,8 +174,14 @@ Plat* Menu::lirePlatDe(LectureFichierEnSections& fichier)
     
 }
 
-// Fonctions globales.
-
+/*
+*Cette méthode permet d'afficher le menu.
+*
+* @param Le paramètre en sortie.
+* @param Le menu à afficher par référence.
+*
+* @return La sortie.
+*/
 ostream& operator<<(ostream& os, const Menu& menu)
 {   
         //TODO

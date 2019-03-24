@@ -59,3 +59,21 @@ double PlatVege::calculerApportNutritif() const
 {
 	return ((vitamines_ * proteines_ / mineraux_) * RAPPORT_NUTRITIF);
 }
+
+/**
+* Cette méthode permet de modifier les taxes pour le plat vege.
+*/
+void PlatVege::setTaxe()
+{
+	taxe_ = 0.07;
+}
+
+/**
+* Cette méthode accède aux taxes pour le plat vege.
+*
+* @return Les taxes pour le plat vege.
+*/
+double PlatVege::getTaxe() const
+{
+	return taxe_;
+}

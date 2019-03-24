@@ -370,7 +370,6 @@ void Restaurant::placerClients(Client* client) {
 	* @param Le nom du client.
 	* @param La commande du client.
 	*/
-
 void Restaurant::livrerClient(Client * client, vector<string> commande, int nbIngredients)
 {
 	cout << "Livraison en cours..." << endl;

@@ -1,8 +1,10 @@
 
 /*
-* Titre : Restaurant.h - Travail Pratique #1
+* Titre : Restaurant.h - Travail Pratique #4
 * Date : 18 Janvier 2019
 * Auteur : Allan BEDDOUK
+* Modifié par : Étienne Bourgoin #1955553
+* Modifié par : Manuel Pellerin #1960929
 */
 
 #ifndef RESTAURANT_H
