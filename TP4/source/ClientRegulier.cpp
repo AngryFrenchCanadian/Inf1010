@@ -78,4 +78,6 @@ double ClientRegulier::getReduction(const Restaurant & res, double montant, bool
 	if (nbPoints_ > SEUIL_DEBUT_REDUCTION) {
 		return (-montant * TAUX_REDUC_REGULIER);
 	}
+	else
+		return 0.0;
 }

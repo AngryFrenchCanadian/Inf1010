@@ -100,11 +100,10 @@ string ClientPrestige::getAdressCodeString() const
 */
 double ClientPrestige :: getReduction(const Restaurant & res, double montant , bool estLivraison) const
 {
-	if (nbPoints_ > SEUIL_DEBUT_REDUCTION && nbPoints_ > SEUIL_LIVRAISON_GRATUITE) {
+	if (nbPoints_ > SEUIL_LIVRAISON_GRATUITE) {
 		return (-montant * TAUX_REDUC_PRESTIGE);
 	}
-	if (nbPoints_ > SEUIL_DEBUT_REDUCTION && nbPoints_ < SEUIL_LIVRAISON_GRATUITE) {
+	else
 		return (-montant * TAUX_REDUC_PRESTIGE + res.getFraisLivraison(adresse_));
-	}
-	else return res.getFraisLivraison(adresse_);
+
 }
