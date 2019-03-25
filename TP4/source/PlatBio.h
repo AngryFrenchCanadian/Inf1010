@@ -20,7 +20,7 @@ public:
 	// constructeurs
     PlatBio(string nom = "inconnu", double prix = 0,
 			double cout = 0, double ecotaxe = 0);//TODO
-    virtual ~ PlatBio() = default;
+    virtual ~PlatBio();
 	//getters 
 	double getEcoTaxe() const;
 	//setters 

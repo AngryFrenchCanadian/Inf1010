@@ -54,10 +54,9 @@ double ClientOccasionnel::getReduction(const Restaurant & res, double montant, b
 */
 void ClientOccasionnel::afficherClient(ostream & os) const
 {
-	if (tableOccupee_ != nullptr) {
-		os << "La table numero " << tableOccupee_ << " est occupee. Le client principal est: " << endl <<
-			prenom_ << nom_ << endl;
-	}
+	Client::afficherClient(os);
+	os << "Taille du groupe: " << tailleGroupe_ << endl;
+
 }
 
 

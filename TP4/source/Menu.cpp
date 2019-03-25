@@ -36,11 +36,13 @@ Menu::Menu(string fichier, TypeMenu type) :
 */
 Menu::~Menu()
 {
-	Menu* menu;
+	
 	for (int i = 0; i < listePlats_.size(); ++i) {
 		delete listePlats_[i];
+		listePlats_[i] = nullptr;
 	}
-	delete menu;
+	listePlats_.clear();
+	listePlatsVege_.clear();
 }
 
 /*
@@ -60,18 +62,47 @@ Plat* Menu::allouerPlat(Plat* plat) {
 Menu::Menu(const Menu & menu) : type_(menu.type_)
 {
 	Plat* plat;
-	for (unsigned i = 0; i < menu.listePlats_.size(); ++i)
+	for (int i = 0 ; i < menu.listePlats_.size(); i++)
 	{
-		listePlats_.push_back(new owner<Plat> (allouerPlat(plat)));
+		plat = allouerPlat(menu.listePlats_[i]);
+		listePlats_.push_back(plat);
+
+		if (dynamic_cast<PlatVege*>(plat))
+			listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+
+		else if (dynamic_cast<PlatBioVege*>(plat))
+			listePlatsVege_.push_back(static_cast<PlatBioVege*>(plat));
 	}
-}
+
+	
   
 }
 
 
 Menu & Menu::operator=(const Menu & menu)
 {
-        //TODO
+	if (this != &menu) {
+		for (int i = 0; i < listePlats_.size(); i++)
+			delete listePlats_[i];
+		listePlats_.clear();
+		listePlatsVege_.clear();
+
+
+		Plat* plat;
+		for (int i = 0; i < menu.listePlats_.size(); i++) {
+			plat = allouerPlat(menu.listePlats_[i]);
+			listePlats_.push_back(plat);
+
+			if (dynamic_cast<PlatVege*>(plat))
+				listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+
+			else if (dynamic_cast<PlatBioVege*>(plat))
+				listePlatsVege_.push_back(static_cast<PlatBioVege*>(plat));
+
+		}
+		plat = nullptr;
+	}
+	return *this;
 }
 
 /**
@@ -95,7 +126,12 @@ vector<Plat*> Menu::getListePlats() const
 */
 Menu& Menu::operator+=(owner<Plat*> plat) 
 {
-	listePlats_.push_back(new owner<Plat>(plat));
+	listePlats_.push_back(plat);
+	if (dynamic_cast<PlatVege*>(plat))
+		listePlatsVege_.push_back(static_cast<PlatVege*>(plat));
+
+	else if (dynamic_cast<PlatBioVege*>(plat))
+		listePlatsVege_.push_back(static_cast<PlatBioVege*>(plat));
 	return *this;
 }
 
@@ -184,5 +220,11 @@ Plat* Menu::lirePlatDe(LectureFichierEnSections& fichier)
 */
 ostream& operator<<(ostream& os, const Menu& menu)
 {   
-        //TODO
+	for (int i = 0; i < menu.listePlats_.size(); i++)
+		menu.listePlats_[i]->afficherPlat(os);
+
+	os << endl << "MENU ENTIEREMENT VEGETARIEN" << endl;
+	for (int i = 0; i < menu.listePlatsVege_.size(); i++)
+		menu.listePlatsVege_[i]->afficherVege(os);
+	return os;
 }

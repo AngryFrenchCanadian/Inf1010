@@ -17,12 +17,13 @@ class PlatVege :
 public:
 	PlatVege(string nom = "inconnu", double prix = 0, double cout = 0, double vitamines = 0,
              double proteines = 0, double mineraux = 0);//TODO
-    virtual ~ PlatVege() = default;
+    virtual ~PlatVege();
     virtual Plat* clone()const; // TODO
     virtual void afficherPlat(ostream & os) const;//TODO
     double calculerApportNutritif() const; // TODO
 	virtual void setTaxe();
 	virtual double getTaxe() const;
+
 protected:
 	double taxe_;
 };

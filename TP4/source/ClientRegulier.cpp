@@ -60,10 +60,8 @@ void ClientRegulier::augmenterNbPoints(int bonus)
 */
 void ClientRegulier::afficherClient(ostream & os) const
 {
-	if (tableOccupee_ != nullptr) {
-		os << "La table numero " << tableOccupee_ << " est occupee. Le client principal est: " << endl <<
-			prenom_ << nom_ << endl;
-	}
+	Client::afficherClient(os);
+	os << "Points: " << nbPoints_ << endl;
 }
 
 /**
@@ -80,4 +78,6 @@ double ClientRegulier::getReduction(const Restaurant & res, double montant, bool
 	if (nbPoints_ > SEUIL_DEBUT_REDUCTION) {
 		return (-montant * TAUX_REDUC_REGULIER);
 	}
+	else
+		return 0.0;
 }

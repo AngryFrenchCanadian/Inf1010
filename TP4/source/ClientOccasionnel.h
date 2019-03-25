@@ -14,7 +14,7 @@ class ClientOccasionnel: public Client
 {
 public:
 	ClientOccasionnel(string_view nom, string_view prenom, int tailleGroupe);//TODO
-    ~ClientOccasionnel();
+    virtual ~ClientOccasionnel();
     virtual int getNbPoints() const;// TODO
     virtual void afficherClient(ostream & os) const;// TODO
     virtual double getReduction(const Restaurant & res, double montant, bool estLivraison) const; // TODO
