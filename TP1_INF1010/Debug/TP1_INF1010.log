@@ -1,0 +1,4 @@
+﻿  main.cpp
+  plat.cpp
+c:\users\étienne bourgoin\source\repos\tp1_inf1010\tp1_inf1010\plat.cpp(7): fatal error C1083: Impossible d'ouvrir le fichier include : 'Plat.h' : No such file or directory
+  Génération de code en cours...
