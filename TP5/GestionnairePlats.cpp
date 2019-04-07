@@ -171,10 +171,9 @@ Plat* GestionnairePlats::trouverPlat(const string& nom) const {
 */
 vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, double borneSup) { // pas sur
 	vector<pair<string, Plat*>> platsConformes;
-	FoncteurIntervalle appartientIntervalle(borneInf, borneSup);
 	auto it = conteneur_.begin();
 
-	copy_if(it, conteneur_.end(), back_inserter(platsConformes), appartientIntervalle(*it));
+	copy_if(it, conteneur_.end(), back_inserter(platsConformes), FoncteurIntervalle(borneInf,borneSup));
 	return platsConformes;
 }
 

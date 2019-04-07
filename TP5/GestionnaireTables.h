@@ -23,4 +23,5 @@ public:
 	void lireTables(const string& nomFichier);
 
 	void afficherTables(ostream& os) const; // TODO
+	GestionnaireTables& operator+=(Table* table);
 };

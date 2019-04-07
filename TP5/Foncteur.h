@@ -40,8 +40,8 @@ class FoncteurIntervalle
 public:
 	FoncteurIntervalle(double min, double max) :min_(min), max_(max) {};
 
-	bool operator()(Plat* plat) {
-		double prixPlat = plat->getPrix();
+	bool operator()(const pair<string,Plat*>& pair)const {
+		double prixPlat = pair.second->getPrix();
 		return (prixPlat >= min_ && prixPlat <= max_);
 	}
 private:

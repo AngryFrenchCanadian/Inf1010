@@ -88,7 +88,7 @@ void GestionnaireTables::afficherTables(ostream& os) const {
 *
 * @return Le conteneur avec la table ajoutée.
 */
-GestionnaireTables* GestionnaireTables::operator+=(Table* table) {
+GestionnaireTables& GestionnaireTables::operator+=(Table* table) {
 	ajouter(table);
 	return *this;
 }

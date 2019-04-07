@@ -87,7 +87,7 @@ int main()
 	testPlacerClients.push_back(true);
 	testPlacerClients.push_back(true);
 
-	for (int i = 0; i < clients.size(); i++) {
+	for (unsigned i = 0; i < clients.size(); i++) {
 		tests.push_back(poly.placerClients(clients[i]) == testPlacerClients[i]);
 	}
 
