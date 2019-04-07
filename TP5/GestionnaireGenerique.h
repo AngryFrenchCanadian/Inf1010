@@ -27,6 +27,7 @@ protected:
 
 template<typename T, typename C>
 C GestionnaireGenerique<T,C>::getConteneur() const {
+	C conteneurCopy;
 	return conteneur_;
 
 }
