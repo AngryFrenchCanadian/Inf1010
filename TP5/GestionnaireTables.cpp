@@ -80,3 +80,15 @@ void GestionnaireTables::afficherTables(ostream& os) const {
 		os << **it;
 	}
 }
+
+/**
+* Cette méthode permet d'ajouter une table au restaurant.
+*
+* @param La table a ajouter.
+*
+* @return Le conteneur avec la table ajoutée.
+*/
+GestionnaireTables* GestionnaireTables::operator+=(Table* table) {
+	ajouter(table);
+	return *this;
+}

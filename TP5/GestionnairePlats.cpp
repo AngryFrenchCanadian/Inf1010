@@ -186,7 +186,7 @@ vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, do
 void GestionnairePlats::afficherPlats(ostream& os) {
 	auto it = getConteneur().begin();
 	auto end = getConteneur().end();
-	for (it; it!=end; it++) {
+	for (it; it != end; it++) {
 		(*it->second).afficherPlat(os);
 	}
 }

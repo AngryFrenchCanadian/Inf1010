@@ -1,6 +1,8 @@
 /*
 * Date : 25 f�vrier 2019
 * Auteur : AbdeB
+* Modifié par : Étienne Bourgoin #1955553
+* Modifié par : Manuel Pellerin #1960929
 */
 
 #include "Restaurant.h"
@@ -193,35 +195,6 @@ bool Restaurant::operator <(const Restaurant& autre) const
 }
 
 /**
-* Cette méthode permet de lire les informations d'une table dans un fichier.
-*
-* @param Le fichier contenant une table du restaurant par référence.
-*/
-void Restaurant::lireTables(const string& nomFichier)
-{
-	LectureFichierEnSections fichier{nomFichier};
-	fichier.allerASection("-TABLES");
-	while (!fichier.estFinSection()) {
-		int id, nbPlaces;
-		fichier >> id >> nbPlaces;
-		*this += new Table(id, nbPlaces);
-	}
-}
-
-/**
-* Cette méthode permet d'ajouter une table au restaurant.
-*
-* @param Le fichier contenant une table du restaurant par référence.
-*
-* @return Le restaurant avec la table ajoutée.
-*/
-Restaurant& Restaurant::operator+=(owner<Table*> table)
-{
-	tables_.push_back(table); 
-	return *this;
-}
-
-/**
 * Cette méthode permet de placer les clients à la table disponible ayant
 * le moins de places tout en ayant assez de places pour le nombre de clients.
 *
@@ -299,13 +272,15 @@ double Restaurant::getFraisLivraison(ZoneHabitation zone) const
 * @param Le type du menu (matin, midi, soir).
 *
 * @return Le menu.
+*
+* @see GestionnairePlats.cpp.
 */
-Menu* Restaurant::getMenu(TypeMenu typeMenu) const
+GestionnairePlats* Restaurant::getMenu(TypeMenu typeMenu) const
 {
 	switch (typeMenu) {
-	case TypeMenu::Matin : return menuMatin_;
-	case TypeMenu::Midi  : return menuMidi_;
-	case TypeMenu::Soir  : return menuSoir_;
+	case TypeMenu::Matin: return menuMatin_;
+	case TypeMenu::Midi: return menuMidi_;
+	case TypeMenu::Soir: return menuSoir_;
 	}
 	assert(false && "Le type du menu est invalide");
 	return nullptr;  // On ne devrait jamais se rendre � cette ligne.
@@ -316,24 +291,9 @@ Menu* Restaurant::getMenu(TypeMenu typeMenu) const
 *
 * @return Le menu actuel.
 */
-Menu* Restaurant::menuActuel() const
+GestionnairePlats* Restaurant::menuActuel() const
 {
 	return getMenu(momentJournee_);
-}
-
-/**
-* Cette méthode accède a une table du restaurant.
-*
-* @param Le numero de la table (id).
-*
-* @return La table.
-*/
-Table* Restaurant::getTable(int id) const
-{
-	for (Table* table : tables_)
-		if (table->getId() == id)
-			return table;
-	return nullptr;
 }
 
 /**
@@ -362,13 +322,22 @@ double Restaurant::getChiffreAffaire() {
 }
 
 /**
+* Cette méthode accède aux tables du restaurant.
+*
+* @return Les tables du restaurant.
+*/
+GestionnaireTables* Restaurant::getTables() const
+{
+	return tables_;
+}
+
+/**
 * Cette méthode accède au nom du type de menu du restaurant.
 *
 * @param Le type du menu (matin, midi, soir).
 *
 * @return Le nom du type de menu.
 */
-string getNomTypeMenu(TypeMenu typeMenu)
-{
+string Restaurant::getNomTypeMenu(TypeMenu typeMenu){
 	return string{nomsDesTypesDeMenu[static_cast<int>(typeMenu)]};
 }
