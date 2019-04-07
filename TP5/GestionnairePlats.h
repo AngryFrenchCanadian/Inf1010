@@ -18,7 +18,7 @@
 
 using namespace std;
 
-class GestionnairePlats // TODO : Ajouter l'héritage 
+class GestionnairePlats : public GestionnaireGenerique<pair<string, Plat*>, map<string, Plat*>>
 {
 public:
 	GestionnairePlats(const string& nomFichier, TypeMenu type); //TODO
@@ -28,7 +28,7 @@ public:
 
 	TypeMenu getType() const; // TODO
 
-	Plat* allouerPlat(Plat*); // TODO
+	Plat* allouerPlat(Plat* plat); // TODO
 
 	Plat* trouverPlatMoinsCher() const; // TODO
 	Plat* trouverPlatPlusCher() const; // TODO

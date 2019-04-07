@@ -10,8 +10,12 @@
 #include "PlatVege.h"
 #include "PlatBioVege.h"
 
-
-
+/**
+* Cette methode permet de lire tous les plats dans un fichier et de les ajouter a un conteneur.
+*
+* @param Le fichier contenant les plats.
+* @param Le type du menu contenu dans le fichier.
+*/
 void GestionnairePlats::lirePlats(const string& nomFichier, TypeMenu type)
 {
 	LectureFichierEnSections fichier{ nomFichier };
@@ -20,6 +24,13 @@ void GestionnairePlats::lirePlats(const string& nomFichier, TypeMenu type)
 		ajouter(lirePlatDe(fichier));
 }
 
+/**
+* Cette methode permet de lire un plat dans un fichier.
+*
+* @param Le fichier contenant le plat.
+*
+* @return Une paire contenant le nom du plat et un pointeur sur celui-ci.
+*/
 pair<string, Plat*> GestionnairePlats::lirePlatDe(LectureFichierEnSections& fichier)
 {
 	auto lectureLigne = fichier.lecteurDeLigne();
@@ -49,4 +60,128 @@ pair<string, Plat*> GestionnairePlats::lirePlatDe(LectureFichierEnSections& fich
 	return pair<string, Plat*>(plat->getNom(), plat);
 }
 
+/**
+* Ce constructeur par paramètres initialise les attributs du menu aux valeurs correspondantes.
+*
+* @param Le fichier contenant le menu.
+* @param Le type du menu contenu dans le fichier sélectionné (matin, midi ou soir).
+*/
+GestionnairePlats::GestionnairePlats(const string& nomFichier, TypeMenu type) {
+	type_ = type;
+	lirePlats(nomFichier, type_);
+}
 
+/**
+* Ce constructeur crée une copie du menu existant.
+*
+* @param Les informations du menu par pointeur.
+*/
+GestionnairePlats::GestionnairePlats(GestionnairePlats* gestionnaire) { // pas sur
+	type_ = gestionnaire->getType();
+	pair<string, Plat*> copie;
+	auto it = gestionnaire->getConteneur().begin();
+	auto end = gestionnaire->getConteneur().end();
+	for (it, it != end; ++it) {
+		copie.first = it->second->getNom();
+		copie.second = allouerPlat(it->second);
+		ajouter(copie);
+	}
+}
+
+/*
+* Ce destructeur detruit le menu.
+*/
+GestionnairePlats::~GestionnairePlats() { // pas sur
+	auto it = getConteneur().begin();
+	auto end = getConteneur().end();
+	for (it; it != end; ++it) {
+		delete it->second;
+	}
+	conteneur_.clear();
+}
+
+/*
+* Cette methode permet d'acceder au type du menu.
+*
+* @return Le type du menu.
+*/
+TypeMenu GestionnairePlats::getType() const {
+	return type_;
+}
+
+/*
+* Cette methode permet de creer un plat a partir d'un autre.
+*
+* @return Le plat cree.
+*/
+Plat* GestionnairePlats::allouerPlat(Plat* plat) {
+	return plat->clone();
+}
+
+/*
+* Cette methode permet de trouver le plat le moins cher dans un conteneur.
+*
+* @return Le plat le moins cher.
+*/
+Plat* GestionnairePlats::trouverPlatMoinsCher() const {
+	auto begin = getConteneur().begin();
+	auto end = getConteneur().end();
+	auto it = min_element(begin, end, FoncteurPlatMoinsCher());
+	return it->second;
+}
+
+/*
+* Cette methode permet de trouver le plat le plus cher dans un conteneur.
+*
+* @return Le plat le plus cher.
+*/
+Plat* GestionnairePlats::trouverPlatPlusCher() const { // pas sur
+	auto begin = getConteneur().begin();
+	auto end = getConteneur().end();
+	auto it = max_element(begin, end, [](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool { return left.second->getPrix() > right.second->getPrix(); })
+		return it->second;
+}
+
+/*
+* Cette methode permet de trouver un plat dans un conteneur.
+*
+* @param Le nom du plat.
+*
+* @return Le plat du conteneur portant le nom spécifié.
+*/
+Plat* GestionnairePlats::trouverPlat(const string& nom) const {
+	auto it = getConteneur().find(nom);
+	return it->second;
+}
+
+/*
+* Cette methode permet de retourner dans un vecteur tous les plats qui sont dans un intervalle de prix spécifique.
+*
+* @param La borne inferieure de l'intervalle.
+* @param La borne superieure de l'intervalle.
+*
+* @return Le vecteur contenant les plats qui font partie de l'intervalle.
+*
+* @see FoncteurIntervalle dans Foncteur.h.
+*/
+vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, double borneSup) { // pas sur
+	vector<pair<string, Plat*>> resultat;
+	FoncteurIntervalle appartientIntervalle(borneInf, borneSup);
+	if (appartientIntervalle(*it)) {
+		resultat.push_back();
+	}
+	return resultat;
+}
+
+/*
+*Cette méthode permet d'afficher le menu.
+*
+* @param Le paramètre en sortie.
+*/
+void GestionnairePlats::afficherPlats(ostream& os) {
+	auto it = getConteneur().begin();
+	auto end = getConteneur().end();
+	for (it; end; it++) {
+		(*it->second).afficherPlat();
+	}
+}
