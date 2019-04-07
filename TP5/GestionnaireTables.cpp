@@ -52,20 +52,20 @@ Table* GestionnaireTables::getTable(int id) const {
 * @return La plus petite table pouvant contenir le groupe.
 */
 Table* GestionnaireTables::getMeilleureTable(int tailleGroupe) const {
-	Table* resultat = nullptr;
+	Table* meilleureTable = nullptr;
 	auto it = conteneur_.begin();
 	auto end = conteneur_.end();
 	for (it; it != end; ++it) {
 		if ((*it)->getNbPlaces() >= tailleGroupe && (*it)->estOccupee() == false) {
-			if (resultat == nullptr) {
-				resultat = *it;
+			if (meilleureTable == nullptr) {
+				meilleureTable = *it;
 			}
-			else if ((*it)->getNbPlaces() < resultat->getNbPlaces()) {
-				resultat = *it;
+			else if ((*it)->getNbPlaces() < meilleureTable->getNbPlaces()) {
+				meilleureTable = *it;
 			}
 		}
 	}
-	return resultat;
+	return meilleureTable;
 }
 
 /*

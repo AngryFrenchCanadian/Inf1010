@@ -155,5 +155,6 @@ int main()
 	// Pour tester l'affichage
 	//cout << poly;
 	
+
 	return 0;
 }

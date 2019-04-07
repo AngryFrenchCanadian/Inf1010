@@ -184,7 +184,7 @@ void Restaurant::commanderPlat(const string nom, int idTable)
 		Plat* plat = menuActuel()->trouverPlat(nom);
 		if (plat != nullptr) {
 			table->commander(plat);
-			
+			return;
 		}
 	}
 	cout << "Erreur : table vide ou plat introuvable." << endl << endl;

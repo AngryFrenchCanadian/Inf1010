@@ -138,9 +138,8 @@ Plat* GestionnairePlats::trouverPlatMoinsCher() const {
 * @return Le plat le plus cher.
 */
 Plat* GestionnairePlats::trouverPlatPlusCher() const { // pas sur
-	auto it = max_element(conteneur_.begin(), conteneur_.end(), 
-		[](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool 
-		{ return left.second->getPrix() > right.second->getPrix(); });
+	auto it = max_element(conteneur_.begin(), conteneur_.end(),
+		[](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool{ return left.second->getPrix() < right.second->getPrix(); });
 		return it->second;
 }
 
