@@ -136,9 +136,9 @@ Plat* GestionnairePlats::trouverPlatMoinsCher() const {
 * @return Le plat le plus cher.
 */
 Plat* GestionnairePlats::trouverPlatPlusCher() const { // pas sur
-	auto begin = getConteneur().begin();
-	auto end = getConteneur().end();
-	auto it = max_element(begin, end, [](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool { return left.second->getPrix() > right.second->getPrix(); });
+	auto it = max_element(conteneur_.begin(), conteneur_.end(), 
+		[](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool 
+		{ return left.second->getPrix() > right.second->getPrix(); });
 		return it->second;
 }
 
@@ -150,8 +150,11 @@ Plat* GestionnairePlats::trouverPlatPlusCher() const { // pas sur
 * @return Le plat du conteneur portant le nom spécifié.
 */
 Plat* GestionnairePlats::trouverPlat(const string& nom) const {
-	auto it = getConteneur().find(nom);
-	return it->second;
+	auto it = conteneur_.find(nom); // retourne iterateur pointant a l'element qui contient la cle
+	if (it != conteneur_.end())
+		return it->second;
+	else
+		return nullptr;
 }
 
 /*
@@ -165,12 +168,12 @@ Plat* GestionnairePlats::trouverPlat(const string& nom) const {
 * @see FoncteurIntervalle dans Foncteur.h.
 */
 vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, double borneSup) { // pas sur
-	vector<pair<string, Plat*>> resultat;
+	vector<pair<string, Plat*>> platsConformes;
 	FoncteurIntervalle appartientIntervalle(borneInf, borneSup);
-	if (appartientIntervalle(*it)) {
-		resultat.push_back();
-	}
-	return resultat;
+	auto it = conteneur_.begin();
+
+	copy_if(it, conteneur_.end(), back_inserter(platsConformes), appartientIntervalle(*it));
+	return platsConformes;
 }
 
 /*
