@@ -35,7 +35,7 @@ Restaurant::Restaurant(const string& nomFichier, string_view nom, TypeMenu momen
 	menuSoir_ {new GestionnairePlats{nomFichier, TypeMenu::Soir }},
 	fraisLivraison_{}
 {
-	lireTables(nomFichier); 
+	tables_->lireTables(nomFichier); 
 	lireAdresses(nomFichier);
 }
 
@@ -47,8 +47,12 @@ Restaurant::~Restaurant()
 	delete menuMatin_;
 	delete menuMidi_;
 	delete menuSoir_;
-	for (Table* table : tables_)
-		delete table;
+	set<Table*> set = tables_->getConteneur();
+	for (auto it = set.begin(); it != set.end(); it++) {
+		delete *it;
+
+	}
+	
 }
 
 /**
@@ -107,10 +111,11 @@ TypeMenu Restaurant::getMoment() const
 *
 * @return Le frais de livraison pour la table de livraison.
 */
-double Restaurant::getFraisLivraison(int index) const
-{
-	return fraisLivraison_[index];
-}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//double Restaurant::getFraisLivraison(int index) const
+//{
+//	return fraisLivraison_[index];
+//}
 
 /**
 * Cette méthode permet de libérer la table et d'ajouter le chiffre
@@ -145,14 +150,14 @@ ostream& operator<<(ostream& os, const Restaurant& restaurent)
 
 	os << "-Voici les tables : " << endl;
 
-	restaurent.tables_->afficherTables();
+	restaurent.tables_->afficherTables(os);
 
 	os << "-Voici son menu : " << endl;
 	for (TypeMenu typeMenu : { TypeMenu::Matin, TypeMenu::Midi, TypeMenu::Soir }) {
 		GestionnairePlats* menu = restaurent.getMenu(typeMenu);
-		os << getNomTypeMenu(typeMenu) << " : " << endl
-			<< *menu << endl
-			<< "Le plat le moins cher est : ";
+		os << restaurent.getNomTypeMenu(typeMenu) << " : " << endl;
+		restaurent.getMenu(typeMenu)->afficherPlats(os); 
+		os << endl << "Le plat le moins cher est : ";
 		menu->trouverPlatMoinsCher()->afficherPlat(os);
 		os << endl;
 	}
@@ -336,6 +341,6 @@ GestionnaireTables* Restaurant::getTables() const
 *
 * @return Le nom du type de menu.
 */
-string Restaurant::getNomTypeMenu(TypeMenu typeMenu){
+string Restaurant::getNomTypeMenu(TypeMenu typeMenu)const {
 	return string{nomsDesTypesDeMenu[static_cast<int>(typeMenu)]};
 }
