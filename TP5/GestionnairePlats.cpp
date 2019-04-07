@@ -81,7 +81,7 @@ GestionnairePlats::GestionnairePlats(GestionnairePlats* gestionnaire) { // pas s
 	pair<string, Plat*> copie;
 	auto it = gestionnaire->getConteneur().begin();
 	auto end = gestionnaire->getConteneur().end();
-	for (it, it != end; ++it) {
+	for (it; it != end; ++it) {
 		copie.first = it->second->getNom();
 		copie.second = allouerPlat(it->second);
 		ajouter(copie);
@@ -138,7 +138,7 @@ Plat* GestionnairePlats::trouverPlatMoinsCher() const {
 Plat* GestionnairePlats::trouverPlatPlusCher() const { // pas sur
 	auto begin = getConteneur().begin();
 	auto end = getConteneur().end();
-	auto it = max_element(begin, end, [](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool { return left.second->getPrix() > right.second->getPrix(); })
+	auto it = max_element(begin, end, [](const pair<string, Plat*>& left, const pair<string, Plat*>& right) -> bool { return left.second->getPrix() > right.second->getPrix(); });
 		return it->second;
 }
 
@@ -181,7 +181,7 @@ vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, do
 void GestionnairePlats::afficherPlats(ostream& os) {
 	auto it = getConteneur().begin();
 	auto end = getConteneur().end();
-	for (it; end; it++) {
-		(*it->second).afficherPlat();
+	for (it; it!=end; it++) {
+		(*it->second).afficherPlat(os);
 	}
 }
