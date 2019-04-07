@@ -78,13 +78,15 @@ GestionnairePlats::GestionnairePlats(const string& nomFichier, TypeMenu type) {
 */
 GestionnairePlats::GestionnairePlats(GestionnairePlats* gestionnaire) { // pas sur
 	type_ = gestionnaire->getType();
-	pair<string, Plat*> copie;
-	auto it = gestionnaire->getConteneur().begin();
-	auto end = gestionnaire->getConteneur().end();
+	pair<string, Plat*> copiePair;
+	map<string, Plat*> copieConteneur = gestionnaire->getConteneur();
+	auto it = copieConteneur.begin();
+	auto end = copieConteneur.end();
+
 	for (it; it != end; ++it) {
-		copie.first = it->second->getNom();
-		copie.second = allouerPlat(it->second);
-		ajouter(copie);
+		copiePair.first = it->second->getNom();
+		copiePair.second = allouerPlat(it->second);
+		ajouter(copiePair);
 	}
 }
 
@@ -92,8 +94,8 @@ GestionnairePlats::GestionnairePlats(GestionnairePlats* gestionnaire) { // pas s
 * Ce destructeur detruit le menu.
 */
 GestionnairePlats::~GestionnairePlats() { // pas sur
-	auto it = getConteneur().begin();
-	auto end = getConteneur().end();
+	auto it = conteneur_.begin();
+	auto end = conteneur_.end();
 	for (it; it != end; ++it) {
 		delete it->second;
 	}
@@ -124,9 +126,7 @@ Plat* GestionnairePlats::allouerPlat(Plat* plat) {
 * @return Le plat le moins cher.
 */
 Plat* GestionnairePlats::trouverPlatMoinsCher() const {
-	auto begin = getConteneur().begin();
-	auto end = getConteneur().end();
-	auto it = min_element(begin, end, FoncteurPlatMoinsCher());
+	auto it = min_element(conteneur_.begin(), conteneur_.end(), FoncteurPlatMoinsCher());
 	return it->second;
 }
 
@@ -174,7 +174,7 @@ vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, do
 }
 
 /*
-* Cette méthode permet d'afficher le menu.
+*Cette méthode permet d'afficher le menu.
 *
 * @param Le paramètre en sortie.
 */
