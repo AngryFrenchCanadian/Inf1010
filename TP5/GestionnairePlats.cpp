@@ -2,6 +2,8 @@
 * Titre: Travail pratique #5 - gestionnairePlats.cpp
 * Date: 21 mars 2019
 * Auteur: Moussa Traor� & Ryan Hardie & Wassim Khene
+* Modifié par : Étienne Bourgoin #1955553
+* Modifié par : Manuel Pellerin #1960929
 *******************************************/
 
 #include "GestionnairePlats.h"
