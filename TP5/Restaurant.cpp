@@ -35,6 +35,7 @@ Restaurant::Restaurant(const string& nomFichier, string_view nom, TypeMenu momen
 	menuSoir_ {new GestionnairePlats{nomFichier, TypeMenu::Soir }},
 	fraisLivraison_{}
 {
+	tables_= new GestionnaireTables();
 	tables_->lireTables(nomFichier); 
 	lireAdresses(nomFichier);
 }
@@ -127,7 +128,8 @@ void Restaurant::libererTable(int id)
 {
 	if (Table* table = tables_->getTable(id)) {
 		chiffreAffaire_ += table->getChiffreAffaire(); 
-		chiffreAffaire_ += calculerReduction(table->getClientPrincipal(), table->getChiffreAffaire(), id == tables_[INDEX_TABLE_LIVRAISON]->getId());
+		Client* client = table->getClientPrincipal();
+		chiffreAffaire_ += calculerReduction(client, table->getChiffreAffaire(), dynamic_cast<ClientPrestige*>(client));
 		table->libererTable(); 
 	}
 }
@@ -174,14 +176,15 @@ ostream& operator<<(ostream& os, const Restaurant& restaurent)
 * @see Méthode trouverPlat dans Menu.cpp (utilisée).
 * @see Méthode commander dans Table.cpp (utilisée).
 */
-void Restaurant::commanderPlat(string_view nom, int idTable)
+void Restaurant::commanderPlat(const string nom, int idTable)
 {
 	Table* table = tables_->getTable(idTable);
-	if (table->estOccupee()) {
+
+	if (table->estOccupee() && table != nullptr) {
 		Plat* plat = menuActuel()->trouverPlat(nom);
 		if (plat != nullptr) {
 			table->commander(plat);
-			return;
+			
 		}
 	}
 	cout << "Erreur : table vide ou plat introuvable." << endl << endl;
@@ -213,8 +216,20 @@ bool Restaurant::operator <(const Restaurant& autre) const
 bool Restaurant::placerClients(Client* client)
 {
 	const int tailleGroupe = client->getTailleGroupe();
-	//TODO : trouver la table la plus adaptée pour le client. 
-	//TODO : Si possible assigner la table au client sinon retourner false.
+	
+	
+	Table* meilleureTable = tables_->getMeilleureTable(tailleGroupe);
+
+	if (meilleureTable != nullptr) {
+
+		if (meilleureTable->estOccupee() == false) {
+			meilleureTable->setClientPrincipal(client);
+			client->setTable(meilleureTable);
+			meilleureTable->placerClients(tailleGroupe);
+			return true;
+		}
+	}
+	return false;
 }
 
 /**

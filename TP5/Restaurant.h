@@ -57,7 +57,7 @@ public:
 	// void lireTables(const string& fichier); // TODO : À retirer, déplcer dans GestionnaitreTables.
 	// Restaurant& operator+=(owner<Table*> table); // TODO : À retirer, deplacer dans GestionnaireTables //? Le param�tre est indiqu� "owner" pour montrer que cette m�thode prend possession du pointeur qui lui est pass�, mais owner<Table*> est �quivalent � Table*; voir pointers.h .
 
-	void commanderPlat(string_view nom, int idTable);
+	void commanderPlat(const string nom, int idTable);
 	bool operator <(const Restaurant& restau) const ;
 	Restaurant& operator=(const Restaurant& autre) = delete;  //? Le programme ne fait jamais de copie de restaurant, donc cette fonction n'�tait pas test�e et par cons�quent probablement �rron�e.
 	
