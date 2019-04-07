@@ -30,9 +30,9 @@ Restaurant::Restaurant(const string& nomFichier, string_view nom, TypeMenu momen
 	nom_{nom},
 	momentJournee_{moment},
 	chiffreAffaire_{0},
-	menuMatin_{new Menu{nomFichier, TypeMenu::Matin}},
-	menuMidi_ {new Menu{nomFichier, TypeMenu::Midi }},
-	menuSoir_ {new Menu{nomFichier, TypeMenu::Soir }},
+	menuMatin_{new GestionnairePlats{nomFichier, TypeMenu::Matin}},
+	menuMidi_ {new GestionnairePlats{nomFichier, TypeMenu::Midi }},
+	menuSoir_ {new GestionnairePlats{nomFichier, TypeMenu::Soir }},
 	fraisLivraison_{}
 {
 	lireTables(nomFichier); 
@@ -120,7 +120,7 @@ double Restaurant::getFraisLivraison(int index) const
 */
 void Restaurant::libererTable(int id)
 {
-	if (Table* table = getTable(id)) {
+	if (Table* table = tables_->getTable(id)) {
 		chiffreAffaire_ += table->getChiffreAffaire(); 
 		chiffreAffaire_ += calculerReduction(table->getClientPrincipal(), table->getChiffreAffaire(), id == tables_[INDEX_TABLE_LIVRAISON]->getId());
 		table->libererTable(); 
@@ -145,13 +145,11 @@ ostream& operator<<(ostream& os, const Restaurant& restaurent)
 
 	os << "-Voici les tables : " << endl;
 
-	for (Table* table : restaurent.tables_)
-		os  << *table << endl;
-	os << endl;
+	restaurent.tables_->afficherTables();
 
 	os << "-Voici son menu : " << endl;
 	for (TypeMenu typeMenu : { TypeMenu::Matin, TypeMenu::Midi, TypeMenu::Soir }) {
-		Menu* menu = restaurent.getMenu(typeMenu);
+		GestionnairePlats* menu = restaurent.getMenu(typeMenu);
 		os << getNomTypeMenu(typeMenu) << " : " << endl
 			<< *menu << endl
 			<< "Le plat le moins cher est : ";
@@ -173,7 +171,7 @@ ostream& operator<<(ostream& os, const Restaurant& restaurent)
 */
 void Restaurant::commanderPlat(string_view nom, int idTable)
 {
-	if (Table* table = getTable(idTable); table && table->estOccupee())
+	if (Table* table = tables_->getTable(idTable); table && tables_->estOccupee())
 		if (Plat* plat = menuActuel()->trouverPlat(nom)) {
 			table->commander(plat);
 			return;
