@@ -176,11 +176,14 @@ ostream& operator<<(ostream& os, const Restaurant& restaurent)
 */
 void Restaurant::commanderPlat(string_view nom, int idTable)
 {
-	if (Table* table = tables_->getTable(idTable); table && tables_->estOccupee())
-		if (Plat* plat = menuActuel()->trouverPlat(nom)) {
+	Table* table = tables_->getTable(idTable);
+	if (table->estOccupee()) {
+		Plat* plat = menuActuel()->trouverPlat(nom);
+		if (plat != nullptr) {
 			table->commander(plat);
 			return;
 		}
+	}
 	cout << "Erreur : table vide ou plat introuvable." << endl << endl;
 }
 
