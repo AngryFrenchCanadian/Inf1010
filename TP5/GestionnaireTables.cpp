@@ -8,6 +8,11 @@
 #include "GestionnaireTables.h"
 #include "LectureFichierEnSections.h"
 
+/**
+* Cette methode permet de lire toutes les tables dans un fichier et de les ajouter a un conteneur.
+*
+* @param Le fichier contenant les plats.
+*/
 void GestionnaireTables::lireTables(const string& nomFichier)
 {
 	LectureFichierEnSections fichier{ nomFichier };
@@ -19,3 +24,57 @@ void GestionnaireTables::lireTables(const string& nomFichier)
 	}
 }
 
+/*
+* Cette methode permet d'acceder a une table specifique.
+*
+* @param Le numero de la table (id).
+*
+* @return La table specifique ou un pointeur nul si la table n'existe pas.
+*/
+Table* GestionnaireTables::getTable(int id) const {
+	
+	auto it = conteneur_.begin();
+	auto end = conteneur_.end();
+	for (it; it != end; ++it) {
+		if ((*it)->getId() == id)
+			return *it;
+	}
+	return nullptr;
+}
+
+/*
+* Cette methode permet de retourner la plus petite table pouvant contenir le groupe.
+*
+* @param La taille du groupe.
+*
+* @return La plus petite table pouvant contenir le groupe.
+*/
+Table* GestionnaireTables::getMeilleureTable(int tailleGroupe) const {
+	Table* resultat = nullptr;
+	auto it = conteneur_.begin();
+	auto end = conteneur_.end();
+	for (it; it != end; ++it) {
+		if ((*it)->getNbPlaces() >= tailleGroupe && (*it)->estOccupee() == false) {
+			if (resultat == nullptr) {
+				resultat = *it;
+			}
+			else if ((*it)->getNbPlaces() < resultat->getNbPlaces()) {
+				resultat = *it;
+			}
+		}
+	}
+	return resultat;
+}
+
+/*
+* Cette méthode permet d'afficher les tables.
+*
+* @param Le paramètre en sortie.
+*/
+void GestionnaireTables::afficherTables(ostream& os) const {
+	auto it = conteneur_.begin();
+	auto end = conteneur_.end();
+	for (it; it != end; ++it) {
+		os << **it;
+	}
+}

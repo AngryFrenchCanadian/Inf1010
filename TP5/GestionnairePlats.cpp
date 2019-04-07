@@ -174,7 +174,7 @@ vector<pair<string, Plat*>> GestionnairePlats::getPlatsEntre(double borneInf, do
 }
 
 /*
-*Cette méthode permet d'afficher le menu.
+* Cette méthode permet d'afficher le menu.
 *
 * @param Le paramètre en sortie.
 */
