@@ -9,7 +9,7 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    QString chemin = ""; // INSERER CHEMIN ABSOLU VERS polyFood.txt
+    QString chemin = "C:/Users/Manu/Inf1010/TP6"; // INSERER CHEMIN ABSOLU VERS polyFood.txt
     try {
         Menu menu = Menu(chemin+FICHIER_POLYFOOD);
         Filtre filtre(&menu);
