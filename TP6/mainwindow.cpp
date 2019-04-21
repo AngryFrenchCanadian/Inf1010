@@ -51,7 +51,8 @@ void MainWindow::creerWidgetPlatsFiltres(){
 
 //TODO
 void MainWindow::creerWidgetCommande() {
-
+    widgetCommande_ = new QListWidget(this);
+    widgetCommande_->setSortingEnabled(true);
 }
 
 void MainWindow::creerWidgetBoutonsAjouterRetirer() {

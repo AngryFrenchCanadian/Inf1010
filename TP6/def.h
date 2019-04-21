@@ -1,7 +1,7 @@
 #ifndef DEF_H
 #define DEF_H
 
-#include "plat.h"
+
 
 #include<string>
 #include <QString>

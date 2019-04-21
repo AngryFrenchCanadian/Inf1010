@@ -1,6 +1,6 @@
 /*
 * Date : 3 avril 2019
-* Auteur : Pierre-Olivier Côté
+* Auteur : Pierre-Olivier C?t?
 */
 #ifndef MENU
 #define MENU
@@ -18,15 +18,15 @@ using namespace std;
 class Menu{
 public:
     Menu(QString nomFichier);
-	~Menu();
-	//getteurs
+    ~Menu();
+    //getteurs
     map<QString, Plat*> getMenu(TypeMenu typeMenu) const;
     Plat* getPlat(QString nomPlat) const;
 
 private:
-	//autres méthodes
+    //autres m?thodes
     void lirePlats(QString nomFichier, TypeMenu type, map<QString, Plat*>& menu);
-	void ajouterPlat(TypeMenu typeMenu, Plat* plat);
+    void ajouterPlat(TypeMenu typeMenu, Plat* plat);
     void supprimerPlatsDuMenu(map<QString, Plat*> menu);
     void lireFichier(QString fichier);
     map<QString, Plat*> menuMatin_;
