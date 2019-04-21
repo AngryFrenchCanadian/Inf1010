@@ -77,11 +77,38 @@ void MainWindow::creerWidgetCommander() {
 //TODO
 void MainWindow::designLayout() {
 
+    QVBoxLayout* filtrePlatLayout = new QVBoxLayout;
+    filtrePlatLayout->addWidget(widgetTypeMenu_);
+    filtrePlatLayout->addWidget(widgetPlatsVeges_);
+    filtrePlatLayout->addWidget(widgetPlatsBios_);
+
+    QHBoxLayout* ajouterRetirerPlatLayout = new QHBoxLayout;
+    ajouterRetirerPlatLayout->addWidget(widgetAjouterPlat_);
+    ajouterRetirerPlatLayout->addWidget(widgetRetirerPlat_);
+
+    QVBoxLayout* listePlatsLayout = new QVBoxLayout;
+    listePlatsLayout->addWidget(widgetPlatsFiltres_);
+    listePlatsLayout->addLayout(ajouterRetirerPlatLayout);
+
+    QHBoxLayout* topLayout = new QHBoxLayout;
+    topLayout->addLayout(filtrePlatLayout);
+    topLayout->addLayout(listePlatsLayout);
+
+    QHBoxLayout* prixCommanderLayout = new QHBoxLayout;
+    prixCommanderLayout->addWidget(widgetPrix_);
+    prixCommanderLayout->addWidget(widgetCommander_);
+
+
+
     QFrame* hLine = new QFrame();
     hLine->setFrameShape(QFrame::HLine);
 
     QVBoxLayout* mainBox = new QVBoxLayout(this);
+    mainBox->addLayout(topLayout);
     mainBox->addWidget(hLine);
+    mainBox->addWidget(widgetCommande_);
+    mainBox->addLayout(prixCommanderLayout);
+
     QWidget* mainWidget = new QWidget();
     mainWidget->setLayout(mainBox);
     setCentralWidget(mainWidget);
