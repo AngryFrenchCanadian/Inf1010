@@ -107,7 +107,7 @@ int main()
 	tests.push_back(poly.livrerClient(clients[5], commandeMarie));
 
 	// Test 18 - 20 - Commander plat
-	poly.commanderPlat("Pates", clients[0]->getTable()->getId());
+	poly.commanderPlat("Pates", clients[0]->getTable()->getId()); 
 
 	poly.commanderPlat("Pates", clients[2]->getTable()->getId());
 
