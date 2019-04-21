@@ -68,7 +68,8 @@ void MainWindow::creerWidgetPrix() {
 
 //TODO
 void MainWindow::creerWidgetCommander() {
-
+    widgetCommander_ = new QPushButton(this);
+    widgetCommander_->setText(COMMANDER);
 }
 
 
@@ -103,10 +104,11 @@ void MainWindow::connecterSignauxAuxSlots() {
 
     //TODO
     //connecter boutons ajouterPlat et retirerPlat
+    QObject::connect(widgetAjouterPlat_, SIGNAL(clicked()), this, SLOT(insererPlatsChoisisDansCommande()));
+    QObject::connect(widgetRetirerPlat_, SIGNAL(clicked()), this, SLOT(retirerPlatsChoisisDeCommande()));
 
     //connecter bouton commander
-    QObject::connect(widgetCommander_, SIGNAL(clicked()),
-                     this, SLOT(commander()));
+    QObject::connect(widgetCommander_, SIGNAL(clicked()), this, SLOT(commander()));
 }
 void MainWindow::mettreAJourPlatsFiltres(){
     QStringList plats = filtre_->getNomPlatsFiltres();
@@ -135,12 +137,21 @@ void MainWindow::mettreAJourPlatsCommande(){
 
 //TODO
 void MainWindow::insererPlatsChoisisDansCommande() {
-
+    commande_->ajouterPlat(widgetPlatsFiltres_->currentItem()->text());
+    mettreAJourPrix();
+    mettreAJourPlatsCommande();
 }
 
 //TODO
 void MainWindow::retirerPlatsChoisisDeCommande() {
-
+    try{
+        commande_->retirerPlat(widgetPlatsFiltres_->currentItem()->text());
+    }
+    catch(ErreurPlatIntrouvable erreur){
+        message(erreur.what());
+    }
+    mettreAJourPrix();
+    mettreAJourPlatsCommande();
 }
 
 void MainWindow::mettreAJourPrix() {

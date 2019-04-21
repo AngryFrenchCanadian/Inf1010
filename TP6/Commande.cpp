@@ -20,6 +20,8 @@ void Commande::retirerPlat(QString nomPlat) {
     if(commande_.removeOne(nomPlat)){
         emit commandeModifie();
     } //TODO
+    else
+        throw ErreurPlatIntrouvable(LABEL_MEAL_NOT_FOUND);
 }
 
 void Commande::viderCommande(){

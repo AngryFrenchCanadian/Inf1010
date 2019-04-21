@@ -10,7 +10,6 @@
 #include "erreurplatintrouvable.h"
 
 #include <string>
-#include <string_view>
 #include <iostream>
 #include <QString>
 
