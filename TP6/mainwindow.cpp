@@ -146,14 +146,17 @@ void MainWindow::mettreAJourPlatsFiltres(){
 
 void MainWindow::clicOptionBio(){
     filtre_->clicOptionBio();
+    mettreAJourPlatsFiltres();
 }
 
 void MainWindow::clicOptionVege(){
     filtre_->clicOptionVege();
+    mettreAJourPlatsFiltres();
 }
 
 void MainWindow::choixTypeMenu(QString typeMenu){
     filtre_->choixTypeMenu(qstringToTypeMenu(typeMenu));
+    mettreAJourPlatsFiltres();
 }
 
 void MainWindow::mettreAJourPlatsCommande(){
